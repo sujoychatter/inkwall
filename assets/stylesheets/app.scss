@@ -1,11 +1,33 @@
+html{
+	height: 100%;
+}
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  height: 100%;
 }
 
 a {
   color: #00B7FF;
 }
-.container{
-	text-align: center;
+
+.header{
+	height: 45px;
+    background-color: #F2C4D5;
+    padding-top: 5px;
+    padding-left: 10px;
+    position: fixed;
+    width: 100%;
+    img{
+    	height: 40px;
+    }
+}
+
+#application{
+	padding-top: 51px;
+	height: 100%;
+    box-sizing: border-box;
+	#main-content{		height: 100%;
+		overflow: auto;
+	}
 }

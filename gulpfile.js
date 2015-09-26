@@ -30,9 +30,9 @@ gulp.task('js', function () {
     .pipe(gulp.dest('public/react/components'));
 });
 
-gulp.task('copyreact', function() {
-   gulp.src('assets/react.min.js')
-   .pipe(gulp.dest('public/react/'));
+gulp.task('copyvendor', function() {
+   gulp.src('assets/vendor/**/*.*')
+   .pipe(gulp.dest('public/'));
 });
 
 gulp.task('copyimages', function() {
@@ -48,4 +48,4 @@ gulp.task('sass:watch', function () {
   gulp.watch('assets/stylesheets/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['js', 'sass', 'copyreact','browserify:js', 'copyimages', 'watch', 'sass:watch']);
+gulp.task('default', ['js', 'sass', 'copyvendor','browserify:js', 'copyimages', 'watch', 'sass:watch']);
