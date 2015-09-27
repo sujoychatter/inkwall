@@ -3,9 +3,11 @@ html
   head
     title= title
     link(rel='shortcut icon', href='/images/logo.png', type='image/png')
-  body
+  body(itemscope, itemtype="http://schema.org/Blog")
     !{header}
     block content
     !{footer}
     link(rel='stylesheet', href='/stylesheets/app.css')
     !{tracking}
+    script(src='/essentials.js' type='text/javascript')
+    script(src='/react/main.js' type='text/javascript')

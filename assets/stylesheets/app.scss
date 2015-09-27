@@ -5,6 +5,24 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0;
   height: 100%;
+  &.shrunk-header{
+    .header{
+      height: 38px;
+      img{
+        -ms-transform: rotate(7deg);
+        -webkit-transform: rotate(7deg);
+        transform: rotate(90deg);
+        height: 28px;
+      }
+      .site-details{
+        position: relative;
+        top: -3px;
+      }
+    }
+    #application{
+      padding-top: 46px;
+    }
+  }
 }
 
 a {
@@ -12,22 +30,53 @@ a {
 }
 
 .header{
-	height: 45px;
+    height: 50px;
     background-color: #F2C4D5;
-    padding-top: 5px;
+    padding-top: 8px;
     padding-left: 10px;
     position: fixed;
     width: 100%;
+    transition: all 1s;
     img{
     	height: 40px;
+      transition: all 1s;
+    }
+    &.shrunk{
+      height: 38px;
+      img{
+        -ms-transform: rotate(7deg);
+        -webkit-transform: rotate(7deg);
+        transform: rotate(90deg);
+        height: 28px;
+      }
+      .site-details{
+        top: -3px;
+      }
     }
 }
 
 #application{
-	padding-top: 51px;
+	padding-top: 58px;
 	height: 100%;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  transition: all 1s ease-in;
 	#main-content{		height: 100%;
 		overflow: auto;
 	}
+}
+
+.site-details{
+  position: relative;
+  top: 0px;
+  transition: all 1s;
+  .site-name{
+    font-size: 28px;
+    margin-left: 10px;
+    color: #400822;
+    font-weight: bolder;
+  }
+  .site-about{
+    margin-left: 10px;
+    color: #8C0F4A;
+  }
 }
