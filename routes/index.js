@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var React = require('react');
-var index = require('../public/react/components/index');
+
 var header = require('../public/react/components/header');
 var footer = require('../public/react/components/footer');
-var wrapper =require('../public/react/wrapper')
+var wrapper =require('../public/react/wrapper');
+var index = require('../public/react/components/index');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
