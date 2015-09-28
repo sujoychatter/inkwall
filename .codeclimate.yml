@@ -50,22 +50,19 @@
 #- vendor/**/*
 
 engines:
-  rubocop:
-    enabled: true
-  golint:
-    enabled: true
-  gofmt:
-    enabled: true
   eslint:
     enabled: true
   csslint:
+    enabled: true
+  fixme:
+    enabled: true
+  watson:
     enabled: true
 ratings:
    paths:
    - assets/**
    - routes/**
    - views/**
-   - "**.go"
 exclude_paths:
 - public/**/*
 - node_modules/**/*
