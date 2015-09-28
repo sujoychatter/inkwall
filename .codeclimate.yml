@@ -68,3 +68,4 @@ ratings:
    - "**.go"
 exclude_paths:
 - public/**/*
+- node_modules/**/*
