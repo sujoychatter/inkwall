@@ -1,14 +1,65 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+var connection_config = require('./knexfile');
+var knex = require('knex')(connection_config[process.env.NODE_ENV]);
+
+var facebookAppId = process.env.FACEBOOK_APP_ID;
+var facebookSecretKey = process.env.FACEBOOK_APP_SECRET;
+
+app.use(session({ secret: 'keyboard cat', key: 'sid', resave: false, saveUninitialized: false}));
+//facebook login initialize via passport facebook
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new FacebookStrategy({
+    clientID: facebookAppId,
+    clientSecret: facebookSecretKey,
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    enableProof: false,
+    profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
+  },
+  function(accessToken, refreshToken, profile, done) {
+      knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+      if(rows.length == 1){
+        return done(null, rows[0]);
+      }
+      else{
+        knex('users').insert({name: profile.displayName,
+                              admin: false,
+                              photo: profile.photos[0].value,
+                              email: profile.email,
+                              profile_id: profile.id
+                            }).then(function(user){
+                              knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+                                if(rows.length == 1){
+                                  return done(null, rows[0]);
+                                }
+                              });
+                            })
+      }
+    });
+  }
+));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +79,15 @@ app.use(function(req,res,next){
   return next();
 })
 
-app.use('/', routes);
+app.use('/', index);
 app.use('/users', users);
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+       successRedirect : '/',
+       failureRedirect: '/'
+  })
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

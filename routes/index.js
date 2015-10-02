@@ -10,10 +10,10 @@ var index = require('../public/react/components/index');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var factory_header = React.createFactory(header);
+	var header_element = React.createElement(header, {user: req.user});
 	var factory_footer = React.createFactory(footer);
 	var wrapper_element = React.createElement(wrapper, {child: index});
-	res.render('index', {title: 'Fodoo', markup: React.renderToString(wrapper_element), header: React.renderToString(factory_header()), tracking: req.tracking_element});
+	res.render('index', {title: 'Fodoo', markup: React.renderToString(wrapper_element), header: React.renderToString(header_element), tracking: req.tracking_element, user: req.user});
 });
 
 module.exports = router;

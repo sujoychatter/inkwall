@@ -53,6 +53,14 @@ a {
         top: -3px;
       }
     }
+    .user-image{
+      height: 45px;
+      width: 45px;
+      margin-right: 20px;
+      border-radius: 23px;
+      background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSvnQDAP3ceAilA8LPcFwc92M1xfJJEzxueNzG-c_1Wax1tzhv6EQ');
+      background-size: cover;
+    }
 }
 
 #application{
@@ -79,4 +87,19 @@ a {
     margin-left: 10px;
     color: #8C0F4A;
   }
+}
+
+.pull-right{
+  float: right;
+}
+.login-button{
+  display: block;
+  height: 40px;
+  width: 55px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-right: 10px;
+  line-height: 40px;
+  color: black;
+  font-size: 12px;
 }
