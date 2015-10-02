@@ -22,6 +22,14 @@ body {
     #application{
       padding-top: 46px;
     }
+    .user-image{
+      -ms-transform: scale(0.7) translate(0px,-10px);
+      -webkit-transform: scale(0.7) translate(0px,-10px);
+      transform: scale(0.7) translate(0px,-10px);
+    }
+    .login-button{
+      transform: translate(0px,-7px);
+    }
   }
 }
 
@@ -58,8 +66,9 @@ a {
       width: 45px;
       margin-right: 20px;
       border-radius: 23px;
-      background-image: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSvnQDAP3ceAilA8LPcFwc92M1xfJJEzxueNzG-c_1Wax1tzhv6EQ');
       background-size: cover;
+      float: left;
+      transition: all 1s;
     }
 }
 
@@ -94,12 +103,14 @@ a {
 }
 .login-button{
   display: block;
-  height: 40px;
+  height: 45px;
   width: 55px;
   text-transform: uppercase;
   text-decoration: none;
-  margin-right: 10px;
-  line-height: 40px;
+  margin-right: 20px;
+  line-height: 45px;
   color: black;
   font-size: 12px;
+  float: left;
+  transition: all 1s;
 }

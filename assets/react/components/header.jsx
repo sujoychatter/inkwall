@@ -7,6 +7,7 @@ module.exports = React.createClass({
 			userDataDiv = <div class="hidden" data-user={JSON.stringify(userData)}></div>,
 			divStyle = {backgroundImage: 'url('+ this.props.user.photo +')'},
 			image = <div className="user-image" style={divStyle}></div>;
+			var logout = <a className="login-button" href="/logout">Logout</a>
 		}
 		else{
 			var login = <a className="login-button" href="/auth/facebook">Login</a>
@@ -20,8 +21,9 @@ module.exports = React.createClass({
 					<span className="site-about" itemProp="description">Blog for engineers</span>
 				</span>
 				<span className="pull-right right-elements">
-					{login}
 					{image}
+					{login}
+					{logout}
 				</span>
 			</div>
 	    )    

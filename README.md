@@ -8,7 +8,7 @@ Users can submit their own posts.
 ###Dependencies
 - node
 - npm
-- running postgresql server with database fodoo
+- running postgresql server with database fodoo_[env]
 
 ###Start application
 - npm install

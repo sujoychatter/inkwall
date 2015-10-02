@@ -1,9 +1,10 @@
 var React = require('react');
 var Router = require('react-router');
-var Index = require('./components/index.jsx');
-var Wrapper = require('./wrapper.jsx');
-
 var Route = Router.Route;
+
+var Wrapper = require('./wrapper.jsx');
+var Index = require('./components/index.jsx');
+var NewPost = require('./components/new_post.jsx');
 
 
 //Elements generated with wrapper
@@ -14,11 +15,20 @@ var IndexWrapperElement = React.createClass({
 		)
 	}
 });
+var NewPostWrapperElement= React.createClass({
+	render: function(){
+		return (
+			<Wrapper child={NewPost} />
+		)
+	}
+})
 //
 
 
 var routes = (
-	<Route name="index" path="/" handler={IndexWrapperElement}></Route>
+	<Route name="index" path="/" handler={IndexWrapperElement}>
+		<Route name="new_post" path="/new_post" handler={NewPostWrapperElement} />
+	</Route>
 );
 
 

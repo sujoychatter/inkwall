@@ -7,17 +7,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-
-var index = require('./routes/index');
-var users = require('./routes/users');
-
-var app = express();
-
 var connection_config = require('./knexfile');
 var knex = require('knex')(connection_config[process.env.NODE_ENV]);
 
 var facebookAppId = process.env.FACEBOOK_APP_ID;
 var facebookSecretKey = process.env.FACEBOOK_APP_SECRET;
+
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use(session({ secret: 'keyboard cat', key: 'sid', resave: false, saveUninitialized: false}));
 //facebook login initialize via passport facebook
@@ -59,11 +60,11 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+//app routes---------------------------------------------------
+var index = require('./routes/index');
+var new_post = require('./routes/new_post');
+//-------------------------------------------------------------
 
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -80,7 +81,10 @@ app.use(function(req,res,next){
 })
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/new_post',ensureAuthenticated, new_post);
+
+
+//Facebook login paths
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
@@ -88,6 +92,10 @@ app.get('/auth/facebook/callback',
        failureRedirect: '/'
   })
 );
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -119,6 +127,11 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')
+}
 
 
 module.exports = app;
