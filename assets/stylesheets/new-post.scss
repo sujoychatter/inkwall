@@ -1,4 +1,16 @@
-.container{
-	text-align: center;
-	padding-top: 10%;
+.new-post.container{
+	padding: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+	.title{
+		height: 40px;
+    	width: 100%;
+    	input{
+    		width: 99%;
+		    height: 35px;
+		    font-size: 20px;
+		    border: none;
+		    outline: none;
+    	}
+	}
 }

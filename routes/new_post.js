@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 	var header_element = React.createElement(header, {user: req.user});
 	var factory_footer = React.createFactory(footer);
 	var wrapper_element = React.createElement(wrapper, {child: new_post});
-	res.render('index', {title: 'Fodoo',
+	res.render('new_post', {title: 'Fodoo',
 						markup: React.renderToString(wrapper_element),
 						header: React.renderToString(header_element),
 						tracking: req.tracking_element,

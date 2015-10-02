@@ -4,6 +4,7 @@ var Route = Router.Route;
 
 var Wrapper = require('./wrapper.jsx');
 var Index = require('./components/index.jsx');
+var Home = require('./components/home.jsx');
 var NewPost = require('./components/new_post.jsx');
 
 
@@ -12,6 +13,13 @@ var IndexWrapperElement = React.createClass({
 	render: function(){
 		return (
 			<Wrapper child={Index} />
+		)
+	}
+});
+var HomeWrapperElement = React.createClass({
+	render: function(){
+		return (
+			<Wrapper child={Home} />
 		)
 	}
 });
@@ -26,8 +34,9 @@ var NewPostWrapperElement= React.createClass({
 
 
 var routes = (
-	<Route name="index" path="/" handler={IndexWrapperElement}>
-		<Route name="new_post" path="/new_post" handler={NewPostWrapperElement} />
+	<Route>
+		<Route name="home" path="/" handler={HomeWrapperElement} />
+		<Route name="new_post" path="new_post" handler={NewPostWrapperElement} />
 	</Route>
 );
 
