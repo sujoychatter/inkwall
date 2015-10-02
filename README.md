@@ -12,5 +12,5 @@ Users can submit their own posts.
 
 ###Start application
 - npm install
-- DATABASE_URL=postgresql://[user[:password]@][netloc][:port]/fodoo node models/database.js
-- NODE_ENV=<production/development> npm start
+- knex migrate:latest
+- DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  npm start
