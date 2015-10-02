@@ -4,7 +4,6 @@ var sass = require('gulp-sass');
 var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
-var server = require('gulp-express');
 var concat = require('gulp-concat');
  
 // gulp.task('concatapp', function() {
@@ -52,11 +51,8 @@ gulp.task('copyimages', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch("assets/react/**/*.jsx", ["js", "browserify:js"])
+    gulp.watch(["assets/react/**/*.jsx"], ["js", "browserify:js"]);
+	gulp.watch('assets/stylesheets/**/*.scss', ['sass']);
 });
 
-gulp.task('sass:watch', function () {
-  gulp.watch('assets/stylesheets/**/*.scss', ['sass']);
-});
-
-gulp.task('default', ['js', 'sass', 'copyvendor','browserify:js', 'copyimages', 'watch', 'sass:watch']);
+gulp.task('default', ['js', 'sass', 'copyvendor','browserify:js','concatapp', 'copyimages', 'watch']);
