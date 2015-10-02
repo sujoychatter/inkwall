@@ -3,17 +3,23 @@ var router = express.Router();
 
 var React = require('react');
 
-var header = require('../public/react/components/header');
-var footer = require('../public/react/components/footer');
-var wrapper =require('../public/react/wrapper');
-var home = require('../public/react/components/home');
+var header = require('../../public/react/components/header');
+var footer = require('../../public/react/components/footer');
+var wrapper =require('../../public/react/wrapper');
+var index = require('../../public/react/components/index');
 
 /* GET home page. */
+/*
+*
+* router.get('/', homeController.init)
+* router.get('/admin', adminController.init)
+* router.get('/newpost', newPostController.init)
+**/
 router.get('/', function(req, res, next) {
 	var header_element = React.createElement(header, {user: req.user});
 	var factory_footer = React.createFactory(footer);
-	var wrapper_element = React.createElement(wrapper, {child: home});
-	res.render('home', {title: 'Fodoo',
+	var wrapper_element = React.createElement(wrapper, {child: index});
+	res.render('index', {title: 'Fodoo',
 						markup: React.renderToString(wrapper_element),
 						header: React.renderToString(header_element),
 						tracking: req.tracking_element,

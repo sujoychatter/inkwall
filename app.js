@@ -61,9 +61,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 //app routes---------------------------------------------------
-var index = require('./routes/index');
-var home = require('./routes/home');
-var new_post = require('./routes/new_post');
+var index = require('./server/routes/index');
+var home = require('./server/routes/home');
+var new_post = require('./server/routes/new_post');
 //-------------------------------------------------------------
 
 
