@@ -75,4 +75,4 @@ gulp.task('watch', function() {
 	gulp.watch('assets/stylesheets/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['js', 'sass', 'copyvendor','browserify:js', 'copyimages', 'watch', 'server', 'inspector']);
+gulp.task('default', ['js', 'sass', 'copyvendor','browserify:js', 'copyimages', 'watch']);
