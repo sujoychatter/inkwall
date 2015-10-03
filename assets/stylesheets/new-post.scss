@@ -2,7 +2,10 @@
 	padding: 20px;
 	padding-left: 50px;
 	padding-right: 50px;
+	height: 100%;
+	box-sizing: border-box;
 	.title{
+		position: absolute;
 		height: 40px;
     	width: 100%;
     	input{
@@ -12,5 +15,62 @@
 		    border: none;
 		    outline: none;
     	}
+	}
+	.btn.btn-primary{
+		&.save{
+			position: absolute;
+			bottom: 30px;
+			left: 65px;
+		}
+		&.publish{
+			position: absolute;
+			bottom: 30px;
+			left: 160px
+		}
+	}
+	.dummy-container{
+		height: 100%;
+		width: 100%;
+		border: 1px solid #F2C4D5;
+	}
+}
+.tinymce{
+	padding-top: 50px;
+	height: 100%;
+	box-sizing: border-box;
+	iframe{
+		height: 100% !important;
+	}
+	.mce-panel{
+		border: 1px solid #F2C4D5;
+	}
+	.mce-tinymce{
+		height: 100%;
+	}
+	.mce-tinymce > .mce-container-body{
+		background-color: #F2C4D5;
+		height: 100%;
+	}
+	.mce-toolbar-grp{
+		background-color: #F2C4D5;
+	}
+	.mce-edit-area{
+		height: calc(100% - 100px);
+	}
+	button{
+		color: #400822;
+		i{
+			color: #400822;
+		}
+	}
+	.mce-statusbar .mce-container-body{
+		height: 35px;
+		background-color: #F2C4D5;
+		.mce-path .mce-path-item{
+			display: none;
+		}
+	}
+	.mce-btn{
+		background-color: #F2C4D5;
 	}
 }

@@ -115,3 +115,24 @@ a {
   float: left;
   transition: all 1s;
 }
+.btn{
+
+}
+.btn-primary{
+  height: 40px;
+  display: inline-block;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 12px;
+  background-color: #400822;
+  border: 2px solid #400822;
+  text-transform: uppercase;
+  color: white;
+  margin-right: 10px;
+  cursor: pointer;
+  outline: none;
+  &:hover{
+    background-color: #F2C4D5;
+    color: #400822;
+  }
+}

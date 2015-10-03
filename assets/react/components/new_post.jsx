@@ -1,5 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+var Button = require('../../../public/react/components/common/button.js');
 
 module.exports = React.createClass({
 	componentDidMount: function(){
@@ -8,14 +9,13 @@ module.exports = React.createClass({
 							selector: ".tinymce div",
 							menubar: false,
 							theme: "modern",
+							resize: false,
 						    plugins: [
-									"advlist autolink lists link image charmap print preview hr anchor pagebreak",
-									"searchreplace wordcount visualblocks visualchars code fullscreen",
-									"insertdatetime media nonbreaking save table contextmenu directionality",
-									"emoticons template paste textcolor colorpicker textpattern imagetools"
+									"autolink lists link image preview fullscreen media table contextmenu",
+									"emoticons paste textcolor colorpicker textpattern imagetools"
 								],
-								toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons",
-								image_advtab: true
+							toolbar1: "undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons | fullscreen",
+							image_advtab: true
 						});
 		}
 		if (ExecutionEnvironment.canUseDOM){
@@ -28,15 +28,21 @@ module.exports = React.createClass({
 			
 		}
 	},
+	saveContent: function(event){
+		alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
+		alert("Content is " + tinyMCE.activeEditor.getContent());
+	},
 	render: function() {
 		return (
 			<div className="new-post container">
 				<div className="title">
-					<input type="text" placeholder="Blog Title"></input>
+					<input type="text" className="new-blog-title" placeholder="Blog Title"></input>
 				</div>
 				<div className="tinymce">
-					<div></div>
+					<div className="dummy-container"></div>
 				</div>
+				<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
+				<Button classes="btn btn-primary publish" content="Publish" />
 			</div>
 		)
 	}
