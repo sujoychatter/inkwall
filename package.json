@@ -30,6 +30,7 @@
     "gulp-node-inspector": "^0.1.0",
     "gulp-nodemon": "^2.0.4",
     "gulp-sass": "^2.0.4",
+    "gulp-shell": "^0.4.3",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
   }

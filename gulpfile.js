@@ -6,7 +6,8 @@ var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
 var nodeInspector   = require('gulp-node-inspector');
-var nodemon         = require('gulp-nodemon')
+var nodemon         = require('gulp-nodemon');
+var shell = require('gulp-shell');
  
 // gulp.task('concatapp', function() {
 //   return gulp.src(['assets/vendor/essentials/**/*.js'])
@@ -59,6 +60,10 @@ gulp.task('inspector', function() {
 			preload: false,
 		}));
 });
+
+gulp.task('migrate:latest', shell.task([
+	"knex --knexfile server/config/knexfile.js  migrate:latest"
+]));
 
 gulp.task('server', function () {
 	nodemon({

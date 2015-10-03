@@ -1,31 +1,12 @@
-var express = require('express');
-var router = express.Router();
-
-var React = require('react');
-
-var header = require('../../public/react/components/header');
-var footer = require('../../public/react/components/footer');
-var wrapper =require('../../public/react/wrapper');
-var index = require('../../public/react/components/index');
-
-/* GET home page. */
-/*
-*
-* router.get('/', homeController.init)
-* router.get('/admin', adminController.init)
-* router.get('/newpost', newPostController.init)
-**/
-router.get('/', function(req, res, next) {
-	var header_element = React.createElement(header, {user: req.user});
-	var factory_footer = React.createFactory(footer);
-	var wrapper_element = React.createElement(wrapper, {child: index});
-	res.render('index', {title: 'Fodoo',
-						markup: React.renderToString(wrapper_element),
-						header: React.renderToString(header_element),
-						tracking: req.tracking_element,
-						user: req.user
-					}
-				);
-});
-
-module.exports = router;
+var homeController = require(_dir.DIR_CONTROLLERS + '/home');
+var authController = require(_dir.DIR_CONTROLLERS + '/auth');
+var blogsController = require(_dir.DIR_CONTROLLERS + '/blogs');
+var newPostController = require(_dir.DIR_CONTROLLERS + '/newpost');
+module.exports = {
+	init: function(app){
+		app.use('/', homeController);
+		//app.use('/auth', authController);
+		//app.use('/blogs', blogsController);
+		app.use('/new_post', newPostController);
+	}
+};
