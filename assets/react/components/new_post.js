@@ -15,14 +15,7 @@ module.exports = React.createClass({
 					"emoticons paste textcolor colorpicker textpattern imagetools"
 				],
 				toolbar1: "undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons | fullscreen",
-				image_advtab: true,
-				setup : function(ed)
-				{
-					ed.on('init', function()
-					{
-						this.getDoc().body.style.fontSize = '14pt';
-					});
-				}
+				image_advtab: true
 			});
 		}
 

@@ -1,3 +1,4 @@
+@import 'basics';
 .new-post.container{
 	padding-left: 50px;
 	padding-right: 50px;
@@ -7,6 +8,8 @@
 		height: 40px;
 		width: 100%;
 		margin-top: 10px;
+		padding-right: 100px;
+		box-sizing: border-box;
 		input{
 			width: 99%;
 		    height: 35px;
@@ -36,31 +39,31 @@
 		height: 100% !important;
 	}
 	.mce-panel{
-		border: 1px solid #F2C4D5;
+		border: 1px solid $light_color;
 	}
 	.mce-tinymce{
 		height: 100%;
 		border-radius: 2px;
 	}
 	.mce-tinymce > .mce-container-body{
-		background-color: #F2C4D5;
+		background-color: $light_color;
 		height: 100%;
 	}
 	.mce-toolbar-grp{
-		background-color: #F2C4D5;
+		background-color: $light_color;
 	}
 	.mce-edit-area{
 		height: calc(100% - 100px);
 	}
 	button{
-		color: #400822;
+		color: $primary_font_color;
 		i{
-			color: #400822;
+			color: $primary_font_color;
 		}
 	}
 	.mce-statusbar .mce-container-body{
 		height: 35px;
-		background-color: #F2C4D5;
+		background-color: $light_color;
 		.mce-path{
 			.mce-path-item, .mce-divider{
 				display: none;
@@ -68,6 +71,6 @@
 		}
 	}
 	.mce-btn{
-		background-color: #F2C4D5;
+		background-color: $light_color;
 	}
 }
