@@ -1,42 +1,63 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 var Router = require('react-router');
 var Route = Router.Route;
-
 var Wrapper = require('./wrapper.js');
-var Index = require('./components/index.js');
 var Home = require('./components/home.js');
 var NewPost = require('./components/new_post.js');
+var Blogs = require('./components/blogs.js');
+import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { Provider } from 'react-redux';
+import configureStore from './store/store';
+import { connect } from 'react-redux';
 
 
 //Elements generated with wrapper
-var IndexWrapperElement = React.createClass({
-	render: function () {
+
+const store = configureStore();
+
+function mapStateToProps(state) {
+	return {
+		
+	};
+}
+
+Wrapper = connect(mapStateToProps)(Wrapper);
+
+class HomeWrapperElement extends Component{
+	render() {
 		return (
-			<Wrapper child={Index}/>
+			<Provider store={store}>
+				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}
+			</Provider>
 		)
 	}
-});
-var HomeWrapperElement = React.createClass({
-	render: function () {
-		return (
-			<Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>
+}
+
+class NewPostWrapperElement extends Component{
+	render() {
+		return (<Provider store={store}>
+			{() => <Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+			</Provider>
 		)
 	}
-});
-var NewPostWrapperElement = React.createClass({
-	render: function () {
+}
+
+class BlogsWrapperElement extends Component{
+	render() {
 		return (
-			<Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>
+			<Provider store={store}>
+				{() => <Wrapper child={Blogs} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+			</Provider>
 		)
 	}
-})
-//
+}
 
 
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
 		<Route name="new_post" path="new_post" handler={NewPostWrapperElement}/>
+		<Route name="blogs" path="blogs" handler={BlogsWrapperElement}/>
 	</Route>
 );
 

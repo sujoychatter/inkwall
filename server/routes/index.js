@@ -6,7 +6,7 @@ module.exports = {
 	init: function(app){
 		app.use('/', homeController);
 		//app.use('/auth', authController);
-		//app.use('/blogs', blogsController);
+		app.use('/blogs', blogsController);
 		app.use('/new_post', newPostController);
 	}
 };

@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var sass = require('gulp-sass');
+var babelify = require('babelify');
 var browserify = require('browserify');
-var reactify = require('reactify');
+//var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
 var nodeInspector = require('gulp-node-inspector');
@@ -16,8 +17,8 @@ var shell = require('gulp-shell');
 // });
 
 gulp.task('browserify:js', function () {
-	browserify('assets/react/main.js')
-		.transform(reactify)
+	browserify({entries: 'assets/react/main.js'})
+		.transform(babelify)
 		.bundle()
 		.pipe(source('main.js'))
 		.pipe(gulp.dest('public/react/'));

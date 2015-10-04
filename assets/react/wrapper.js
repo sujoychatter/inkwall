@@ -1,17 +1,17 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Header = require('./components/header.js');
 
-module.exports = React.createClass({
-	handleScroll: function (e) {
+export default class Wrapper extends Component{
+	handleScroll(e) {
 		if (e.target.scrollTop > 10) {
 			document.body.className = "shrunk-header"
 		}
 		else if (e.target.scrollTop < 10) {
 			document.body.className = ""
 		}
-	},
-	componentWillMount: function(){
+	}
+	componentWillMount(){
 		if (ExecutionEnvironment.canUseDOM && this.props.cssElementId && !document.getElementById(this.props.cssElementId)) {
 			var linkElement = document.createElement('link');
 			linkElement.setAttribute('rel', 'stylesheet');
@@ -19,18 +19,18 @@ module.exports = React.createClass({
 			linkElement.setAttribute('id', this.props.cssElementId);
 			document.body.appendChild(linkElement);
 		}
-	},
-	componentDidMount: function(){
+	}
+	componentDidMount(){
 		if (ExecutionEnvironment.canUseDOM) {
 			document.getElementsByClassName('main-content')[0].addEventListener('scroll', this.handleScroll);
 		}
-	},
-	componentWillUnmount: function () {
+	}
+	componentWillUnmount() {
 		if (ExecutionEnvironment.canUseDOM) {
 			document.getElementsByClassName('main-content')[0].removeEventListener('scroll', this.handleScroll);
 		}
-	},
-	render: function () {
+	}
+	render() {
 		var Child = this.props.child;
 		return (
 			<div className="main-content">
@@ -39,4 +39,4 @@ module.exports = React.createClass({
 			</div>
 		)
 	}
-});
+};
