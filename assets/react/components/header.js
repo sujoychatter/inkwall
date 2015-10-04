@@ -34,12 +34,19 @@ module.exports = React.createClass({
 		else {
 			var login = <a className="login-button" href="/auth/facebook">Login</a>
 		}
+		var logo_link
+		if (ExecutionEnvironment.canUseDOM) {
+			logo_link = <Link to="/">
+								<img src="/images/logo.png" type="image/png"></img>
+							</Link>
+		}
+		else{
+			logo_link = <a href="/"><img src="/images/logo.png" type="image/png"></img></a>
+		}
 		var options = [{name: "New Post", frontend_route: '/new_post'}, {name: "Logout", backend_route: '/logout'}]
 		return (
 			<div className="header">
-				<Link to="/">
-				<img src="/images/logo.png" type="image/png"></img>
-				</Link>
+				{logo_link}
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Fodoo</span>
 					<span className="site-about" itemProp="description">Blog for engineers</span>
