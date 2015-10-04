@@ -1,6 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-var Button = require('./common/button.js');
+var Button = require('./common/button.jsx');
 
 module.exports = React.createClass({
 	componentDidMount: function () {

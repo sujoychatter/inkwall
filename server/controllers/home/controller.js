@@ -1,7 +1,4 @@
 var React = require('react');
-
-var header = require(_dir.DIR_COMPONENTS + '/header');
-var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var home = require(_dir.DIR_COMPONENTS + '/home');
 

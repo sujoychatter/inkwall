@@ -2,20 +2,12 @@ var React = require('react');
 var Router = require('react-router');
 var Route = Router.Route;
 
-var Wrapper = require('./wrapper.js');
-var Index = require('./components/index.js');
-var Home = require('./components/home.js');
-var NewPost = require('./components/new_post.js');
+var Wrapper = require('./wrapper.jsx');
+var Home = require('./components/home.jsx');
+var NewPost = require('./components/new_post.jsx');
 
 
 //Elements generated with wrapper
-var IndexWrapperElement = React.createClass({
-	render: function () {
-		return (
-			<Wrapper child={Index}/>
-		)
-	}
-});
 var HomeWrapperElement = React.createClass({
 	render: function () {
 		return (

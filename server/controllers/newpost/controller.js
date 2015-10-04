@@ -1,6 +1,4 @@
 var React = require('react');
-var header = require(_dir.DIR_COMPONENTS + '/header');
-var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var new_post = require(_dir.DIR_COMPONENTS + '/new_post');
 
@@ -19,8 +17,5 @@ module.exports = {
 			tracking: req.tracking_element,
 			page_data: "var fodoo_data = " + JSON.stringify(data)
 		});
-	},
-	preview: function (req, res, next) {
-		next();
 	}
 };

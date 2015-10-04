@@ -1,6 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-var Header = require('./components/header.js');
+var Header = require('./components/header.jsx');
 
 module.exports = React.createClass({
 	handleScroll: function (e) {
