@@ -1,11 +1,23 @@
 var React = require('react');
+var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 
 module.exports = React.createClass({
-	render: function() {
+	getInitialState: function(){
+		var data = {};
 		if(this.props.user){
-			var userData = {userName: this.props.user.name, imageURL: this.props.user.photo, admin: this.props.user.admin},
-			userDataDiv = <div class="hidden" data-user={JSON.stringify(userData)}></div>,
-			divStyle = {backgroundImage: 'url('+ this.props.user.photo +')'},
+			data =  {user: this.props.user};
+		}
+		else if(ExecutionEnvironment.canUseDOM){
+			if((typeof fodoo_data != "undefined") && fodoo_data && fodoo_data.user){
+				data =  {user: fodoo_data.user};
+			}
+		}
+		return data;
+	},
+	render: function() {
+		if(this.state.user){
+			var userData = {userName: this.state.user.name, imageURL: this.state.user.photo, admin: this.state.user.admin},
+			divStyle = {backgroundImage: 'url('+ this.state.user.photo +')'},
 			image = <div className="user-image" style={divStyle}></div>;
 			var logout = <a className="login-button" href="/logout">Logout</a>
 		}
@@ -14,7 +26,6 @@ module.exports = React.createClass({
 		}
 		return (
 			<div className="header">
-				{userDataDiv}
 				<img src="/images/logo.png" type="image/png"></img>
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Fodoo</span>

@@ -1,15 +1,14 @@
 .new-post.container{
-	padding: 20px;
 	padding-left: 50px;
 	padding-right: 50px;
-	height: 100%;
-	box-sizing: border-box;
+	padding-bottom: 20px;
 	.title{
 		position: absolute;
 		height: 40px;
-    	width: 100%;
-    	input{
-    		width: 99%;
+		width: 100%;
+		margin-top: 10px;
+		input{
+			width: 99%;
 		    height: 35px;
 		    font-size: 20px;
 		    border: none;
@@ -28,11 +27,6 @@
 			left: 160px
 		}
 	}
-	.dummy-container{
-		height: 100%;
-		width: 100%;
-		border: 1px solid #F2C4D5;
-	}
 }
 .tinymce{
 	padding-top: 50px;
@@ -46,6 +40,7 @@
 	}
 	.mce-tinymce{
 		height: 100%;
+		border-radius: 2px;
 	}
 	.mce-tinymce > .mce-container-body{
 		background-color: #F2C4D5;
@@ -66,8 +61,10 @@
 	.mce-statusbar .mce-container-body{
 		height: 35px;
 		background-color: #F2C4D5;
-		.mce-path .mce-path-item{
-			display: none;
+		.mce-path{
+			.mce-path-item, .mce-divider{
+				display: none;
+			}
 		}
 	}
 	.mce-btn{

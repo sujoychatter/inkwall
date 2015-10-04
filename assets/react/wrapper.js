@@ -1,5 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+var Header = require('./components/header.js');
 
 module.exports = React.createClass({
 	handleScroll: function(e){
@@ -12,18 +13,21 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function(){
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementById('main-content').addEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('main-content')[0].addEventListener('scroll', this.handleScroll);
 		}
 	},
 	componentWillUnmount: function(){
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementById('main-content').removeEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('main-content')[0].removeEventListener('scroll', this.handleScroll);
 		}
 	},
 	render: function() {
 		var Child = this.props.child;
 		return (
-			<Child />
+			<div className="main-content">
+				<Header user={this.props.user}/>
+				<Child />
+			</div>
 		)
 	}
 });

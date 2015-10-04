@@ -2,10 +2,10 @@ var React = require('react');
 var Router = require('react-router');
 var Route = Router.Route;
 
-var Wrapper = require('./wrapper.jsx');
-var Index = require('./components/index.jsx');
-var Home = require('./components/home.jsx');
-var NewPost = require('./components/new_post.jsx');
+var Wrapper = require('./wrapper.js');
+var Index = require('./components/index.js');
+var Home = require('./components/home.js');
+var NewPost = require('./components/new_post.js');
 
 
 //Elements generated with wrapper
@@ -43,5 +43,5 @@ var routes = (
 
 
 Router.run(routes, Router.HistoryLocation, function (Handler) {
-	React.render(<Handler/>, document.getElementById('main-content'));
+	React.render(<Handler/>, document.getElementById('application'));
 });

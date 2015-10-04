@@ -19,9 +19,6 @@ body {
         top: -3px;
       }
     }
-    #application{
-      padding-top: 46px;
-    }
     .user-image{
       -ms-transform: scale(0.7) translate(0px,-10px);
       -webkit-transform: scale(0.7) translate(0px,-10px);
@@ -74,13 +71,18 @@ a {
 }
 
 #application{
-	padding-top: 58px;
 	height: 100%;
   box-sizing: border-box;
   transition: all 1s ease-in;
-	#main-content{		height: 100%;
+	.main-content{		height: 100%;
 		overflow: auto;
 	}
+}
+
+.container{
+  padding-top: 58px;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .site-details{
@@ -131,6 +133,7 @@ a {
   margin-right: 10px;
   cursor: pointer;
   outline: none;
+  border-radius: 2px;
   &:hover{
     background-color: #F2C4D5;
     color: #400822;

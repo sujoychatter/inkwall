@@ -3,9 +3,9 @@ html
   head
     title= title
   body(itemscope, itemtype="http://schema.org/Blog")
-    !{header}
+    script
+      !{page_data}
     block content
-    !{footer}
     link(rel='stylesheet', href='/stylesheets/app.css')
     !{tracking}
     script(src='/react/main.js' type='text/javascript' defer)
