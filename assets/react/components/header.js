@@ -2,26 +2,30 @@ var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 
 module.exports = React.createClass({
-	getInitialState: function(){
+	getInitialState: function () {
 		var data = {};
-		if(this.props.user){
-			data =  {user: this.props.user};
+		if (this.props.user) {
+			data = {user: this.props.user};
 		}
-		else if(ExecutionEnvironment.canUseDOM){
-			if((typeof fodoo_data != "undefined") && fodoo_data && fodoo_data.user){
-				data =  {user: fodoo_data.user};
+		else if (ExecutionEnvironment.canUseDOM) {
+			if ((typeof fodoo_data != "undefined") && fodoo_data && fodoo_data.user) {
+				data = {user: fodoo_data.user};
 			}
 		}
 		return data;
 	},
-	render: function() {
-		if(this.state.user){
-			var userData = {userName: this.state.user.name, imageURL: this.state.user.photo, admin: this.state.user.admin},
-			divStyle = {backgroundImage: 'url('+ this.state.user.photo +')'},
-			image = <div className="user-image" style={divStyle}></div>;
+	render: function () {
+		if (this.state.user) {
+			var userData = {
+					userName: this.state.user.name,
+					imageURL: this.state.user.photo,
+					admin: this.state.user.admin
+				},
+				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
+				image = <div className="user-image" style={divStyle}></div>;
 			var logout = <a className="login-button" href="/logout">Logout</a>
 		}
-		else{
+		else {
 			var login = <a className="login-button" href="/auth/facebook">Login</a>
 		}
 		return (
@@ -37,6 +41,6 @@ module.exports = React.createClass({
 					{logout}
 				</span>
 			</div>
-	    )    
+		)
 	}
 });

@@ -10,21 +10,21 @@ var NewPost = require('./components/new_post.js');
 
 //Elements generated with wrapper
 var IndexWrapperElement = React.createClass({
-	render: function(){
+	render: function () {
 		return (
-			<Wrapper child={Index} />
+			<Wrapper child={Index}/>
 		)
 	}
 });
 var HomeWrapperElement = React.createClass({
-	render: function(){
+	render: function () {
 		return (
 			<Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>
 		)
 	}
 });
-var NewPostWrapperElement= React.createClass({
-	render: function(){
+var NewPostWrapperElement = React.createClass({
+	render: function () {
 		return (
 			<Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>
 		)
@@ -35,11 +35,10 @@ var NewPostWrapperElement= React.createClass({
 
 var routes = (
 	<Route>
-		<Route name="home" path="/" handler={HomeWrapperElement} />
-		<Route name="new_post" path="new_post" handler={NewPostWrapperElement} />
+		<Route name="home" path="/" handler={HomeWrapperElement}/>
+		<Route name="new_post" path="new_post" handler={NewPostWrapperElement}/>
 	</Route>
 );
-
 
 
 Router.run(routes, Router.HistoryLocation, function (Handler) {

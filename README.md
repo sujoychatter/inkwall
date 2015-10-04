@@ -12,5 +12,6 @@ Users can submit their own posts.
 
 ###Start application
 - npm install
-- knex migrate:latest
-- DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  npm start
+- gulp migrate:latest
+- gulp
+- DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  node app.js
