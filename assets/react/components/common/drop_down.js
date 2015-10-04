@@ -1,4 +1,7 @@
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
+var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 
 module.exports = React.createClass({
 	clicked: function (event) {
@@ -10,8 +13,14 @@ module.exports = React.createClass({
 		var _this = this;
 		function createOptions(){
 			return _this.props.options.map(function(option, index){
-				if(option.action){
-					var action = <a href={option.action}>{option.name}</a>
+				if(option.backend_route){
+					var action = <a href={option.backend_route}>{option.name}</a>
+				}
+				else if(option.frontend_route && ExecutionEnvironment.canUseDOM){
+					var action = <Link to={option.frontend_route}>{option.name}</Link>
+				}
+				else if (option.frontend_route){
+					var action = <a href={option.frontend_route}>{option.name}</a>
 				}
 				return (
 					<div className="drop-option" key={index}>
@@ -20,8 +29,12 @@ module.exports = React.createClass({
 				)
 			})
 		};
+		var className = "drop-down-container";
+		if(this.props.showDropDown){
+			className = className + " visible";
+		}
 		return (
-			<div className="drop-down-container">
+			<div className={className}>
 				<div className="drop-down">
 					{createOptions()}
 				</div>

@@ -1,3 +1,4 @@
+@import 'basics';
 html{
 	height: 100%;
 }
@@ -9,23 +10,30 @@ body {
     .header{
       height: 38px;
       img{
-        -ms-transform: rotate(7deg);
-        -webkit-transform: rotate(7deg);
-        transform: rotate(90deg);
+        -ms-transform: rotate(7deg) translateX(-3px);
+        -webkit-transform: rotate(7deg) translateX(-3px);
+        transform: rotate(90deg) translateX(-3px);
         height: 28px;
       }
       .site-details{
         position: relative;
-        top: -3px;
+        top: -6px;
+      }
+      .right-elements{
+        height: 38px;
       }
     }
     .user-image{
       -ms-transform: scale(0.7) translate(0px,-10px);
       -webkit-transform: scale(0.7) translate(0px,-10px);
       transform: scale(0.7) translate(0px,-10px);
+      margin-top: 5px;
     }
     .login-button{
       transform: translate(0px,-7px);
+    }
+    .drop-down-container{
+      top: 32px;
     }
   }
 }
@@ -35,13 +43,15 @@ a {
 }
 
 .header{
-    height: 50px;
-    background-color: #F2C4D5;
+    z-index: 1;
+    height: 58px;
+    background-color: #5B608B;
     padding-top: 8px;
     padding-left: 10px;
     position: fixed;
     width: 100%;
     transition: all 1s;
+    box-sizing: border-box;
     img{
     	height: 40px;
       transition: all 1s;
@@ -61,12 +71,14 @@ a {
     .user-image{
       height: 40px;
       width: 40px;
-      margin-right: 37px;
+      margin-right: 20px;
+      margin-left: 20px;
+      margin-top: 8px;
       border-radius: 23px;
       background-size: cover;
       float: left;
       transition: all 1s;
-      border: 1px solid #8C0F4A;
+      cursor: pointer;
     }
 }
 
@@ -83,6 +95,15 @@ a {
   padding-top: 58px;
   height: 100%;
   box-sizing: border-box;
+  z-index: 1;
+}
+
+.right-elements{
+  background-color: $light_color;
+  height: 58px;
+  position: relative;
+  top: -8px;
+  transition: all 1s;
 }
 
 .site-details{
@@ -92,12 +113,11 @@ a {
   .site-name{
     font-size: 28px;
     margin-left: 10px;
-    color: #400822;
-    font-weight: bolder;
+    color: white;
   }
   .site-about{
     margin-left: 10px;
-    color: #8C0F4A;
+    color: $light_color;
   }
 }
 
@@ -105,17 +125,17 @@ a {
   float: right;
 }
 .login-button{
-  display: block;
-  height: 45px;
-  width: 55px;
+  display: inline-block;
+  height: 100%;
   text-transform: uppercase;
   text-decoration: none;
-  margin-right: 20px;
+  padding-right: 20px;
   line-height: 45px;
-  color: black;
+  color: white;
   font-size: 12px;
-  float: left;
   transition: all 1s;
+  padding-left: 20px;
+  padding-top: 5px;
 }
 .btn{
 
@@ -126,8 +146,8 @@ a {
   padding-right: 20px;
   padding-left: 20px;
   font-size: 12px;
-  background-color: #400822;
-  border: 2px solid #400822;
+  background-color: $primary_background;
+  border: 2px solid $primary_background;
   text-transform: uppercase;
   color: white;
   margin-right: 10px;
@@ -135,8 +155,8 @@ a {
   outline: none;
   border-radius: 2px;
   &:hover{
-    background-color: #F2C4D5;
-    color: #400822;
+    background-color: $light_color;
+    color: $primary_background;
   }
 }
 
@@ -145,13 +165,18 @@ a {
   height: 58px;
   width: 125px;
   top: 50px;
-  right: 35px;
-  color: #400822;
+  right: 16px;
+  color: $primary_background;
+  display: none;
+  &.visible{
+    display: block;
+  }
   .drop-down{
     width: 100%;
-    border: 1px solid #400822;
-    margin-top: 10px;
+    margin-top: 9px;
     border-radius: 2px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,.4);
   }
   .up-pick{
     position: absolute;
@@ -159,24 +184,32 @@ a {
     width: 0px;
     top: 0px;
     right: 13px;
-    border-bottom: 10px solid #400822;
-    border-right: 10px solid transparent;
-    border-left: 10px solid transparent;
+    border-bottom: 9px solid white;
+    border-right: 9px solid transparent;
+    border-left: 9px solid transparent;
   }
   .drop-option{
-    padding: 10px;
     text-transform: uppercase;
     font-size: 10px;
     cursor: pointer;
     &:hover{
-      background-color: #F2C4D5;
+      background-color: $light_color;
     }
     a{
       display: block;
       height: 100%;
-      width: 100%;
+      width: 115px;
       text-decoration: none;
       color: inherit;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-right: 5px;
+      margin-left: 5px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.27);
+      box-sizing: border-box;
+    }
+    &:last-child a{
+      border-bottom: 0;
     }
   }
 }
