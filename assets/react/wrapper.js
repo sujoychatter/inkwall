@@ -3,25 +3,25 @@ var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Header = require('./components/header.js');
 
 module.exports = React.createClass({
-	handleScroll: function(e){
-		if(e.target.scrollTop > 10){
+	handleScroll: function (e) {
+		if (e.target.scrollTop > 10) {
 			document.body.className = "shrunk-header"
 		}
-		else if(e.target.scrollTop < 10){
+		else if (e.target.scrollTop < 10) {
 			document.body.className = ""
 		}
 	},
-	componentDidMount: function(){
+	componentDidMount: function () {
 		if (ExecutionEnvironment.canUseDOM) {
 			document.getElementsByClassName('main-content')[0].addEventListener('scroll', this.handleScroll);
 		}
 	},
-	componentWillUnmount: function(){
+	componentWillUnmount: function () {
 		if (ExecutionEnvironment.canUseDOM) {
 			document.getElementsByClassName('main-content')[0].removeEventListener('scroll', this.handleScroll);
 		}
 	},
-	render: function() {
+	render: function () {
 		var Child = this.props.child;
 		return (
 			<div className="main-content">
