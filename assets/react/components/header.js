@@ -1,5 +1,6 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+var DropDown = require('./common/drop_down');
 
 module.exports = React.createClass({
 	getInitialState: function () {
@@ -23,11 +24,11 @@ module.exports = React.createClass({
 				},
 				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
 				image = <div className="user-image" style={divStyle}></div>;
-			var logout = <a className="login-button" href="/logout">Logout</a>
 		}
 		else {
 			var login = <a className="login-button" href="/auth/facebook">Login</a>
 		}
+		var options = [{name: "New Post", action: '/new_post'}, {name: "Logout", action: '/logout'}]
 		return (
 			<div className="header">
 				<img src="/images/logo.png" type="image/png"></img>
@@ -38,7 +39,7 @@ module.exports = React.createClass({
 				<span className="pull-right right-elements">
 					{image}
 					{login}
-					{logout}
+					<DropDown options={options}/>
 				</span>
 			</div>
 		)

@@ -61,7 +61,7 @@ a {
     .user-image{
       height: 40px;
       width: 40px;
-      margin-right: 20px;
+      margin-right: 37px;
       border-radius: 23px;
       background-size: cover;
       float: left;
@@ -137,5 +137,46 @@ a {
   &:hover{
     background-color: #F2C4D5;
     color: #400822;
+  }
+}
+
+.drop-down-container{
+  position: absolute;
+  height: 58px;
+  width: 125px;
+  top: 50px;
+  right: 35px;
+  color: #400822;
+  .drop-down{
+    width: 100%;
+    border: 1px solid #400822;
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+  .up-pick{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    top: 0px;
+    right: 13px;
+    border-bottom: 10px solid #400822;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+  }
+  .drop-option{
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 10px;
+    cursor: pointer;
+    &:hover{
+      background-color: #F2C4D5;
+    }
+    a{
+      display: block;
+      height: 100%;
+      width: 100%;
+      text-decoration: none;
+      color: inherit;
+    }
   }
 }
