@@ -15,16 +15,12 @@ var shell = require('gulp-shell');
 //     .pipe(gulp.dest('public/'));
 // });
 
-var files = [{path: 'assets/react/views/HelloWorld.jsx', source: 'HelloWorld.js'}];
-
 gulp.task('browserify:js', function(){
-	//files.forEach(function(file){
-		browserify('assets/react/main.jsx')
-			.transform(reactify)
-			.bundle()
-			.pipe(source('main.js'))
-			.pipe(gulp.dest('public/react/'));
-	//});
+	browserify('assets/react/main.js')
+		.transform(reactify)
+		.bundle()
+		.pipe(source('main.js'))
+		.pipe(gulp.dest('public/react/'));
 });
 
 gulp.task('sass', function () {
@@ -34,11 +30,11 @@ gulp.task('sass', function () {
 });
 
 gulp.task('js', function () {    
-  gulp.src('assets/react/components/**/*.jsx')
+  gulp.src('assets/react/components/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('public/react/components'));
 
-    gulp.src('assets/react/wrapper.jsx')
+    gulp.src('assets/react/wrapper.js')
     .pipe(babel())
     .pipe(gulp.dest('public/react/'));
 });
@@ -76,7 +72,7 @@ gulp.task('server', function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(["assets/react/**/*.jsx"], ["js", "browserify:js"]);
+    gulp.watch(["assets/react/**/*.js"], ["js", "browserify:js"]);
 	gulp.watch('assets/stylesheets/**/*.scss', ['sass']);
 });
 
