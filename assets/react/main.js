@@ -17,8 +17,8 @@ const store = configureStore();
 
 function mapStateToProps(state) {
 	return {
-		
-	};
+		posts: state.blogs.posts
+	}
 }
 
 Wrapper = connect(mapStateToProps)(Wrapper);
@@ -51,7 +51,6 @@ class BlogsWrapperElement extends Component{
 		)
 	}
 }
-
 
 var routes = (
 	<Route>

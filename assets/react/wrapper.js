@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Header = require('./components/header.js');
+import { bindActionCreators } from 'redux';
+import * as postsActions from './actions/posts';
 
 export default class Wrapper extends Component{
+	constructor(props){
+		super(props);
+	}
 	handleScroll(e) {
 		if (e.target.scrollTop > 10) {
 			document.body.className = "shrunk-header"
@@ -31,11 +36,13 @@ export default class Wrapper extends Component{
 		}
 	}
 	render() {
+		const { dispatch } = this.props;
+		this.props.actions = bindActionCreators(postsActions, dispatch);
 		var Child = this.props.child;
 		return (
 			<div className="main-content">
 				<Header user={this.props.user}/>
-				<Child />
+				<Child {...this.props}/>
 			</div>
 		)
 	}

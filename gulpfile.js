@@ -16,6 +16,13 @@ var shell = require('gulp-shell');
 //     .pipe(gulp.dest('public/'));
 // });
 
+gulp.task('js', function () {
+	gulp.src('assets/react/**/*.js')
+		.pipe(babel())
+		.pipe(gulp.dest('public/react'));
+
+});
+
 gulp.task('browserify:js', function () {
 	browserify({entries: 'assets/react/main.js'})
 		.transform(babelify)
@@ -28,16 +35,6 @@ gulp.task('sass', function () {
 	gulp.src('assets/stylesheets/**/*.scss')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest('public/stylesheets/'));
-});
-
-gulp.task('js', function () {
-	gulp.src('assets/react/components/**/*.js')
-		.pipe(babel())
-		.pipe(gulp.dest('public/react/components'));
-
-	gulp.src('assets/react/wrapper.js')
-		.pipe(babel())
-		.pipe(gulp.dest('public/react/'));
 });
 
 gulp.task('copyvendor', function () {
