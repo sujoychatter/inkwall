@@ -19,14 +19,14 @@ var IndexWrapperElement = React.createClass({
 var HomeWrapperElement = React.createClass({
 	render: function(){
 		return (
-			<Wrapper child={Home} />
+			<Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>
 		)
 	}
 });
 var NewPostWrapperElement= React.createClass({
 	render: function(){
 		return (
-			<Wrapper child={NewPost} />
+			<Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>
 		)
 	}
 })

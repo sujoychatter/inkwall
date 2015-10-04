@@ -11,6 +11,15 @@ module.exports = React.createClass({
 			document.body.className = ""
 		}
 	},
+	componentWillMount: function(){
+		if (ExecutionEnvironment.canUseDOM && this.props.cssElementId && !document.getElementById(this.props.cssElementId)) {
+			var linkElement = document.createElement('link');
+			linkElement.setAttribute('rel', 'stylesheet');
+			linkElement.setAttribute('href', this.props.stylesheetLink);
+			linkElement.setAttribute('id', this.props.cssElementId);
+			document.body.appendChild(linkElement);
+		}
+	},
 	componentDidMount: function(){
 		if (ExecutionEnvironment.canUseDOM) {
 			document.getElementsByClassName('main-content')[0].addEventListener('scroll', this.handleScroll);
