@@ -22,12 +22,12 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function(){
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('main-content')[0].addEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('container')[0].addEventListener('scroll', this.handleScroll);
 		}
 	},
 	componentWillUnmount: function () {
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('main-content')[0].removeEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('container')[0].removeEventListener('scroll', this.handleScroll);
 		}
 	},
 	render: function () {

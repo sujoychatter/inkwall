@@ -30,8 +30,30 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
-		alert("Content is " + tinyMCE.activeEditor.getContent());
+		var params = "title=" + document.getElementsByClassName('new-blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		
+		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
+		// alert("Content is " + tinyMCE.activeEditor.getContent());
+		function handler()
+		{
+		    if (oReq.readyState == 4 /* complete */) {
+		        if (oReq.status == 200) {
+		            console.log(oReq.responseText);
+		        }
+		    }
+		}
+		var oReq = new XMLHttpRequest();
+		if (oReq != null) {
+			oReq.open("post", "/new_post/save", true);
+		    //Send the proper header information along with the request
+			oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+		    oReq.onreadystatechange = handler;
+		    oReq.send(params);
+		}
+		else {
+		    console.log("AJAX (XMLHTTP) not supported.");
+		}
 	},
 	render: function () {
 		return (

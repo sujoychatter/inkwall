@@ -3,6 +3,8 @@ var header = require(_dir.DIR_COMPONENTS + '/header');
 var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var new_post = require(_dir.DIR_COMPONENTS + '/new_post');
+var connection_config = require(_dir.CONFIG + '/knexfile');
+var knex = require('knex')(connection_config[process.env.NODE_ENV]);
 
 /* GET users listing. */
 module.exports = {
@@ -19,6 +21,11 @@ module.exports = {
 			tracking: req.tracking_element,
 			page_data: "var fodoo_data = " + JSON.stringify(data)
 		});
+	},
+	newpostSave: function(req, res, next){
+		console.log(req.body);
+		console.log(knex);
+		res.end("yes");
 	},
 	preview: function (req, res, next) {
 		next();
