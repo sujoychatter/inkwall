@@ -15,3 +15,6 @@ Users can submit their own posts.
 - gulp migrate:latest
 - gulp
 - DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  node app.js
+- 
+
+You can find demo at http://www.fodoo.in
