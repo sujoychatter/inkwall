@@ -35,8 +35,9 @@ class HomeWrapperElement extends Component{
 
 class NewPostWrapperElement extends Component{
 	render() {
-		return (<Provider store={store}>
-			{() => <Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+		return (
+			<Provider store={store}>
+				{() => <Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
 			</Provider>
 		)
 	}
