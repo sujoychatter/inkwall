@@ -8,6 +8,5 @@ module.exports = {
 		//app.use('/auth', authController);
 		//app.use('/blogs', blogsController);
 		app.use('/new_post', newPostController);
-		app.post('/new_post/save', newPostController);
 	}
 };
