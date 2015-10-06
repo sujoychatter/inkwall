@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {publishPost} from '../actions/posts.js'
 
 export default class Blogs extends Component {
 	constructor(props){
@@ -14,8 +15,9 @@ export default class Blogs extends Component {
 		return elems;
 	}
 	publishPost(){
-		var text = "Posted Post";
-		this.props.actions.publishPost(text);
+		const { dispatch } = this.props;
+		let text = "Posted Post";
+		dispatch(publishPost({ type: "PUBLISH_POST", text }));
 	}
 	render() {
 		return (
