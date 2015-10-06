@@ -3,6 +3,7 @@ var dir = {};
 
 dir.DIR_APP = path.resolve("./");
 dir.DIR_SERVER = dir.DIR_APP + '/server';
+dir.CONFIG = dir.DIR_SERVER + '/config';
 dir.DIR_PUBLIC = dir.DIR_APP + '/public';
 dir.DIR_CONTROLLERS = dir.DIR_SERVER + "/controllers";
 dir.DIR_MODELS = dir.DIR_SERVER + "/models";

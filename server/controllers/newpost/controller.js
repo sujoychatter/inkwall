@@ -4,6 +4,7 @@ var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var new_post = require(_dir.DIR_COMPONENTS + '/new_post');
 
+
 /* GET users listing. */
 module.exports = {
 	newpost: function (req, res, next) {
@@ -19,6 +20,15 @@ module.exports = {
 			tracking: req.tracking_element,
 			page_data: "var fodoo_data = " + JSON.stringify(data)
 		});
+	},
+	newpostSave: function(req, res, next){
+		if(req.saved){
+			res.status(201).send(req.article);
+		}
+		else{
+			res.status(500).send('Something broke!');
+		}
+		
 	},
 	preview: function (req, res, next) {
 		next();

@@ -16,6 +16,8 @@
 		    font-size: 20px;
 		    border: none;
 		    outline: none;
+		    color: black;
+		    text-align: center;
     	}
 	}
 	.btn.btn-primary{
@@ -27,7 +29,7 @@
 		&.publish{
 			position: absolute;
 			bottom: 30px;
-			left: 160px
+			right: 56px;
 		}
 	}
 }
@@ -39,18 +41,21 @@
 		height: 100% !important;
 	}
 	.mce-panel{
-		border: 1px solid $light_color;
+		border: 1px solid white;
 	}
 	.mce-tinymce{
 		height: 100%;
 		border-radius: 2px;
 	}
 	.mce-tinymce > .mce-container-body{
-		background-color: $light_color;
+		background-color: white;
 		height: 100%;
 	}
 	.mce-toolbar-grp{
-		background-color: $light_color;
+		background-color: white;
+	}
+	.mce-toolbar > .mce-container-body{
+		text-align: center;
 	}
 	.mce-edit-area{
 		height: calc(100% - 100px);
@@ -63,7 +68,7 @@
 	}
 	.mce-statusbar .mce-container-body{
 		height: 35px;
-		background-color: $light_color;
+		background-color: white;
 		.mce-path{
 			.mce-path-item, .mce-divider{
 				display: none;
@@ -71,6 +76,9 @@
 		}
 	}
 	.mce-btn{
-		background-color: $light_color;
+		background-color: white;
+	}
+	.mce-btn-group{
+		border: none;
 	}
 }

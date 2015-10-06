@@ -86,8 +86,8 @@ a {
 	height: 100%;
   box-sizing: border-box;
   transition: all 1s ease-in;
-	.main-content{		height: 100%;
-		overflow: auto;
+	.main-content{		
+    height: 100%;
 	}
 }
 
@@ -96,6 +96,7 @@ a {
   height: 100%;
   box-sizing: border-box;
   z-index: 1;
+  overflow: auto;
 }
 
 .right-elements{
@@ -146,17 +147,16 @@ a {
   padding-right: 20px;
   padding-left: 20px;
   font-size: 12px;
-  background-color: $primary_background;
-  border: 2px solid $primary_background;
+  background-color: $light_color;
   text-transform: uppercase;
   color: white;
   margin-right: 10px;
   cursor: pointer;
   outline: none;
   border-radius: 2px;
+  border: none;
   &:hover{
-    background-color: $light_color;
-    color: $primary_background;
+    background-color: $primary_background;
   }
 }
 
