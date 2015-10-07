@@ -28,7 +28,7 @@ module.exports = {
 		else{
 			res.status(500).send('Something broke!');
 		}
-		
+
 	},
 	preview: function (req, res, next) {
 		next();
