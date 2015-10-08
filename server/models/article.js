@@ -1,8 +1,12 @@
 var connection_config = require(_dir.CONFIG + '/knexfile');
-var knex = require('knex')(connection_config[process.env.NODE_ENV]);
+var knex = require('knex')(connection_config[Configs.NODE_ENV]);
 
 module.exports = {
-
+	
+	fetch: function(query) {
+		if(!query){query = {}};
+		return knex('articles').where(query);
+	},
 	update: function(id, params, user_id){
 		var title = params.title,
 		content = params.content,
@@ -27,5 +31,4 @@ module.exports = {
 	find: function(id){
 		return knex('articles').where('id', id);
 	}
-
 }

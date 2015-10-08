@@ -2,3 +2,4 @@ public
 node_modules
 .idea/
 server/config/knexfile.js
+server/config/app_config.js

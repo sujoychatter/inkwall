@@ -2,6 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var path = require('path');
 global._dir = require('./config/directory');
+global.Configs = require('./config/app_config');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -9,10 +10,10 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var connection_config = require('./config/knexfile');
-var knex = require('knex')(connection_config[process.env.NODE_ENV]);
-var facebookAppId = process.env.FACEBOOK_APP_ID;
+var knex = require('knex')(connection_config[Configs.NODE_ENV]);
+var facebookAppId = Configs.FACEBOOK_APP_ID;
 var router = require('./routes');
-var facebookSecretKey = process.env.FACEBOOK_APP_SECRET;
+var facebookSecretKey = Configs.FACEBOOK_APP_SECRET;
 
 var app = express();
 
