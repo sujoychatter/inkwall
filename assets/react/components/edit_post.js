@@ -4,7 +4,8 @@ var Button = require('./common/button.js');
 
 module.exports = React.createClass({
 	componentDidMount: function () {
-		function initiateTinyMCE() {
+
+		function setupTinyMCE(){
 			tinyMCE.init({
 				selector: ".tinymce div",
 				menubar: false,
@@ -25,33 +26,62 @@ module.exports = React.createClass({
 				}
 			});
 		}
-
-		if (ExecutionEnvironment.canUseDOM) {
+		function initiateTinyMCE() {
 			if (typeof tinyMCE == "undefined") {
-				window.onload = initiateTinyMCE;
+				window.onload = setupTinyMCE;
 			}
 			else {
-				initiateTinyMCE();
+				setupTinyMCE();
 			}
+		}
+		function getPostData(postId){
+			return new Promise(function(resolve, reject){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/posts/'+postId, true);
+				xhr.onload = function(){
+					if(xhr.status == 200){
+						resolve(xhr.response);
+					}
+					else{
+						reject(Error('Data didn\'t load successfully; error code:' + xhr.statusText))
+					}
+				};
+				xhr.onerror = function() {
+					reject(Error('There was a network error.'));
+				};
+				xhr.send();
+			});
+		};
 
+		if (ExecutionEnvironment.canUseDOM) {
+			if (this.props.data.post_id) {
+				getPostData(this.props.data.post_id).then(
+					function(post_string){
+						var post = JSON.parse(post_string).post;
+						document.getElementsByClassName('blog-title')[0].value = post.title;
+						document.getElementsByClassName('dummy-container')[0].innerHTML = post.content;
+						initiateTinyMCE()
+					}
+				)
+			}
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('new-blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
 		
 		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
 		function handler()
 		{
 		    if (oReq.readyState == 4 /* complete */) {
-		        if (oReq.status == 200) {
+		        if (oReq.status == 201) {
 		            console.log(oReq.responseText);
 		        }
 		    }
 		}
 		var oReq = new XMLHttpRequest();
 		if (oReq != null) {
-			oReq.open("post", "/new_post/save", true);
+			oReq.open("PUT", "/posts/"+ this.props.data.post_id +"/update", true);
 		    //Send the proper header information along with the request
 			oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -64,9 +94,9 @@ module.exports = React.createClass({
 	},
 	render: function () {
 		return (
-			<div className="new-post container">
+			<div className="edit-post container">
 				<div className="title">
-					<input type="text" className="new-blog-title" placeholder="Blog Title"></input>
+					<input type="text" className="blog-title" placeholder="Blog Title"></input>
 				</div>
 				<div className="tinymce">
 					<div className="dummy-container"></div>

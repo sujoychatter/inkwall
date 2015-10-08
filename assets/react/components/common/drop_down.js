@@ -19,8 +19,8 @@ module.exports = React.createClass({
 				else if(option.frontend_route && ExecutionEnvironment.canUseDOM){
 					var action = <Link to={option.frontend_route}>{option.name}</Link>
 				}
-				else if (option.frontend_route){
-					var action = <a href={option.frontend_route}>{option.name}</a>
+				else if(option.callback){
+					var action = <a href="#" onClick={option.callback}>{option.name}</a>
 				}
 				return (
 					<div className="drop-option" key={index}>
