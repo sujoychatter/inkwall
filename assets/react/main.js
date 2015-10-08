@@ -3,9 +3,8 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
-var NewPost = require('./components/new_post.js');
+var EditPost = require('./components/edit_post.js');
 var Blogs = require('./components/blogs.js');
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
@@ -33,11 +32,12 @@ class HomeWrapperElement extends Component{
 	}
 }
 
-class NewPostWrapperElement extends Component{
+class EditPostWrapperElement extends Component{
 	render() {
+		var data = {post_id: this.props.params.postId}
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+				{() => <Wrapper child={EditPost} data={data} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -56,7 +56,7 @@ class BlogsWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
-		<Route name="new_post" path="new_post" handler={NewPostWrapperElement}/>
+		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 		<Route name="blogs" path="blogs" handler={BlogsWrapperElement}/>
 	</Route>
 );
