@@ -67,7 +67,7 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('new-blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
 		
 		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
@@ -81,7 +81,7 @@ module.exports = React.createClass({
 		}
 		var oReq = new XMLHttpRequest();
 		if (oReq != null) {
-			oReq.open("post", "/new_post/save", true);
+			oReq.open("PUT", "/posts/"+ this.props.data.post_id +"/update", true);
 		    //Send the proper header information along with the request
 			oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
