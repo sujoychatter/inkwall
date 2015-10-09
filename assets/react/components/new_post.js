@@ -37,9 +37,9 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('new-blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		var params = "title=" + document.getElementsByClassName('new-post-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
 		
-		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
+		// alert("Title is " + document.getElementsByClassName('new-post-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
 		function handler()
 		{
@@ -66,7 +66,7 @@ module.exports = React.createClass({
 		return (
 			<div className="new-post container">
 				<div className="title">
-					<input type="text" className="new-blog-title" placeholder="Blog Title"></input>
+					<input type="text" className="new-post-title" placeholder="Post Title"></input>
 				</div>
 				<div className="tinymce">
 					<div className="dummy-container"></div>

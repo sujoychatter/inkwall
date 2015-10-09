@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import {publishPost} from '../actions/posts.js'
+import {publishPost} from '../actions/posts'
 
-export default class Blogs extends Component {
+export default class MyPosts extends Component {
 	constructor(props){
 		super(props);
 	}
@@ -9,7 +9,7 @@ export default class Blogs extends Component {
 		let elems = [];
 		if(this.props.posts) {
 			this.props.posts.forEach((val) => {
-				return elems.push(<div>{val}</div>)
+				return elems.push(<div data-id={val.id} key={val.id}>{val.content}</div>)
 			});
 		}
 		return elems;

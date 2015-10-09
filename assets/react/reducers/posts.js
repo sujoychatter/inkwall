@@ -1,9 +1,8 @@
-import { PUBLISH_POST, UNPUBLISH_POST, DELETE_POST} from '../constants/posts';
+import { PUBLISH_POST, UNPUBLISH_POST, DELETE_POST, CREATE_BLOGS} from '../constants/posts';
 
 const initialState = {
-	posts: [],
-	fetched: false
-};
+	posts: []
+}
 
 export default function posts(state = initialState, action = {}) {
 	switch (action.type) {
@@ -21,6 +20,9 @@ export default function posts(state = initialState, action = {}) {
 			return state.filter(todo =>
 				todo.id !== action.id
 			);
+
+		case CREATE_BLOGS:
+			return state.posts.concat(action.posts);
 
 		default:
 			return state;
