@@ -37,7 +37,7 @@ module.exports = React.createClass({
 		function getPostData(postId){
 			return new Promise(function(resolve, reject){
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', '/posts/'+postId, true);
+				xhr.open('GET', '/posts/'+postId+'?for_edit=true', true);
 				xhr.onload = function(){
 					if(xhr.status == 200){
 						resolve(xhr.response);

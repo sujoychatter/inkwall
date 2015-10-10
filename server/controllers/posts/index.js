@@ -14,7 +14,7 @@ function ensureAuthenticated(req, res, next) {
 
 //api endpoints
 router.post('/create', ensureAuthenticated, controller.createPost);
-router.get('/:id', ensureAuthenticated, controller.getPost);
+router.get('/:id', controller.getPost);
 router.put('/:id/update', ensureAuthenticated, controller.updatePost);
 
 //page endpoints

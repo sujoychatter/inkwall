@@ -30,5 +30,8 @@ module.exports = {
 	},
 	find: function(id){
 		return knex('articles').where('id', id);
+	},
+	setViews: function(id, count){
+		return knex('articles').returning('*').where({id: id}).update({view_count: count});
 	}
 }
