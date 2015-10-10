@@ -28,7 +28,7 @@ module.exports = React.createClass({
 			}
 		};
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', '/posts/create', true);
+		xhr.open('POST', '/api/posts/create', true);
 		xhr.onreadystatechange = handleNewPost;
 		xhr.send();
 	},
@@ -60,7 +60,7 @@ module.exports = React.createClass({
 				{logo_link}
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Fodoo</span>
-					<span className="site-about" itemProp="description">Post for engineers</span>
+					<span className="site-about" itemProp="description">Blogs for engineers</span>
 				</span>
 				<span className="pull-right right-elements">
 					{image}

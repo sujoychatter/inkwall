@@ -38,7 +38,7 @@ module.exports = React.createClass({
 		function getPostData(postId){
 			return new Promise(function(resolve, reject){
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', '/posts/'+postId+'?for_edit=true', true);
+				xhr.open('GET', '/api/posts/'+postId+'?for_edit=true', true);
 				xhr.onload = function(){
 					if(xhr.status == 200){
 						resolve(xhr.response);
@@ -91,7 +91,7 @@ module.exports = React.createClass({
 		}
 		var oReq = new XMLHttpRequest();
 		if (oReq != null) {
-			oReq.open("PUT", "/posts/"+ this.props.data.post_id +"/update", true);
+			oReq.open("PUT", "/api/posts/"+ this.props.data.post_id +"/update", true);
 		    //Send the proper header information along with the request
 			oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -102,11 +102,14 @@ module.exports = React.createClass({
 		    console.log("AJAX (XMLHTTP) not supported.");
 		}
 	},
+	onTitleChange: function(event){
+		this.setState({title:  event.target.value});
+	},
 	render: function () {
 		return (
 			<div className="edit-post container">
 				<div className="title">
-					<input type="text" className="blog-title" placeholder="Blog Title" value={this.state.title}/>
+					<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
 				</div>
 				<div className="tinymce">
 					<div className="dummy-container"></div>

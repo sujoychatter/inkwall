@@ -11,12 +11,6 @@ function ensureAuthenticated(req, res, next) {
 	res.redirect('/')
 }
 
-
-//api endpoints
-router.post('/create', ensureAuthenticated, controller.createPost);
-router.get('/:id', controller.getPost);
-router.put('/:id/update', ensureAuthenticated, controller.updatePost);
-
 //page endpoints
 router.get('/:id/edit', ensureAuthenticated, controller.editPost);
 
