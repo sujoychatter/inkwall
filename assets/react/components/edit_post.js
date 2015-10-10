@@ -44,7 +44,7 @@ module.exports = React.createClass({
 						resolve(xhr.response);
 					}
 					else{
-						reject(Error('Data didn\'t load successfully; error code:' + xhr.statusText))
+						reject(Error('Data didn\'t load successfully; error code:' + xhr.statusText));
 					}
 				};
 				xhr.onerror = function() {

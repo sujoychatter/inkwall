@@ -3,7 +3,7 @@ var knex = require('knex')(connection_config[Configs.NODE_ENV]);
 
 module.exports = {
 	
-	fetch: function(query) {
+	all: function(query) {
 		if(!query){query = {}};
 		return knex('articles').where(query);
 	},

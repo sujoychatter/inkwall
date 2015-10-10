@@ -1,6 +1,35 @@
 @import 'basics';
 .home.container{
-	text-align: center;
-	padding-top: 100px;
-	color: white;
+	.cards-container{
+		width: 100%;
+		padding: 20px;
+	}
+	.grid-sizer, .card{
+		width: 230px;
+		background-color: #C9BFDE;
+		float: left;
+		margin-bottom: 10px;
+		border-radius: 2px;
+		padding: 3px;
+		box-sizing: border-box;
+		text-align: center;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.17);
+		.title{
+			margin: 5px;
+			font-size: 25px;
+		}
+		.details{
+			text-align: left;
+			margin: 5px;
+		}
+		.view-count{
+			float: right;
+		}
+		.author{
+			color: #5B608B;
+		}
+	}
+	.post-image{
+		width: 100%;
+	}
 }
