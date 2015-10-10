@@ -16,5 +16,10 @@ module.exports = {
 		return Article.find(req.params.id).then(function(post){
 			return res.status(200).json({post: post[0]});
 		})
+	},
+	fetchPosts: function(req, res, next){
+		return Article.all(req.query).then(function(posts){
+			return res.status(200).json({post: posts});
+		})
 	}
 }
