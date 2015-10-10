@@ -12,7 +12,7 @@ export default class MyPosts extends Component {
 			posts.forEach((post) => {
 				return elems.push(
 					<div data-id={post.id} key={post.id}>
-						<div class=""></div>
+						<div className=""></div>
 						<div onClick={this.publishPost.bind(this)}>Please Add Post</div>
 					</div>
 				)

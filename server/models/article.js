@@ -10,7 +10,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //	limit: "Integer"
 //};
 
-var keys = ['id', 'published', 'approved', 'user_id', 'limit']
+var keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview']
 
 module.exports = {
 	all: function(query){
@@ -22,7 +22,12 @@ module.exports = {
 		var title = params.title,
 		content = params.content,
 		time = new Date;
-		return knex('articles').where({id: id, user_id: user_id}).update({title: title, content: content, updated_at: time});
+		return knex('articles').where({id: id, user_id: user_id}).update({
+			title: title,
+			content: content,
+			updated_at: time,
+			preview: params.preview
+		});
 	},
 	create: function(data){
 		var user = data.user,

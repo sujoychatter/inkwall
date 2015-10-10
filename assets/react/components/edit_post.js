@@ -77,8 +77,11 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
-		
+		var preview = tinyMCE.activeEditor.getContent({format : 'text'}).split('\n');
+		preview = preview.slice(0,4).join('\n').substring(0,300);
+		var params = "title=" + document.getElementsByClassName('blog-title')[0].value +
+			"&content=" + tinyMCE.activeEditor.getContent() +
+			"&preview=" + preview;
 		// alert("Title is " + document.getElementsByClassName('new-post-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
 		function handler()
