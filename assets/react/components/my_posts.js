@@ -10,7 +10,12 @@ export default class MyPosts extends Component {
 		const posts = this.props.posts;
 		if(posts) {
 			posts.forEach((post) => {
-				return elems.push(<div data-id={post.id} key={post.id}>{post.content}</div>)
+				return elems.push(
+					<div data-id={post.id} key={post.id}>
+						<div class=""></div>
+						<div onClick={this.publishPost.bind(this)}>Please Add Post</div>
+					</div>
+				)
 			});
 		}
 		return elems;
@@ -23,7 +28,6 @@ export default class MyPosts extends Component {
 	render() {
 		return (
 			<div className="container home">
-				<div onClick={this.publishPost.bind(this)}>Please Add Post</div>
 				{this.getPostElement()}
 			</div>
 		)
