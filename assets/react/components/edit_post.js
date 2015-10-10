@@ -4,7 +4,7 @@ var Button = require('./common/button.js');
 
 module.exports = React.createClass({
 	componentDidMount: function () {
-
+		var self = this;
 		function setupTinyMCE(){
 			tinyMCE.init({
 				selector: ".tinymce div",
@@ -22,6 +22,7 @@ module.exports = React.createClass({
 					ed.on('init', function()
 					{
 						this.getDoc().body.style.fontSize = '14pt';
+						this.setContent(self.state.content);
 					});
 				}
 			});
@@ -55,21 +56,30 @@ module.exports = React.createClass({
 
 		if (ExecutionEnvironment.canUseDOM) {
 			if (this.props.data.post_id) {
+				var self = this;
 				getPostData(this.props.data.post_id).then(
 					function(post_string){
 						var post = JSON.parse(post_string).post;
-						document.getElementsByClassName('blog-title')[0].value = post.title;
-						document.getElementsByClassName('dummy-container')[0].innerHTML = post.content;
+						self.setState({
+							title: post.title,
+							content: post.content
+						});
 						initiateTinyMCE()
 					}
 				)
 			}
 		}
 	},
+	getInitialState: function(){
+		return {
+			title: "",
+			content: ""
+		}
+	},
 	saveContent: function (event) {
 		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent({format : 'raw'});
 		
-		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
+		// alert("Title is " + document.getElementsByClassName('new-post-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
 		function handler()
 		{
@@ -96,7 +106,7 @@ module.exports = React.createClass({
 		return (
 			<div className="edit-post container">
 				<div className="title">
-					<input type="text" className="blog-title" placeholder="Blog Title"></input>
+					<input type="text" className="blog-title" placeholder="Blog Title" value={this.state.title}/>
 				</div>
 				<div className="tinymce">
 					<div className="dummy-container"></div>

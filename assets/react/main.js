@@ -3,20 +3,32 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
+var MyPosts = require('./components/my_posts.js');
 var EditPost = require('./components/edit_post.js');
-var Blogs = require('./components/blogs.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
+import {createPosts} from './actions/posts'
+import {setUserData} from './actions/user'
 
 
 //Elements generated with wrapper
-
+function getInitialData(){
+	var initialState = window.fodoo_data
+	return {
+		user: initialState.user,
+		posts: initialState.posts
+	}
+}
 const store = configureStore();
+
+store.dispatch(createPosts(window.fodoo_data.posts));
+store.dispatch(setUserData(window.fodoo_data.user));
 
 function mapStateToProps(state) {
 	return {
-		posts: state.blogs.posts
+		posts: state.posts,
+		user: state.user
 	}
 }
 
@@ -34,7 +46,7 @@ class HomeWrapperElement extends Component{
 
 class EditPostWrapperElement extends Component{
 	render() {
-		var data = {post_id: this.props.params.postId}
+		var data = {post_id: this.props.params.postId};
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={EditPost} data={data} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
@@ -43,11 +55,11 @@ class EditPostWrapperElement extends Component{
 	}
 }
 
-class BlogsWrapperElement extends Component{
+class MyPostsWrapperElement extends Component{
 	render() {
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={Blogs} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+				{() => <Wrapper child={MyPosts}  cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
 			</Provider>
 		)
 	}
@@ -56,8 +68,8 @@ class BlogsWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
+		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
-		<Route name="blogs" path="blogs" handler={BlogsWrapperElement}/>
 	</Route>
 );
 

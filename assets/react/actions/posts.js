@@ -10,7 +10,8 @@ function addTodoWithoutCheck() {
 }
 
 //function fetchPosts(text) {
-//	return function (dispatch) {
+//	return function (dispat
+// ch) {
 //		dispatch(addTodoWithoutCheck());
 //		fetch("https://buy.housing.com/api/v0/search/suggest/?&string=powa&cursor=4&source=web&source=web").then(
 //			(result) =>  dispatch(addTodoWithoutCheck()),
@@ -24,6 +25,13 @@ export function publishPost() {
 		dispatch(addTodoWithoutCheck());
 	}
 }
+
+export function createPosts(posts) {
+	return function (dispatch) {
+		dispatch({type: types.CREATE_BLOGS, posts: posts});
+	}
+}
+
 export function deletePost(id) {
 	return { type: types.DELETE_POST, id };
 }

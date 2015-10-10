@@ -16,11 +16,6 @@ module.exports = React.createClass({
 		if (this.props.user) {
 			data = {user: this.props.user};
 		}
-		else if (ExecutionEnvironment.canUseDOM) {
-			if ((typeof fodoo_data != "undefined") && fodoo_data && fodoo_data.user) {
-				data = {user: fodoo_data.user};
-			}
-		}
 		return data;
 	},
 	newPost: function(){
@@ -38,7 +33,7 @@ module.exports = React.createClass({
 		xhr.send();
 	},
 	render: function () {
-		if (this.state.user) {
+		if (this.state.user && this.state.user.name) {
 			var userData = {
 					userName: this.state.user.name,
 					imageURL: this.state.user.photo,
@@ -65,7 +60,7 @@ module.exports = React.createClass({
 				{logo_link}
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Fodoo</span>
-					<span className="site-about" itemProp="description">Blog for engineers</span>
+					<span className="site-about" itemProp="description">Post for engineers</span>
 				</span>
 				<span className="pull-right right-elements">
 					{image}
