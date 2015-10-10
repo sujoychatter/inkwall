@@ -59,7 +59,7 @@ class MyPostsWrapperElement extends Component{
 	render() {
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={MyPosts}  cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+				{() => <Wrapper child={MyPosts}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
 			</Provider>
 		)
 	}

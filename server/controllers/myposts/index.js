@@ -9,7 +9,6 @@ function ensureAuthenticated(req, res, next) {
 	}
 	res.redirect('/')
 }
-//router.get('/', ensureAuthenticated, controller.myposts);
-router.get('/', controller.myposts);
+router.get('/', ensureAuthenticated, controller.myposts);
 
 module.exports = router;
