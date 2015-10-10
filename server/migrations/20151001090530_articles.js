@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
 		table.string('title');
 		table.integer('user_id');
 		table.text('content');
-		table.boolean('published');
-		table.boolean('approved');
+		table.boolean('published').defaultTo(false);
+		table.boolean('approved').defaultTo(false);
 		table.timestamps();
 	});
 };

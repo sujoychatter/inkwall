@@ -1,28 +1,23 @@
 import * as types from '../constants/posts';
+require('es6-promise').polyfill();
 import fetch from 'isomorphic-fetch';
 
-function addTodoWithoutCheck() {
-
-	return {
-		type: types.PUBLISH_POST,
-		text: "My first Post"
-	};
-}
-
-//function fetchPosts(text) {
-//	return function (dispat
-// ch) {
-//		dispatch(addTodoWithoutCheck());
-//		fetch("https://buy.housing.com/api/v0/search/suggest/?&string=powa&cursor=4&source=web&source=web").then(
-//			(result) =>  dispatch(addTodoWithoutCheck()),
-//			(error) =>  dispatch(addTodoWithoutCheck())
-//		);
-//	}
-//}
-
-export function publishPost() {
+export function publishPost(id) {
 	return function (dispatch) {
-		dispatch(addTodoWithoutCheck());
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({published: true}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(function(){
+				return dispatch({ type: types.PUBLISH_POST, id});
+			}
+		)
+
 	}
 }
 
@@ -32,10 +27,33 @@ export function createPosts(posts) {
 	}
 }
 
-export function deletePost(id) {
-	return { type: types.DELETE_POST, id };
+export function removePost(id) {
+	return function (dispatch) {
+		var url = "/api/posts/" + id;
+		request({
+			url: url,
+			type: "put",
+			data: {active: false}
+		}).then(() =>{
+			return dispatch({ type: types.REMOVE_POST, id});
+		});
+
+	}
 }
 
-export function unpublishPost(id, text) {
-	return { type: types.UNPUBLISH_POST, id, tex};
+export function unPublishPost(id) {
+	return function (dispatch) {
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({published: false}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(function(){
+			return dispatch({ type: types.UN_PUBLISH_POST, id});
+		})
+	}
 }

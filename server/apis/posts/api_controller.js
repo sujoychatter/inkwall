@@ -3,7 +3,7 @@ module.exports = {
 	updatePost: function(req, res, next){
 		return Article.update(req.params.id, req.body, req.user.id).then(
 			function(){
-				return res.status(200).send({success: true});
+				return res.status(200).json({success: true});
 			}
 		);
 	},

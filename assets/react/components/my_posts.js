@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import {publishPost} from '../actions/posts'
+import {publishPost, unPublishPost, removePost} from '../actions/posts'
+import Button from './common/button';
 
 export default class MyPosts extends Component {
 	constructor(props){
@@ -11,23 +12,34 @@ export default class MyPosts extends Component {
 		if(posts) {
 			posts.forEach((post) => {
 				return elems.push(
-					<div data-id={post.id} key={post.id}>
-						<div className=""></div>
-						<div onClick={this.publishPost.bind(this)}>Please Add Post</div>
+					<div className="item" data-id={post.id} key={post.id}>
+						<div className="item-title">{post.title}</div>
+						<div className="item-preview">{post.preview}</div>
+						<div className="last-updated">{post.updated_at}</div>
+						<Button onclicking={
+							post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
+						} content={post.published ? 'Un-Publish' : 'Publish'}/>
 					</div>
 				)
 			});
 		}
 		return elems;
 	}
-	publishPost(){
-		const { dispatch } = this.props;
-		let text = "Posted Post";
-		dispatch(publishPost({ type: "PUBLISH_POST", text }));
+	remove(elem){
+		let dispatch = this.props.dispatch;
+		dispatch(removePost(elem.id));
+	}
+	publish(post){
+		let dispatch = this.props.dispatch;
+		dispatch(publishPost(post.id));
+	}
+	unPublish(post){
+		let dispatch = this.props.dispatch;
+		dispatch(unPublishPost(post.id));
 	}
 	render() {
 		return (
-			<div className="container home">
+			<div className="container my-posts">
 				{this.getPostElement()}
 			</div>
 		)

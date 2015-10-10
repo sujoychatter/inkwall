@@ -1,28 +1,28 @@
-import { PUBLISH_POST, UNPUBLISH_POST, DELETE_POST, CREATE_BLOGS} from '../constants/posts';
+import { PUBLISH_POST, UN_PUBLISH_POST, REMOVE_POST, CREATE_BLOGS} from '../constants/posts';
 
-const initialState = {
-	posts: []
-}
-
-export default function posts(state = initialState, action = {}) {
+export default function posts(state = [], action = {}) {
 	switch (action.type) {
 		case PUBLISH_POST:
-			var posts = state.posts.map((post) => {return post});
-			posts.push(action.text);
-			return {posts: posts};
+			return state.map((post) => {
+				if(post.id == action.id){
+					post.published = true;
+				}
+				return post
+			});
 
-		case UNPUBLISH_POST:
-			return state.filter(todo =>
-				todo.id !== action.id
-			);
+		case UN_PUBLISH_POST:
+			return state.map((post) => {
+				if(post.id == action.id){
+					post.published = false;
+				}
+				return post
+			});
 
-		case DELETE_POST:
-			return state.filter(todo =>
-				todo.id !== action.id
-			);
+		case REMOVE_POST:
+			return state.filter((post) => map.id != action.id);
 
 		case CREATE_BLOGS:
-			return state.posts.concat(action.posts);
+			return state.concat(action.posts);
 
 		default:
 			return state;
