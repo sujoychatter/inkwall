@@ -1,9 +1,9 @@
-import { LOGGED_IN, LOGGED_OUT} from '../constants/user';
+import { LOGGED_OUT, SET_USER} from '../constants/user';
 
 export default function posts(state = {}, action = {}) {
 	switch (action.type) {
-		case LOGGED_IN:
-			return state;
+		case SET_USER:
+			return action.data || {};
 
 		case LOGGED_OUT:
 			return {};

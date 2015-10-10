@@ -1,10 +1,12 @@
 var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var DropDown = require('./common/drop_down');
-var Router = require('react-router');
-var Link = Router.Link;
+import Router, { Navigation, Link } from 'react-router';
 
 module.exports = React.createClass({
+
+	mixins: [Navigation],
+
 	showHideDropDown: function(){
 		this.state.showDropDown = !this.state.showDropDown;
 		this.setState(this.state);
@@ -16,8 +18,22 @@ module.exports = React.createClass({
 		}
 		return data;
 	},
+	newPost: function(){
+		var _this = this;
+		function handleNewPost(){
+			if(xhr.readyState == 4){
+				if(xhr.status == 201){
+					_this.transitionTo('/posts/' + JSON.parse(xhr.responseText).id + '/edit');
+				}
+			}
+		};
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/posts/create', true);
+		xhr.onreadystatechange = handleNewPost;
+		xhr.send();
+	},
 	render: function () {
-		if (this.state.user) {
+		if (this.state.user && this.state.user.name) {
 			var userData = {
 					userName: this.state.user.name,
 					imageURL: this.state.user.photo,
@@ -38,7 +54,7 @@ module.exports = React.createClass({
 		else{
 			logo_link = <a href="/"><img src="/images/logo.png" type="image/png"></img></a>
 		}
-		var options = [{name: "New Post", frontend_route: '/new_post'}, {name: "Logout", backend_route: '/logout'}]
+		var options = [{name: "New Post", callback: this.newPost}, {name: "Logout", backend_route: '/logout'}]
 		return (
 			<div className="header">
 				{logo_link}

@@ -39,6 +39,7 @@ export default class Wrapper extends Component{
 		const { dispatch } = this.props;
 		this.props.actions = bindActionCreators(postsActions, dispatch);
 		var Child = this.props.child;
+		//TODO: change ...this.props to child related data only
 		return (
 			<div className="main-content">
 				<Header user={this.props.user}/>

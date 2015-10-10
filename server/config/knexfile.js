@@ -7,8 +7,9 @@ module.exports = {
 		connection: {
 			host     : '127.0.0.1',
 			port     : 5432,
-			user     : 'riteshkumar',
-			database : 'fodoo_development'
+			user     : 'postgres',
+			database : 'fodoo_development',
+			password : 'pointer'
 		},
 		migrations: {
 			directory: './../migrations'
@@ -19,7 +20,7 @@ module.exports = {
 		client: 'postgresql',
 		connection: {
 			database: 'my_db',
-			user:     'username',
+			user:     'postgres',
 			password: 'password'
 		},
 		pool: {
@@ -36,7 +37,7 @@ module.exports = {
 		client: 'postgresql',
 		connection: {
 			database: 'my_db',
-			user:     'username',
+			user:     'postgres',
 			password: 'password'
 		},
 		pool: {

@@ -9,9 +9,10 @@ function addTodoWithoutCheck() {
 	};
 }
 
-export function loggedOut() {
-	return function (dispatch) {
-		dispatch(addTodoWithoutCheck());
+export function setUserData(user) {
+	return {
+		type : types.SET_USER,
+		data : user
 	}
 }
 export function loggedIn(id) {

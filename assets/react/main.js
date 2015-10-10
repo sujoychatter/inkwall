@@ -3,13 +3,13 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
-var NewPost = require('./components/new_post.js');
 var MyPosts = require('./components/my_posts.js');
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+var EditPost = require('./components/edit_post.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
 import {createPosts} from './actions/posts'
+import {setUserData} from './actions/user'
 
 
 //Elements generated with wrapper
@@ -23,6 +23,7 @@ function getInitialData(){
 const store = configureStore();
 
 store.dispatch(createPosts(window.fodoo_data.posts));
+store.dispatch(setUserData(window.fodoo_data.user));
 
 function mapStateToProps(state) {
 	return {
@@ -43,11 +44,12 @@ class HomeWrapperElement extends Component{
 	}
 }
 
-class NewPostWrapperElement extends Component{
+class EditPostWrapperElement extends Component{
 	render() {
+		var data = {post_id: this.props.params.postId};
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={NewPost} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+				{() => <Wrapper child={EditPost} data={data} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -57,7 +59,7 @@ class MyPostsWrapperElement extends Component{
 	render() {
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={MyPosts} cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
+				{() => <Wrapper child={MyPosts}  cssElementId="new-post-css" stylesheetLink="/stylesheets/new-post.css"/>}
 			</Provider>
 		)
 	}
@@ -66,8 +68,8 @@ class MyPostsWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
-		<Route name="new_post" path="new_post" handler={NewPostWrapperElement}/>
 		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
+		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 	</Route>
 );
 

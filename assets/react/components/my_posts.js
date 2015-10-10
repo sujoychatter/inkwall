@@ -5,11 +5,12 @@ export default class MyPosts extends Component {
 	constructor(props){
 		super(props);
 	}
-	getListElement(){
+	getPostElement(){
 		let elems = [];
-		if(this.props.posts) {
-			this.props.posts.forEach((val) => {
-				return elems.push(<div data-id={val.id} key={val.id}>{val.content}</div>)
+		const posts = this.props.posts;
+		if(posts) {
+			posts.forEach((post) => {
+				return elems.push(<div data-id={post.id} key={post.id}>{post.content}</div>)
 			});
 		}
 		return elems;
@@ -23,7 +24,7 @@ export default class MyPosts extends Component {
 		return (
 			<div className="container home">
 				<div onClick={this.publishPost.bind(this)}>Please Add Post</div>
-				{this.getListElement()}
+				{this.getPostElement()}
 			</div>
 		)
 	}
