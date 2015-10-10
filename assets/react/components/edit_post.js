@@ -67,7 +67,7 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent({format : 'raw'});
 		
 		// alert("Title is " + document.getElementsByClassName('new-blog-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
