@@ -4,6 +4,9 @@
 		width: 100%;
 		padding: 20px;
 	}
+	.grid-sizer{
+		display: none;
+	}
 	.grid-sizer, .card{
 		width: 230px;
 		background-color: #C9BFDE;
@@ -28,6 +31,13 @@
 		.author{
 			color: #5B608B;
 		}
+	}
+	.card{
+		transform: scale(0);
+		transition: all 0.3s;
+	}
+	.cards-container.show-cards .card{
+		transform: scale(1);
 	}
 	.post-image{
 		width: 100%;
