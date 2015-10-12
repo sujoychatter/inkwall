@@ -9,6 +9,14 @@ function addTodoWithoutCheck() {
 	};
 }
 
+function receivePosts(json){
+	return {
+		type: types.RECEIVE_POSTS,
+		posts: json.posts,
+		receivedAt: Date.now()
+	}
+}
+
 //function fetchPosts(text) {
 //	return function (dispat
 // ch) {
@@ -19,6 +27,21 @@ function addTodoWithoutCheck() {
 //		);
 //	}
 //}
+
+function requestPost(){
+	return {
+		type: types.REQUEST_POSTS
+	}
+}
+
+export function fetchAllPosts(){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts').then(response => response.json()).then(json => 
+			dispatch(receivePosts(json))
+		)
+	}
+}
 
 export function publishPost() {
 	return function (dispatch) {

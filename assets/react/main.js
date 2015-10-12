@@ -8,26 +8,39 @@ var EditPost = require('./components/edit_post.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts} from './actions/posts'
+import {createPosts } from './actions/posts';
+import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
+import {setVisibilityFilter} from './actions/visibilityFilters'
 
 
 //Elements generated with wrapper
-function getInitialData(){
-	var initialState = window.fodoo_data
-	return {
-		user: initialState.user,
-		posts: initialState.posts
-	}
-}
+// function getInitialData(){
+// 	var initialState = window.fodoo_data
+// 	return {
+// 		user: initialState.user,
+// 		posts: initialState.posts
+// 	}
+// }
 const store = configureStore();
 
 store.dispatch(createPosts(window.fodoo_data.posts));
 store.dispatch(setUserData(window.fodoo_data.user));
+store.dispatch(setVisibilityFilter(VisibilityConstants.Filters.SHOW_ALL));
+
+function selectPosts(posts, filter, my_id){
+	switch(filter){
+		case VisibilityConstants.Filters.SHOW_ALL:
+			return posts;
+		case VisibilityConstants.Filters.SHOW_MY:
+			return posts.filter(post => post.user_id == my_id);
+	}
+}
 
 function mapStateToProps(state) {
+	debugger
 	return {
-		posts: state.posts,
+		posts: selectPosts(state.posts, state.visibilityFilter, state.user.id),
 		user: state.user
 	}
 }

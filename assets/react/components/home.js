@@ -1,18 +1,17 @@
 var React = require('react');
+import {fetchAllPosts} from '../actions/posts'
 
 module.exports = React.createClass({
 	cardClicked: function(){
 		console.log("clicked");
 	},
-	getInitialState: function(){
-		var data = {}
-		if(this.props.posts){
-			data.posts = this.props.posts;
+	setPosts: function(){
+		this.setState(Object.assign({}, state, {posts: this.props.items}))
+	},
+	componentWillMount: function(){
+		if(this.props.dispatch){
+			this.props.dispatch(fetchAllPosts())
 		}
-		else if(typeof fodoo_data != 'undefined'){
-			data.posts = fodoo_data.posts;
-		}
-		return data;
 	},
 	initiateMasonry: function(){
 		var cardContainer = document.getElementsByClassName('cards-container')[0];
@@ -45,15 +44,16 @@ module.exports = React.createClass({
 		}
 	},
 	render: function () {
+		console.log(this.props.posts);
 		var self=this;
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
 				return <div key={index} className="card" onClick={self.cardClicked}>
-					{self.getImageTag(post.post.content)}
-					<div className="title">{post.post.title}</div>
+					{self.getImageTag(post.content)}
+					<div className="title">{post.title}</div>
 					<div className="details">
 						<span className="author">{post.user.name}</span>
-						<span className="view-count">{post.post.view_count}</span>
+						<span className="view-count">{post.view_count}</span>
 					</div>
 				</div>
 			});
@@ -64,7 +64,7 @@ module.exports = React.createClass({
 				<div className="wrapper">
 				<div className="cards-container">
 					<div className="grid-sizer"></div>
-					{createCards(this.state.posts.slice(0,10))}
+					{createCards(this.props.posts.items.slice(0,10))}
 				</div>
 				</div>
 			</div>

@@ -1,10 +1,12 @@
-import { PUBLISH_POST, UNPUBLISH_POST, DELETE_POST, CREATE_BLOGS} from '../constants/posts';
+import { PUBLISH_POST, UNPUBLISH_POST, DELETE_POST, CREATE_BLOGS, REQUEST_POSTS, RECEIVE_POSTS} from '../constants/posts';
 
 const initialState = {
-	posts: []
+	items: [],
+	isFetching: false
 }
 
 export default function posts(state = initialState, action = {}) {
+	debugger
 	switch (action.type) {
 		case PUBLISH_POST:
 			var posts = state.posts.map((post) => {return post});
@@ -22,8 +24,16 @@ export default function posts(state = initialState, action = {}) {
 			);
 
 		case CREATE_BLOGS:
-			return state.posts.concat(action.posts);
+			return Object.assign({},state,  {isFetching: false, items: action.posts} );
 
+		case REQUEST_POSTS:
+			return Object.assign({}, state, {isFetching: true});
+		case RECEIVE_POSTS:
+			return Object.assign({}, state, {
+				isFetching: false,
+				items: action.posts,
+				lastUpdate: action.receivedAt
+			})
 		default:
 			return state;
 	}

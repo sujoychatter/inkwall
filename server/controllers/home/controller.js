@@ -14,12 +14,14 @@ module.exports = {
 			var result = [];
 
 			function updateAndCheck(index, user){
-				result.push({post: posts[index], user: user[0]});
+				var post = posts[index];
+				post.user = user[0];
+				result.push(post);
 				if(result.length == posts.length){
-					var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: result});
+					var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: {items: result}});
 					var data = {};
 					if (req.user) {
-						data.user = {name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
+						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 					}
 					data.posts = result;
 					return res.render('home', {
