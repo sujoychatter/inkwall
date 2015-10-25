@@ -1,4 +1,5 @@
 import * as types from '../constants/posts';
+import {setVisibilityFilter} from './visibilityFilters'
 import fetch from 'isomorphic-fetch';
 
 function addTodoWithoutCheck() {
@@ -14,6 +15,13 @@ function receivePosts(json){
 		type: types.RECEIVE_POSTS,
 		posts: json.posts,
 		receivedAt: Date.now()
+	}
+}
+
+export function setSelectedPost(post){
+	return {
+		type: types.SET_SELECTED_POST,
+		post: post
 	}
 }
 
@@ -40,6 +48,19 @@ export function fetchAllPosts(){
 		return fetch('/api/posts').then(response => response.json()).then(json => 
 			dispatch(receivePosts(json))
 		)
+	}
+}
+
+export function setSelectedPostByName(postName){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts/by_name?name=' + postName).then(
+			response => response.json()
+		).then(function(json){
+			dispatch(setSelectedPost(json.posts[0]));
+			dispatch(receivePosts(json));
+			dispatch(setVisibilityFilter("SHOW_ONE"));
+		})
 	}
 }
 

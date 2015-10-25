@@ -18,12 +18,13 @@ module.exports = {
 				post.user = user[0];
 				result.push(post);
 				if(result.length == posts.length){
-					var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: {items: result}});
+					var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: result});
 					var data = {};
 					if (req.user) {
 						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 					}
 					data.posts = result;
+					data.posts_visibility = "SHOW_ALL";
 					return res.render('home', {
 							title: 'Fodoo',
 							markup: React.renderToString(wrapper_element),

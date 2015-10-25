@@ -108,14 +108,16 @@ module.exports = React.createClass({
 	render: function () {
 		return (
 			<div className="edit-post container">
-				<div className="title">
-					<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
+				<div className="wrapper">
+					<div className="title">
+						<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
+					</div>
+					<div className="tinymce">
+						<div className="dummy-container"></div>
+					</div>
+					<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
+					<Button classes="btn btn-primary publish" content="Publish"/>
 				</div>
-				<div className="tinymce">
-					<div className="dummy-container"></div>
-				</div>
-				<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
-				<Button classes="btn btn-primary publish" content="Publish"/>
 			</div>
 		)
 	}

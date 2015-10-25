@@ -5,10 +5,11 @@ var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
 var MyPosts = require('./components/my_posts.js');
 var EditPost = require('./components/edit_post.js');
+var ShowPost = require('./components/show_post.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts } from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName } from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
@@ -26,21 +27,23 @@ const store = configureStore();
 
 store.dispatch(createPosts(window.fodoo_data.posts));
 store.dispatch(setUserData(window.fodoo_data.user));
-store.dispatch(setVisibilityFilter(VisibilityConstants.Filters.SHOW_ALL));
+store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
+store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
 
-function selectPosts(posts, filter, my_id){
+function selectPosts(posts, filter, my_id, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts;
 		case VisibilityConstants.Filters.SHOW_MY:
 			return posts.filter(post => post.user_id == my_id);
+		case VisibilityConstants.Filters.SHOW_ONE:
+			return posts.filter(post => post.id == state.posts.selected_post_id);
 	}
 }
 
 function mapStateToProps(state) {
-	debugger
 	return {
-		posts: selectPosts(state.posts, state.visibilityFilter, state.user.id),
+		posts: selectPosts(state.posts.items, state.visibilityFilter, state.user.id, state),
 		user: state.user
 	}
 }
@@ -68,6 +71,18 @@ class EditPostWrapperElement extends Component{
 	}
 }
 
+class ShowPostWrapperElement extends Component{
+	render() {
+		store.dispatch(setSelectedPostByName(this.props.params.postName));
+		// store.dispatch(setVisibilityFilter("SHOW_ONE"));
+		return (
+			<Provider store={store}>
+				{() => <Wrapper child={ShowPost} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
+			</Provider>
+		)
+	}
+}
+
 class MyPostsWrapperElement extends Component{
 	render() {
 		return (
@@ -83,6 +98,7 @@ var routes = (
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
 		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
+		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
 	</Route>
 );
 

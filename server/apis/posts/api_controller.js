@@ -33,6 +33,26 @@ module.exports = {
 			});
 		})
 	},
+	getPostsByName: function(req, res, next){
+		Article.all({title: req.query.name.replace(/-/g, " ")}).then(function(articles){
+			console.log(articles);
+			var result = [];
+		
+			function updateAndCheck(index, user){
+				var post = articles[index];
+				post.user = user[0];
+				result.push(post);
+				if(result.length == articles.length){
+					return res.status(200).send({posts: result});
+				}
+			}	
+			articles.forEach(function(post, index){
+				User.find(post.user_id).then(function(index, user){
+					updateAndCheck(index, user);
+				}.bind(this, index))
+			});
+		})
+	},
 	getPost: function(req, res, next){
 		if(req.query.for_edit || req.query.for_preview){
 			Article.find(req.params.id).then(function(articles){

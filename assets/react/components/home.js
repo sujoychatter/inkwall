@@ -1,34 +1,44 @@
 var React = require('react');
-import {fetchAllPosts} from '../actions/posts'
+import {fetchAllPosts} from '../actions/posts';
+import {setVisibilityFilter} from '../actions/visibilityFilters'
+import {Filters} from '../constants/visibilityFilters';
+import Router, { Navigation, Link } from 'react-router';
 
 module.exports = React.createClass({
-	cardClicked: function(){
-		console.log("clicked");
+
+	mixins: [Navigation],
+
+	cardClicked: function(post_title){
+		this.transitionTo('/posts/' + post_title.replace(/\s/g, "-"));
 	},
 	setPosts: function(){
 		this.setState(Object.assign({}, state, {posts: this.props.items}))
 	},
 	componentWillMount: function(){
 		if(this.props.dispatch){
+			this.props.dispatch(setVisibilityFilter(Filters.SHOW_ALL));
 			this.props.dispatch(fetchAllPosts())
 		}
 	},
 	initiateMasonry: function(){
 		var cardContainer = document.getElementsByClassName('cards-container')[0];
-		if(!this.masonry){
-			this.masonry = new Masonry(cardContainer, {
-				itemSelector: '.card',
-				columnWidth: '.grid-sizer',
-				gutter: 10,
-				isInitLayout: false
-			});
-			this.masonry.on('layoutComplete', function(){
-				document.getElementsByClassName('cards-container')[0].className = "cards-container show-cards";
-			});
-			this.masonry.layout();
-		}
+		// if(!this.masonry){
+		this.masonry = new Masonry(cardContainer, {
+			itemSelector: '.card',
+			columnWidth: '.grid-sizer',
+			gutter: 10,
+			isInitLayout: false
+		});
+		this.masonry.on('layoutComplete', function(){
+			document.getElementsByClassName('cards-container')[0].className = "cards-container show-cards";
+		});
+		this.masonry.layout();
+		// }
 	},
 	componentDidMount: function(){
+		this.initiateMasonry();
+	},
+	componentDidUpdate: function(){
 		this.initiateMasonry();
 	},
 	getImageTag: function(content_text){
@@ -44,11 +54,11 @@ module.exports = React.createClass({
 		}
 	},
 	render: function () {
-		console.log(this.props.posts);
 		var self=this;
+		var items = [];
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
-				return <div key={index} className="card" onClick={self.cardClicked}>
+				return <div key={index} className="card" onClick={self.cardClicked.bind(null, post.title)}>
 					{self.getImageTag(post.content)}
 					<div className="title">{post.title}</div>
 					<div className="details">
@@ -59,12 +69,15 @@ module.exports = React.createClass({
 			});
 			return elements;
 		}
+		if(this.props.posts){
+			items = this.props.posts.slice(0,10)
+		}
 		return (
 			<div className="container home">
 				<div className="wrapper">
 				<div className="cards-container">
 					<div className="grid-sizer"></div>
-					{createCards(this.props.posts.items.slice(0,10))}
+					{createCards(items)}
 				</div>
 				</div>
 			</div>
