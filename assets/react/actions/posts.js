@@ -64,6 +64,19 @@ export function setSelectedPostByName(postName){
 	}
 }
 
+export function setSelectedPostById(id){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts/' + id + '?for_edit=true').then(
+			response => response.json()
+		).then(function(json){
+			dispatch(setSelectedPost(json.posts[0]));
+			dispatch(receivePosts(json));
+			dispatch(setVisibilityFilter("SHOW_ONE"));
+		})
+	}
+}
+
 export function publishPost() {
 	return function (dispatch) {
 		dispatch(addTodoWithoutCheck());

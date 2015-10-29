@@ -59,7 +59,7 @@ module.exports = React.createClass({
 				var self = this;
 				getPostData(this.props.data.post_id).then(
 					function(post_string){
-						var post = JSON.parse(post_string).post;
+						var post = JSON.parse(post_string).posts[0];
 						self.setState({
 							title: post.title,
 							content: post.content

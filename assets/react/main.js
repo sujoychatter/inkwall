@@ -9,7 +9,7 @@ var ShowPost = require('./components/show_post.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts, setSelectedPost, setSelectedPostByName } from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById } from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
@@ -62,6 +62,7 @@ class HomeWrapperElement extends Component{
 
 class EditPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setSelectedPostById(this.props.params.postId));
 		var data = {post_id: this.props.params.postId};
 		return (
 			<Provider store={store}>
@@ -74,7 +75,6 @@ class EditPostWrapperElement extends Component{
 class ShowPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setSelectedPostByName(this.props.params.postName));
-		// store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={ShowPost} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}

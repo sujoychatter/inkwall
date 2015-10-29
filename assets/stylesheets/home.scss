@@ -36,9 +36,13 @@
 	.card{
 		transform: scale(0.9);
 		transition: all 0.7s;
+		cursor: pointer;
 	}
 	.cards-container.show-cards .card{
 		transform: scale(1);
+		&:hover{
+			transform: scale(1.05);
+		}
 	}
 	.post-image{
 		width: 100%;

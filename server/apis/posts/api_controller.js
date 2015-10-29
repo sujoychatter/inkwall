@@ -35,38 +35,40 @@ module.exports = {
 	},
 	getPostsByName: function(req, res, next){
 		Article.all({title: req.query.name.replace(/-/g, " ")}).then(function(articles){
-			console.log(articles);
 			var result = [];
 		
-			function updateAndCheck(index, user){
-				var post = articles[index];
+			function updateAndReturn(user){
+				var post = articles[0];
 				post.user = user[0];
 				result.push(post);
-				if(result.length == articles.length){
-					return res.status(200).send({posts: result});
-				}
-			}	
-			articles.forEach(function(post, index){
-				User.find(post.user_id).then(function(index, user){
-					updateAndCheck(index, user);
-				}.bind(this, index))
-			});
-		})
-	},
-	getPost: function(req, res, next){
-		if(req.query.for_edit || req.query.for_preview){
-			Article.find(req.params.id).then(function(articles){
-				return res.status(200).send({post: articles[0]});
-			});
-		}
-		else{
-			Article.find(req.params.id).then(function(articles){
+
 				var viewCount = articles[0].view_count,
 				id = articles[0].id;
 				Article.setViews(id, (viewCount+ 1)).then(function(articles){
-					return res.status(200).send({post: articles[0]});
+					return res.status(200).send({posts: result});
 				});
-			});
-		}
+			}	
+
+			User.find(articles[0].user_id).then(function(user){
+				updateAndReturn(user);
+			})
+		})
+	},
+	getPost: function(req, res, next){
+		Article.find(req.params.id).then(function(articles){
+
+			var result = [];
+		
+			function updateAndReturn(user){
+				var post = articles[0];
+				post.user = user[0];
+				result.push(post);
+				return res.status(200).send({posts: result});
+			}	
+
+			User.find(articles[0].user_id).then(function(user){
+				updateAndReturn(user);
+			})
+		});
 	}
 }
