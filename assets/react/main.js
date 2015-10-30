@@ -5,29 +5,45 @@ var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
 var MyPosts = require('./components/my_posts.js');
 var EditPost = require('./components/edit_post.js');
+var ShowPost = require('./components/show_post.js');
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts} from './actions/posts'
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById } from './actions/posts';
+import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
+import {setVisibilityFilter} from './actions/visibilityFilters'
 
 
 //Elements generated with wrapper
-function getInitialData(){
-	var initialState = window.fodoo_data
-	return {
-		user: initialState.user,
-		posts: initialState.posts
-	}
-}
+// function getInitialData(){
+// 	var initialState = window.fodoo_data
+// 	return {
+// 		user: initialState.user,
+// 		posts: initialState.posts
+// 	}
+// }
 const store = configureStore();
 
 store.dispatch(createPosts(window.fodoo_data.posts));
 store.dispatch(setUserData(window.fodoo_data.user));
+store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
+store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
+
+function selectPosts(posts, filter, my_id, state){
+	switch(filter){
+		case VisibilityConstants.Filters.SHOW_ALL:
+			return posts;
+		case VisibilityConstants.Filters.SHOW_MY:
+			return posts.filter(post => post.user_id == my_id);
+		case VisibilityConstants.Filters.SHOW_ONE:
+			return posts.filter(post => post.id == state.posts.selected_post_id);
+	}
+}
 
 function mapStateToProps(state) {
 	return {
-		posts: state.posts,
+		posts: selectPosts(state.posts.items, state.visibilityFilter, state.user.id, state),
 		user: state.user
 	}
 }
@@ -46,10 +62,22 @@ class HomeWrapperElement extends Component{
 
 class EditPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setSelectedPostById(this.props.params.postId));
 		var data = {post_id: this.props.params.postId};
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={EditPost} data={data} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+			</Provider>
+		)
+	}
+}
+
+class ShowPostWrapperElement extends Component{
+	render() {
+		store.dispatch(setSelectedPostByName(this.props.params.postName));
+		return (
+			<Provider store={store}>
+				{() => <Wrapper child={ShowPost} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
 			</Provider>
 		)
 	}
@@ -70,6 +98,7 @@ var routes = (
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
 		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
+		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
 	</Route>
 );
 

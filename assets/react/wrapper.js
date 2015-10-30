@@ -27,12 +27,12 @@ export default class Wrapper extends Component{
 	}
 	componentDidMount(){
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('container')[0].addEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('wrapper')[0].addEventListener('scroll', this.handleScroll);
 		}
 	}
 	componentWillUnmount() {
 		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('container')[0].removeEventListener('scroll', this.handleScroll);
+			document.getElementsByClassName('wrapper')[0].removeEventListener('scroll', this.handleScroll);
 		}
 	}
 	render() {

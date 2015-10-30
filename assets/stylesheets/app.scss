@@ -35,6 +35,9 @@ body {
     .drop-down-container{
       top: 32px;
     }
+    .container{
+      padding-top: 38px;
+    }
   }
 }
 
@@ -88,7 +91,13 @@ a {
   transition: all 1s ease-in;
 	.main-content{		
     height: 100%;
+    overflow: hidden;
 	}
+}
+
+.wrapper{
+  overflow: auto;
+  height: 100%;
 }
 
 .container{
@@ -96,7 +105,8 @@ a {
   height: 100%;
   box-sizing: border-box;
   z-index: 1;
-  overflow: auto;
+  overflow: hidden;
+  transition: padding-top 1s;
 }
 
 .right-elements{

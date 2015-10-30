@@ -1,0 +1,14 @@
+@import 'basics';
+
+.show-post{
+	.title{
+		font-size: 30px;
+		text-align: center;
+		margin: 20px 0px 20px 0px;
+		font-weight: bold;
+	}
+	.content{
+		padding: 0px 50px 0px 50px;
+		font-size: 20px;
+	}
+}

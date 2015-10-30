@@ -38,13 +38,13 @@ module.exports = React.createClass({
 		function getPostData(postId){
 			return new Promise(function(resolve, reject){
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', '/api/posts/'+postId, true);
+				xhr.open('GET', '/api/posts/'+postId+'?for_edit=true', true);
 				xhr.onload = function(){
 					if(xhr.status == 200){
 						resolve(xhr.response);
 					}
 					else{
-						reject(Error('Data didn\'t load successfully; error code:' + xhr.statusText))
+						reject(Error('Data didn\'t load successfully; error code:' + xhr.statusText));
 					}
 				};
 				xhr.onerror = function() {
@@ -59,7 +59,7 @@ module.exports = React.createClass({
 				var self = this;
 				getPostData(this.props.data.post_id).then(
 					function(post_string){
-						var post = JSON.parse(post_string).post;
+						var post = JSON.parse(post_string).posts[0];
 						self.setState({
 							title: post.title,
 							content: post.content
@@ -77,7 +77,7 @@ module.exports = React.createClass({
 		}
 	},
 	saveContent: function (event) {
-		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent();
+		var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent({format : 'raw'});
 		
 		// alert("Title is " + document.getElementsByClassName('new-post-title')[0].value);
 		// alert("Content is " + tinyMCE.activeEditor.getContent());
@@ -108,14 +108,16 @@ module.exports = React.createClass({
 	render: function () {
 		return (
 			<div className="edit-post container">
-				<div className="title">
-					<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
+				<div className="wrapper">
+					<div className="title">
+						<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
+					</div>
+					<div className="tinymce">
+						<div className="dummy-container"></div>
+					</div>
+					<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
+					<Button classes="btn btn-primary publish" content="Publish"/>
 				</div>
-				<div className="tinymce">
-					<div className="dummy-container"></div>
-				</div>
-				<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
-				<Button classes="btn btn-primary publish" content="Publish"/>
 			</div>
 		)
 	}

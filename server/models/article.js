@@ -3,7 +3,7 @@ var knex = require('knex')(connection_config[Configs.NODE_ENV]);
 
 module.exports = {
 	
-	fetch: function(query) {
+	all: function(query) {
 		if(!query){query = {}};
 		return knex('articles').where(query);
 	},
@@ -30,5 +30,8 @@ module.exports = {
 	},
 	find: function(id){
 		return knex('articles').where('id', id);
+	},
+	setViews: function(id, count){
+		return knex('articles').returning('*').where({id: id}).update({view_count: count});
 	}
 }
