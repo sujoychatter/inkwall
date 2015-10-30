@@ -28,7 +28,6 @@ export default function posts(state = initialState, action = {}) {
 		case REQUEST_POSTS:
 			return Object.assign({}, state, {isFetching: true});
 		case RECEIVE_POSTS:
-		debugger
 			return Object.assign({}, state, {
 				isFetching: false,
 				items: action.posts,

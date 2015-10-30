@@ -8,7 +8,6 @@ module.exports = React.createClass({
 		return {__html: html_string}
 	},
 	render: function () {
-		debugger
 		return (
 			<div className="show-post container">
 				<div className="wrapper">
