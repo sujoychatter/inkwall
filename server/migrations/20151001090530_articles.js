@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
 		table.text('content');
 		table.boolean('published').defaultTo(false);
 		table.boolean('approved').defaultTo(false);
+		table.integer('view_count');
 		table.timestamps();
 	});
 };

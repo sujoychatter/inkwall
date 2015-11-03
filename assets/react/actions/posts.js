@@ -1,8 +1,83 @@
 import * as types from '../constants/posts';
-require('es6-promise').polyfill();
+import {setVisibilityFilter} from './visibilityFilters'
 import fetch from 'isomorphic-fetch';
 
-export function publishPost(id) {
+function addTodoWithoutCheck() {
+
+	return {
+		type: types.PUBLISH_POST,
+		text: "My first Post"
+	};
+}
+
+function receivePosts(json){
+	return {
+		type: types.RECEIVE_POSTS,
+		posts: json.posts,
+		receivedAt: Date.now()
+	}
+}
+
+export function setSelectedPost(post){
+	return {
+		type: types.SET_SELECTED_POST,
+		post: post
+	}
+}
+
+//function fetchPosts(text) {
+//	return function (dispat
+// ch) {
+//		dispatch(addTodoWithoutCheck());
+//		fetch("https://buy.housing.com/api/v0/search/suggest/?&string=powa&cursor=4&source=web&source=web").then(
+//			(result) =>  dispatch(addTodoWithoutCheck()),
+//			(error) =>  dispatch(addTodoWithoutCheck())
+//		);
+//	}
+//}
+
+function requestPost(){
+	return {
+		type: types.REQUEST_POSTS
+	}
+}
+
+export function fetchAllPosts(){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts').then(response => response.json()).then(json => 
+			dispatch(receivePosts(json))
+		)
+	}
+}
+
+export function setSelectedPostByName(postName){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts/by_name?name=' + postName).then(
+			response => response.json()
+		).then(function(json){
+			dispatch(setSelectedPost(json.posts[0]));
+			dispatch(receivePosts(json));
+			dispatch(setVisibilityFilter("SHOW_ONE"));
+		})
+	}
+}
+
+export function setSelectedPostById(id){
+	return function(dispatch){
+		dispatch(requestPost());
+		return fetch('/api/posts/' + id + '?for_edit=true').then(
+			response => response.json()
+		).then(function(json){
+			dispatch(setSelectedPost(json.posts[0]));
+			dispatch(receivePosts(json));
+			dispatch(setVisibilityFilter("SHOW_ONE"));
+		})
+	}
+}
+
+export function publishPost() {
 	return function (dispatch) {
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',

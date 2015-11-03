@@ -10,9 +10,10 @@ function ensureAuthenticated(req, res, next) {
 	next();
 }
 
-router.get('/', controller.fetchPosts);
 router.post('/create', ensureAuthenticated, controller.createPost);
+router.get('/by_name', controller.getPostsByName);
 router.get('/:id', controller.getPost);
-router.put('/:id/update', controller.updatePost);
+router.get('/', controller.getPosts);
+router.put('/:id/update', ensureAuthenticated, controller.updatePost);
 
 module.exports = router;
