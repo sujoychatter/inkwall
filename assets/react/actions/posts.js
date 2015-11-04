@@ -64,6 +64,20 @@ export function setSelectedPostByName(postName){
 	}
 }
 
+export function savePost(post){
+	console.log(post)
+	return function(dispatch){
+		return fetch('/api/posts/' + post.id + '/update?' + 'post=' + JSON.stringify(post), {
+			credentials: 'include',
+			method: 'PUT'
+		}).then(
+			response => response.json()
+		).then(function(json){
+			dispatch(receivePosts(json));
+		})
+	}
+}
+
 export function setSelectedPostById(id){
 	return function(dispatch){
 		dispatch(requestPost());
@@ -74,12 +88,6 @@ export function setSelectedPostById(id){
 			dispatch(receivePosts(json));
 			dispatch(setVisibilityFilter("SHOW_ONE"));
 		})
-	}
-}
-
-export function publishPost() {
-	return function (dispatch) {
-		dispatch(addTodoWithoutCheck());
 	}
 }
 

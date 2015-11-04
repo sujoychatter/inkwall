@@ -7,11 +7,11 @@ module.exports = {
 		if(!query){query = {}};
 		return knex('articles').where(query);
 	},
-	update: function(id, params, user_id){
-		var title = params.title,
-		content = params.content,
+	update: function(id, post, user_id){
+		var title = post.title,
+		content = post.content,
 		time = new Date;
-		return knex('articles').where({id: id, user_id: user_id}).update({title: title, content: content, updated_at: time});
+		return knex('articles').returning('*').where({id: id, user_id: user_id}).update({title: title, content: content, updated_at: time});
 	},
 	create: function(data){
 		var user = data.user,
