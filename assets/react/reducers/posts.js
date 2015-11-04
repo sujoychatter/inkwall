@@ -8,20 +8,22 @@ const initialState = {
 export default function posts(state = initialState, action = {}) {
 	switch (action.type) {
 		case PUBLISH_POST:
-			return state.map((post) => {
+			var items = state.items.map((post) => {
 				if(post.id == action.id){
 					post.published = true;
 				}
 				return post
 			});
+			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case UN_PUBLISH_POST:
-			return state.map((post) => {
+			var items = state.items.map((post) => {
 				if(post.id == action.id){
 					post.published = false;
 				}
 				return post
 			});
+			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case REMOVE_POST:
 			return state.filter((post) => map.id != action.id);
@@ -31,12 +33,14 @@ export default function posts(state = initialState, action = {}) {
 
 		case REQUEST_POSTS:
 			return Object.assign({}, state, {isFetching: true});
+		
 		case RECEIVE_POSTS:
 			return Object.assign({}, state, {
 				isFetching: false,
 				items: action.posts,
 				lastUpdate: action.receivedAt
 			});
+		
 		case SET_SELECTED_POST:
 			return Object.assign({}, state, {
 				selected_post_id: action.post.id

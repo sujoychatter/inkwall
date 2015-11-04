@@ -77,7 +77,7 @@ export function setSelectedPostById(id){
 	}
 }
 
-export function publishPost() {
+export function publishPost(id) {
 	return function (dispatch) {
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
