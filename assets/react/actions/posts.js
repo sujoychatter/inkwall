@@ -64,6 +64,31 @@ export function setSelectedPostByName(postName){
 	}
 }
 
+function getPostPreview(){
+	var preview = tinyMCE.activeEditor.getContent({format : 'text'}).split('\n');
+	preview = preview.slice(0,4).join('\n').substring(0,300);
+	return preview
+}
+
+export function savePost(post){
+	post.preview = getPostPreview(post.content)
+	return function(dispatch){
+		return fetch('/api/posts/' + post.id + '/update', {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify(post),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(
+			response => response.json()
+		).then(function(json){
+			dispatch(receivePosts(json));
+		})
+	}
+}
+
 export function setSelectedPostById(id){
 	return function(dispatch){
 		dispatch(requestPost());

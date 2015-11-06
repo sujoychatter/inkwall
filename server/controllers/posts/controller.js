@@ -11,13 +11,15 @@ var Article = require(_dir.DIR_MODELS + '/article');
 module.exports = {
 	editPost: function (req, res, next) {
 		Article.find(req.params.id).then(
-			function(article){
-				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user});
+			function(articles){
+				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles});
 				var data = {}
 				if (req.user) {
 					data.user = {name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 				}
-				data.selected_post = article;
+				data.posts = articles;
+				data.posts_visibility = "SHOW_ONE";
+				data.selected_post = articles[0];
 				return res.render('new_post', {
 					title: 'Fodoo',
 					markup: React.renderToString(wrapper_element),

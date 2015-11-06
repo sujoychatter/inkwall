@@ -12,7 +12,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //page endpoints
-router.get('/:id/edit', controller.editPost);
+router.get('/:id/edit', ensureAuthenticated, controller.editPost);
 router.get('/:name', controller.showPost);
 
 

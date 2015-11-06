@@ -2,9 +2,9 @@ var Article = require(_dir.DIR_MODELS + '/article');
 var User = require(_dir.DIR_MODELS + '/user'); 
 module.exports = {
 	updatePost: function(req, res, next){
-		Article.update(req.params.id, req.body, req.user.id).then(
-			function(){
-				return res.status(200).json({success: true});
+		return Article.update(req.params.id, req.body, req.user.id).then(
+			function(articles){
+				return res.status(200).send({posts: articles});
 			}
 		);
 	},
@@ -14,7 +14,7 @@ module.exports = {
 		});
 	},
 	getPosts: function(req, res, next){
-		Article.all().then(function(posts){
+		return Article.all().then(function(posts){
 			var result = [];
 
 			function updateAndCheck(index, user){

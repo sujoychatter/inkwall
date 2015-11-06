@@ -4,10 +4,10 @@ var controller = require('./api_controller');
 
 /* GET home page. */
 function ensureAuthenticated(req, res, next) {
-	if (!req.isAuthenticated()) {
-		return res.status(403).json({message: "Access Denied"});
+	if (req.isAuthenticated()) {
+		return next();
 	}
-	next();
+	res.redirect('/')
 }
 
 router.post('/create', ensureAuthenticated, controller.createPost);

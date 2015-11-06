@@ -22,7 +22,7 @@ module.exports = {
 		var time = new Date;
 		var query = modelHelper.getValidQueryParams(keys, params);
 		query.updated_at = time;
-		return knex('articles').where({id: id, user_id: user_id}).update(query);
+		return knex('articles').returning('*').where({id: id, user_id: user_id}).update(query);
 	},
 	create: function(data){
 		var user = data.user,
