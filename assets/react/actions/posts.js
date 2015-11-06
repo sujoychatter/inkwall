@@ -64,12 +64,23 @@ export function setSelectedPostByName(postName){
 	}
 }
 
+function getPostPreview(){
+	var preview = tinyMCE.activeEditor.getContent({format : 'text'}).split('\n');
+	preview = preview.slice(0,4).join('\n').substring(0,300);
+	return preview
+}
+
 export function savePost(post){
-	console.log(post)
+	post.preview = getPostPreview(post.content)
 	return function(dispatch){
-		return fetch('/api/posts/' + post.id + '/update?' + 'post=' + JSON.stringify(post), {
+		return fetch('/api/posts/' + post.id + '/update', {
 			credentials: 'include',
-			method: 'PUT'
+			method: 'PUT',
+			body: JSON.stringify(post),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
 		}).then(
 			response => response.json()
 		).then(function(json){
@@ -91,16 +102,58 @@ export function setSelectedPostById(id){
 	}
 }
 
+export function publishPost(id) {
+	return function (dispatch) {
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({published: true}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(function(){
+				return dispatch({ type: types.PUBLISH_POST, id});
+			}
+		)
+
+	}
+}
+
 export function createPosts(posts) {
 	return function (dispatch) {
 		dispatch({type: types.CREATE_BLOGS, posts: posts});
 	}
 }
 
-export function deletePost(id) {
-	return { type: types.DELETE_POST, id };
+export function removePost(id) {
+	return function (dispatch) {
+		var url = "/api/posts/" + id;
+		request({
+			url: url,
+			type: "put",
+			data: {active: false}
+		}).then(() =>{
+			return dispatch({ type: types.REMOVE_POST, id});
+		});
+
+	}
 }
 
-export function unpublishPost(id, text) {
-	return { type: types.UNPUBLISH_POST, id, tex};
+export function unPublishPost(id) {
+	return function (dispatch) {
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({published: false}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(function(){
+			return dispatch({ type: types.UN_PUBLISH_POST, id});
+		})
+	}
 }

@@ -18,6 +18,9 @@ module.exports = React.createClass({
 		}
 		return data;
 	},
+	myPosts: function(){
+		this.transitionTo('/my-posts');
+	},
 	newPost: function(){
 		var _this = this;
 		function handleNewPost(){
@@ -54,7 +57,11 @@ module.exports = React.createClass({
 		else{
 			logo_link = <a href="/"><img src="/images/logo.png" type="image/png"></img></a>
 		}
-		var options = [{name: "New Post", callback: this.newPost}, {name: "Logout", backend_route: '/logout'}]
+		var options = [
+			{name: "New Post", callback: this.newPost},
+			{name: "My Posts", callback: this.myPosts},
+			{name: "Logout", backend_route: '/logout'}
+		]
 		return (
 			<div className="header">
 				{logo_link}

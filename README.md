@@ -12,9 +12,9 @@ Users can submit their own posts.
 
 ###Start application
 - npm install
-- gulp migrate:latest
+- knex --knexfile server/config/knexfile.js <command>
 - gulp
 - DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  node app.js
-- 
+-
 
 You can find demo at http://www.fodoo.in

@@ -67,27 +67,6 @@ module.exports = React.createClass({
 			content: tinyMCE.activeEditor.getContent({format : 'raw'})
 		}
 		this.props.dispatch(savePost(post))
-		// var params = "title=" + document.getElementsByClassName('blog-title')[0].value + "&content=" + tinyMCE.activeEditor.getContent({format : 'raw'});
-		// function handler()
-		// {
-		//     if (oReq.readyState == 4 /* complete */) {
-		//         if (oReq.status == 201) {
-		//             console.log(oReq.responseText);
-		//         }
-		//     }
-		// }
-		// var oReq = new XMLHttpRequest();
-		// if (oReq != null) {
-		// 	oReq.open("PUT", "/api/posts/"+ this.props.data.post_id +"/update", true);
-		//     //Send the proper header information along with the request
-		// 	oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-		//     oReq.onreadystatechange = handler;
-		//     oReq.send(params);
-		// }
-		// else {
-		//     console.log("AJAX (XMLHTTP) not supported.");
-		// }
 	},
 	onTitleChange: function(event){
 		this.setState({title:  event.target.value});

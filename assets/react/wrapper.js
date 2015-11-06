@@ -8,14 +8,14 @@ export default class Wrapper extends Component{
 	constructor(props){
 		super(props);
 	}
-	handleScroll(e) {
-		if (e.target.scrollTop > 10) {
-			document.body.className = "shrunk-header"
-		}
-		else if (e.target.scrollTop < 10) {
-			document.body.className = ""
-		}
-	}
+	// handleScroll(e) {
+	// 	if (e.target.scrollTop > 10) {
+	// 		document.body.className = "shrunk-header"
+	// 	}
+	// 	else if (e.target.scrollTop < 10) {
+	// 		document.body.className = ""
+	// 	}
+	// }
 	componentWillMount(){
 		if (ExecutionEnvironment.canUseDOM && this.props.cssElementId && !document.getElementById(this.props.cssElementId)) {
 			var linkElement = document.createElement('link');
@@ -26,16 +26,17 @@ export default class Wrapper extends Component{
 		}
 	}
 	componentDidMount(){
-		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('wrapper')[0].addEventListener('scroll', this.handleScroll);
-		}
+		// if (ExecutionEnvironment.canUseDOM) {
+		// 	document.getElementsByClassName('wrapper')[0].addEventListener('scroll', this.handleScroll);
+		// }
 	}
 	componentWillUnmount() {
-		if (ExecutionEnvironment.canUseDOM) {
-			document.getElementsByClassName('wrapper')[0].removeEventListener('scroll', this.handleScroll);
-		}
+		// if (ExecutionEnvironment.canUseDOM) {
+		// 	document.getElementsByClassName('wrapper')[0].removeEventListener('scroll', this.handleScroll);
+		// }
 	}
 	render() {
+		debugger
 		const { dispatch } = this.props;
 		this.props.actions = bindActionCreators(postsActions, dispatch);
 		var Child = this.props.child;
