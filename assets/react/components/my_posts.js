@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import {publishPost, unPublishPost, removePost, fetchPosts, receivePosts} from '../actions/posts'
 import Button from './common/button';
+import Router from 'react-router';
+import { Navigation, Link } from 'react-router';
 
 export default class MyPosts extends Component {
-	constructor(props){
-		super(props);
+	constructor(props, context){
+		super(props, context);
+		context.router
 	}
 	componentDidMount(){
 		let dispatch = this.props.dispatch;
@@ -12,13 +15,16 @@ export default class MyPosts extends Component {
 			dispatch(receivePosts(posts))
 		})
 	}
+	openPost(post){
+		this.context.router.transitionTo('/posts/' + post.id + '/edit');
+	}
 	getPostElement(){
 		let elems = [];
 		const posts = this.props.posts;
 		if(posts) {
 			posts.forEach((post) => {
 				return elems.push(
-					<div className="item" data-id={post.id} key={post.id}>
+					<div onClick={this.openPost.bind(this, post)}className="item" data-id={post.id} key={post.id}>
 						<div className="item-title">{post.title}</div>
 						<div className="item-preview">{post.preview}</div>
 						<div className="last-updated">{post.updated_at}</div>
@@ -52,4 +58,7 @@ export default class MyPosts extends Component {
 			</div>
 		)
 	}
+};
+MyPosts.contextTypes = {
+    router: React.PropTypes.func.isRequired
 };
