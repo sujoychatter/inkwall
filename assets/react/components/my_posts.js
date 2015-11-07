@@ -40,7 +40,9 @@ export default class MyPosts extends Component {
 	render() {
 		return (
 			<div className="container my-posts">
+				<div className="wrapper">
 				{this.getPostElement()}
+				</div>
 			</div>
 		)
 	}
