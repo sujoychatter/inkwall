@@ -2,7 +2,10 @@ var Article = require(_dir.DIR_MODELS + '/article');
 var User = require(_dir.DIR_MODELS + '/user'); 
 module.exports = {
 	updatePost: function(req, res, next){
-		return Article.update(req.params.id, req.body, req.user.id).then(
+		post = req.body
+		if(post.title)
+			post.url = post.title.replace(/[^((a-z)|(A-Z)|(\s))]*/g, "").replace(/\s+/g, "-")
+		return Article.update(req.params.id, post, req.user.id).then(
 			function(articles){
 				return res.status(200).send({posts: articles});
 			}
@@ -34,7 +37,7 @@ module.exports = {
 		})
 	},
 	getPostsByName: function(req, res, next){
-		Article.all({title: req.query.name.replace(/-/g, " ")}).then(function(articles){
+		Article.all({url: req.query.name}).then(function(articles){
 			var result = [];
 		
 			function updateAndReturn(user){

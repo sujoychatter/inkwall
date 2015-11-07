@@ -6,6 +6,8 @@ var Home = require('./components/home.js');
 var MyPosts = require('./components/my_posts.js');
 var EditPost = require('./components/edit_post.js');
 var ShowPost = require('./components/show_post.js');
+import {Filters} from './constants/visibilityFilters';
+import {fetchAllPosts} from './actions/posts';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
@@ -34,6 +36,8 @@ function selectPosts(posts, filter, my_id, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts;
+		case VisibilityConstants.Filters.SHOW_ALL_PUBLISHED:
+			return posts.filter(post => post.published === true);
 		case VisibilityConstants.Filters.SHOW_MY:
 			return posts.filter(post => post.user_id == my_id);
 		case VisibilityConstants.Filters.SHOW_ONE:
@@ -52,6 +56,8 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 
 class HomeWrapperElement extends Component{
 	render() {
+		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_PUBLISHED));
+		store.dispatch(fetchAllPosts())
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}

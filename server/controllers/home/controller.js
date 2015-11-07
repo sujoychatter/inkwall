@@ -9,14 +9,14 @@ var User = require(_dir.DIR_MODELS + '/user');
 
 module.exports = {
 	init: function (req, res, next) {
-		Article.all().then(function(posts){
+		Article.all({published: true}).then(function(posts){
 			var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: posts});
 			var data = {};
 			if (req.user) {
 				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 			}
 			data.posts = posts;
-			data.posts_visibility = "SHOW_ALL";
+			data.posts_visibility = "SHOW_ALL_PUBLISHED";
 			return res.render('home', {
 					title: 'Fodoo',
 					markup: React.renderToString(wrapper_element),
