@@ -33,18 +33,25 @@ module.exports = React.createClass({
 		this.initiateMasonry();
 	},
 	getImageTag: function(content_text){
-		if(!content_text){
+		try{
+			if(!content_text){
+				return ""
+			}
+			var img_tag = content_text.match('img[^>]*src[^>]*');
+			if(img_tag && img_tag[0]){
+				var width = parseInt(img_tag[0].match(/width="\d*/)[0].slice(7)),
+				height = parseInt(img_tag[0].match(/height="\d*/)[0].slice(8)),
+				cardImageWidth = (230 - 6),
+				cardImageHeight = (cardImageWidth/width)*height;
+				var image_url = img_tag[0].match('src="[^"]*"');
+				var url = image_url[0].slice(5, (image_url.length - 2));
+				return <img src={url} height={cardImageHeight + 'px'} width={cardImageWidth + 'px'} className="post-image"></img>
+			}else{
+				return ""
+			}
+		}catch(e){
+			console.log(e)
 			return ""
-		}
-		var img_tag = content_text.match('img[^>]*src[^>]*');
-		if(img_tag){
-			var width = parseInt(img_tag[0].match(/width="\d*/)[0].slice(7)),
-			height = parseInt(img_tag[0].match(/height="\d*/)[0].slice(8)),
-			cardImageWidth = (230 - 6),
-			cardImageHeight = (cardImageWidth/width)*height;
-			var image_url = img_tag[0].match('src="[^"]*"');
-			var url = image_url[0].slice(5, (image_url.length - 2));
-			return <img src={url} height={cardImageHeight + 'px'} width={cardImageWidth + 'px'} className="post-image"></img>
 		}
 	},
 	render: function () {
@@ -56,7 +63,7 @@ module.exports = React.createClass({
 					{self.getImageTag(post.content)}
 					<div className="title">{post.title}</div>
 					<div className="details">
-						<span className="author">{post.user.name}</span>
+						<span className="author">{post.user_name}</span>
 						<span className="view-count">{post.view_count}</span>
 					</div>
 				</div>
