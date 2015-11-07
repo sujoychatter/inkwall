@@ -36,7 +36,6 @@ export default class Wrapper extends Component{
 		// }
 	}
 	render() {
-		debugger
 		const { dispatch } = this.props;
 		this.props.actions = bindActionCreators(postsActions, dispatch);
 		var Child = this.props.child;

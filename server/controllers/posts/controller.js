@@ -31,7 +31,7 @@ module.exports = {
 	},
 
 	showPost: function (req, res, next){
-		Article.all({title: req.params.name.replace(/-/g, " ")}).then(
+		Article.all({url: req.params.name}).then(
 			function(articles){
 				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles});
 				var data = {};

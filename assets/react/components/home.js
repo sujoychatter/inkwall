@@ -1,24 +1,15 @@
 var React = require('react');
-import {fetchAllPosts} from '../actions/posts';
-import {setVisibilityFilter} from '../actions/visibilityFilters'
-import {Filters} from '../constants/visibilityFilters';
 import Router, { Navigation, Link } from 'react-router';
 
 module.exports = React.createClass({
 
 	mixins: [Navigation],
 
-	cardClicked: function(post_title){
-		this.transitionTo('/posts/' + post_title.replace(/\s/g, "-"));
+	cardClicked: function(url){
+		this.transitionTo('/posts/' + url);
 	},
 	setPosts: function(){
 		this.setState(Object.assign({}, state, {posts: this.props.items}))
-	},
-	componentWillMount: function(){
-		if(this.props.dispatch){
-			this.props.dispatch(setVisibilityFilter(Filters.SHOW_ALL));
-			this.props.dispatch(fetchAllPosts())
-		}
 	},
 	initiateMasonry: function(){
 		var cardContainer = document.getElementsByClassName('cards-container')[0];
@@ -61,7 +52,7 @@ module.exports = React.createClass({
 		var items = [];
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
-				return <div key={index} className="card" onClick={self.cardClicked.bind(null, post.title)}>
+				return <div key={index} className="card" onClick={self.cardClicked.bind(null, post.url)}>
 					{self.getImageTag(post.content)}
 					<div className="title">{post.title}</div>
 					<div className="details">
