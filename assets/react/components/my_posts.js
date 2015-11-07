@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import {publishPost, unPublishPost, removePost} from '../actions/posts'
+import {publishPost, unPublishPost, removePost, fetchPosts, receivePosts} from '../actions/posts'
 import Button from './common/button';
 
 export default class MyPosts extends Component {
 	constructor(props){
 		super(props);
+	}
+	componentDidMount(){
+		let dispatch = this.props.dispatch;
+		fetchPosts({user_id: this.props.user.id}).then(function(posts){
+			dispatch(receivePosts(posts))
+		})
 	}
 	getPostElement(){
 		let elems = [];

@@ -11,7 +11,7 @@ import {fetchAllPosts} from './actions/posts';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById } from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost} from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
@@ -91,6 +91,8 @@ class ShowPostWrapperElement extends Component{
 
 class MyPostsWrapperElement extends Component{
 	render() {
+		store.dispatch(setVisibilityFilter(Filters.SHOW_MY))
+		store.dispatch(requestPost())
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={MyPosts}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}

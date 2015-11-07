@@ -16,26 +16,14 @@ module.exports = {
 			return res.status(201).send({id: id[0]});
 		});
 	},
+
 	getPosts: function(req, res, next){
-		return Article.all().then(function(posts){
-			var result = [];
-
-			function updateAndCheck(index, user){
-				var post = posts[index];
-				post.user = user[0];
-				result.push(post);
-				if(result.length == posts.length){
-					return res.status(200).send({posts: result});
-				}
-			}
-
-			posts.forEach(function(post, index){
-				User.find(post.user_id).then(function(index, user){
-					updateAndCheck(index, user);
-				}.bind(this, index))
-			});
+		var query = req.query || {}
+		return Article.all(query).then(function(posts){
+			res.status(200).send({posts: posts});
 		})
 	},
+	
 	getPostsByName: function(req, res, next){
 		Article.all({url: req.query.name}).then(function(articles){
 			var result = [];
