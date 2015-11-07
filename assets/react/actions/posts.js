@@ -10,6 +10,10 @@ export function receivePosts(posts){
 	}
 }
 
+export function removePost(id){
+	return { type: types.REMOVE_POST, id}
+}
+
 export function setSelectedPost(post){
 	return {
 		type: types.SET_SELECTED_POST,
@@ -136,18 +140,17 @@ export function createPosts(posts) {
 	}
 }
 
-export function removePost(id) {
-	return function (dispatch) {
-		var url = "/api/posts/" + id;
-		request({
-			url: url,
-			type: "put",
-			data: {active: false}
-		}).then(() =>{
-			return dispatch({ type: types.REMOVE_POST, id});
-		});
-
-	}
+export function updatePost(id, query) {
+	var url = "/api/posts/" + id + '/update';
+	return fetch(url, {
+		credentials: 'include',
+		method: 'PUT',
+		body: JSON.stringify(query),
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+	})
 }
 
 export function unPublishPost(id) {

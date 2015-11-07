@@ -26,7 +26,8 @@ export default function posts(state = initialState, action = {}) {
 			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case REMOVE_POST:
-			return state.filter((post) => map.id != action.id);
+			var items = state.items.filter((post) => post.id != action.id)
+			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case CREATE_BLOGS:
 			return Object.assign({},state,  {isFetching: false, items: action.posts} );
@@ -35,9 +36,26 @@ export default function posts(state = initialState, action = {}) {
 			return Object.assign({}, state, {isFetching: true});
 		
 		case RECEIVE_POSTS:
+			var posts =  action.posts,
+				items =  state.items,
+				new_items, is_present;
+			
+			new_items = posts || [];
+			for(var i in items){
+				is_present = false;
+				for(var j in posts){
+					if(posts[j].id == items[i].id){
+						is_present = true;
+						break;
+					}
+				}
+				if(!is_present){
+					new_items.push(items[i])
+				}
+			}
 			return Object.assign({}, state, {
 				isFetching: false,
-				items: action.posts,
+				items: new_items,
 				lastUpdate: action.receivedAt
 			});
 		
