@@ -11,6 +11,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 router.post('/create', ensureAuthenticated, controller.createPost);
+router.get('/my', ensureAuthenticated, controller.getMyPosts);
 router.get('/by_name', controller.getPostsByName);
 router.get('/:id', controller.getPost);
 router.get('/', controller.getPosts);

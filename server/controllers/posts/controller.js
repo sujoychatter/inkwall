@@ -15,7 +15,7 @@ module.exports = {
 				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles});
 				var data = {}
 				if (req.user) {
-					data.user = {name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
+					data.user = {name: req.user.name, id: req.user.id, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 				}
 				data.posts = articles;
 				data.posts_visibility = "SHOW_ONE";

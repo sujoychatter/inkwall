@@ -58,10 +58,24 @@ export function fetchAllPosts(){
 	}
 }
 
+export function fetchMyPosts(){
+	return function(dispatch){
+		fetch('/api/posts/my',{credentials: 'include'})
+		.then(response => response.json())
+		.then(function(json){
+			return dispatch(receivePosts(json.posts))
+		})
+	}
+}
+
 export function fetchPosts(query){
-	return fetch('/api/posts'.concat(encodeQueryParams(query)))
-	.then(response => response.json())
-	.then(function(json){ return json.posts })
+	return function(dispatch){
+		fetch('/api/posts'.concat(encodeQueryParams(query)))
+		.then(response => response.json())
+		.then(function(json){
+			return dispatch(receivePosts(json.posts))
+		})
+	}
 }
 
 export function setSelectedPostByName(postName){

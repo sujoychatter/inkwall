@@ -32,7 +32,7 @@ passport.use(new FacebookStrategy({
 		enableProof: false,
 		profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
 	},
-	function(accessToken, refreshToken, profile, done) {
+	function(accessToken, refreshToken, profile, done){
 		knex.select().from('users').where('profile_id', profile.id).then(function(rows){
 			if(rows.length == 1){
 				return done(null, rows[0]);

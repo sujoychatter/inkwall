@@ -14,6 +14,12 @@ module.exports = React.createClass({
 					<div className="title">
 						{this.props.posts[0].title}
 					</div>
+					<div className="user-details">
+						<img className="user-image" src={this.props.posts[0].user_photo}/>
+						<span className="user-name">
+							{this.props.posts[0].user_name}
+						</span>
+					</div>
 					<div className="content" dangerouslySetInnerHTML={this.createContent(this.props.posts[0].content)}>
 					</div>
 				</div>

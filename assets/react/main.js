@@ -11,7 +11,7 @@ import {fetchAllPosts} from './actions/posts';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost} from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost, fetchMyPosts} from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {setUserData} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
@@ -39,6 +39,8 @@ function selectPosts(posts, filter, my_id, state){
 		case VisibilityConstants.Filters.SHOW_ALL_PUBLISHED:
 			return posts.filter(post => post.published === true);
 		case VisibilityConstants.Filters.SHOW_MY:
+			if(state.user.admin)
+				return posts;
 			return posts.filter(post => post.user_id == my_id);
 		case VisibilityConstants.Filters.SHOW_ONE:
 			return posts.filter(post => post.id == state.posts.selected_post_id);
@@ -91,8 +93,8 @@ class ShowPostWrapperElement extends Component{
 
 class MyPostsWrapperElement extends Component{
 	render() {
+		store.dispatch(fetchMyPosts())
 		store.dispatch(setVisibilityFilter(Filters.SHOW_MY))
-		store.dispatch(requestPost())
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={MyPosts}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}

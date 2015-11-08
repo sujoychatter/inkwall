@@ -21,7 +21,10 @@ module.exports = React.createClass({
 			isInitLayout: false
 		});
 		this.masonry.on('layoutComplete', function(){
-			document.getElementsByClassName('cards-container')[0].className = "cards-container show-cards";
+			var element = document.getElementsByClassName('cards-container')[0]
+			if(element){
+				element.className = "cards-container show-cards";
+			}
 		});
 		this.masonry.layout();
 		// }
