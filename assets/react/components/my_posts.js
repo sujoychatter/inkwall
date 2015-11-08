@@ -15,6 +15,24 @@ export default class MyPosts extends Component {
 	getPostElement(){
 		let elems = [];
 		const posts = this.props.posts;
+		var admin_user = this.props.user.admin
+		function showPublishButton(post){
+			if(admin_user){
+				return <Button onclicking={
+					post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
+				} content={post.published ? 'Un-Publish' : 'Publish'}/>
+			}
+		}
+		function showRemoveButton(post){
+			if(post.published !== true){
+				return <Button onclicking={this.remove.bind(this, post)} content={"Remove"}/>
+			}
+		}
+		function showEditButton(post){
+			if(post.published !== true){
+				return <Button onclicking={this.openPost.bind(this, post)} content={"Edit"}/>
+			}
+		}
 		if(posts) {
 			posts.forEach((post) => {
 				return elems.push(
@@ -23,12 +41,9 @@ export default class MyPosts extends Component {
 						<div className="item-preview">{post.preview}</div>
 						<div className="last-updated">{post.updated_at}</div>
 						<div className="post-controls">
-							<Button onclicking={
-								post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
-							} content={post.published ? 'Un-Publish' : 'Publish'}/>
-							<Button onclicking={this.remove.bind(this, post)} content={"Remove"}/>
-							<Button onclicking={this.openPost.bind(this, post)} content={"Edit"}/>
-							<Button onclicking={this.openPost.bind(this, post)} content={"Preview"}/>
+							{showPublishButton.call(this,post)}
+							{showEditButton.call(this,post)}
+							{showRemoveButton.call(this,post)}
 						</div>
 					</div>
 				)
