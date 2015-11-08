@@ -11,7 +11,7 @@ module.exports = {
 		);
 	},
 	createPost: function(req, res, next){
-		return Article.create({user: req.user}).then(function(id){
+		return Article.create({user: req.user, active: true}).then(function(id){
 			return res.status(201).send({id: id[0]});
 		});
 	},

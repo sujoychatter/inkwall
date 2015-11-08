@@ -15,8 +15,9 @@ var admin_keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name']
 module.exports = {
 	all: function(query){
-		if(!query){query = {}};
+		if(!query){query = {active: true}};
 		query = modelHelper.getValidQueryParams(admin_keys, query);
+		query.active = true
 		return knex
 		.select(final_keys)
 		.from('articles')
