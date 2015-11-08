@@ -24,19 +24,14 @@ module.exports = {
 		.where(query)
 	},
 	update: function(id, params, user_id, admin){
-		var time = new Date,
-		check_keys = admin_keys,
+		var check_keys = admin_keys,
 		filters = {id: id};
 		if(admin !== true){
 			filters.published = false;
 			filters.user_id = user_id;
 			check_keys = keys;
 		}
-		var query = modelHelper.getValidQueryParams(check_keys, params);
-		if(params.title){
-			query.url = params.title.replace(/[^((a-z)|(A-Z)|(\s))]*/g, "").replace(/\s+/g, "-")
-		}
-		query.updated_at = time;
+		var query = modelHelper.getArticleValidQueryParams(check_keys, params);
 		return knex('articles').returning('*').where(filters).update(query);
 	},
 	create: function(data){
