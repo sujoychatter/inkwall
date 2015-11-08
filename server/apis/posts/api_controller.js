@@ -28,23 +28,7 @@ module.exports = {
 	
 	getPostsByName: function(req, res, next){
 		Article.all({url: req.query.name}).then(function(articles){
-			var result = [];
-		
-			function updateAndReturn(user){
-				var post = articles[0];
-				post.user = user[0];
-				result.push(post);
-
-				var viewCount = articles[0].view_count,
-				id = articles[0].id;
-				Article.setViews(id, (viewCount+ 1)).then(function(articles){
-					return res.status(200).send({posts: result});
-				});
-			}	
-
-			User.find(articles[0].user_id).then(function(user){
-				updateAndReturn(user);
-			})
+			return res.status(200).send({posts: articles});
 		})
 	},
 	getPost: function(req, res, next){
@@ -63,5 +47,10 @@ module.exports = {
 				updateAndReturn(user);
 			})
 		});
+	},
+	getMyPosts: function(req, res,next){
+		return Article.all({user_id: req.user.id}).then(function(posts){
+			res.status(200).send({posts: posts});
+		})
 	}
 }

@@ -9,12 +9,6 @@ export default class MyPosts extends Component {
 		super(props, context);
 		context.router
 	}
-	componentDidMount(){
-		let dispatch = this.props.dispatch;
-		fetchPosts({user_id: this.props.user.id}).then(function(posts){
-			dispatch(receivePosts(posts))
-		})
-	}
 	openPost(post){
 		this.context.router.transitionTo('/posts/' + post.id + '/edit');
 	}

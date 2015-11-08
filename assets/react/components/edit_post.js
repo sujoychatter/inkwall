@@ -14,6 +14,9 @@ module.exports = React.createClass({
 		if(nextProps.posts[0])
 			this.setState({title:  nextProps.posts[0].title});
 	},
+	componentWillUnmount: function(){
+		tinyMCE.activeEditor = null
+	},
 	setupEditor: function(){
 		var self = this;
 		this.noRerender = true
