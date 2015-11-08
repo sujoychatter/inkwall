@@ -11,7 +11,8 @@ module.exports = React.createClass({
 		this.setupEditor()
 	},
 	componentWillReceiveProps: function(nextProps) {
-		this.setState({title:  nextProps.posts[0].title});
+		if(nextProps.posts[0])
+			this.setState({title:  nextProps.posts[0].title});
 	},
 	setupEditor: function(){
 		var self = this;

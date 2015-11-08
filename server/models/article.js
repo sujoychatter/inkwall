@@ -10,7 +10,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //	limit: "Integer"
 //};
 
-var keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title']
+var keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name']
 module.exports = {
 	all: function(query){
