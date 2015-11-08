@@ -5,6 +5,24 @@ const initialState = {
 	isFetching: false
 }
 
+function mergePosts(items, posts){
+	var new_items, is_present;
+	new_items = posts || [];
+	for(var i in items){
+		is_present = false;
+		for(var j in posts){
+			if(parseInt(posts[j].id) == parseInt(items[i].id)){
+				is_present = true;
+				break;
+			}
+		}
+		if(!is_present){
+			new_items.push(items[i])
+		}
+	}
+	return new_items;
+}
+
 export default function posts(state = initialState, action = {}) {
 	switch (action.type) {
 		case PUBLISH_POST:
@@ -26,7 +44,8 @@ export default function posts(state = initialState, action = {}) {
 			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case REMOVE_POST:
-			return state.filter((post) => map.id != action.id);
+			var items = state.items.filter((post) => post.id != action.id)
+			return Object.assign({}, state, {isFetching: false, items: items});
 
 		case CREATE_BLOGS:
 			return Object.assign({},state,  {isFetching: false, items: action.posts} );
@@ -35,9 +54,10 @@ export default function posts(state = initialState, action = {}) {
 			return Object.assign({}, state, {isFetching: true});
 		
 		case RECEIVE_POSTS:
+			var items = mergePosts(state.items, action.posts)
 			return Object.assign({}, state, {
 				isFetching: false,
-				items: action.posts,
+				items: items,
 				lastUpdate: action.receivedAt
 			});
 		

@@ -34,13 +34,13 @@ module.exports = React.createClass({
 						ed.on('init', function()
 						{
 							this.getDoc().body.style.fontSize = '14pt';
-							this.setContent(self.props.posts[0].content);
+							this.setContent(self.props.posts[0].content || "");
 						});
 					}
 				});
 			}
 			else{
-				tinyMCE.activeEditor.setContent(self.props.posts[0].content);
+				tinyMCE.activeEditor.setContent(self.props.posts[0].content || "");
 			}
 		}
 		function initiateTinyMCE() {

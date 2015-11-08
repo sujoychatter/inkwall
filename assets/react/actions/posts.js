@@ -2,20 +2,16 @@ import * as types from '../constants/posts';
 import {setVisibilityFilter} from './visibilityFilters'
 import fetch from 'isomorphic-fetch';
 
-function addTodoWithoutCheck() {
-
-	return {
-		type: types.PUBLISH_POST,
-		text: "My first Post"
-	};
-}
-
-function receivePosts(json){
+export function receivePosts(posts){
 	return {
 		type: types.RECEIVE_POSTS,
-		posts: json.posts,
+		posts: posts,
 		receivedAt: Date.now()
 	}
+}
+
+export function removePost(id){
+	return { type: types.REMOVE_POST, id}
 }
 
 export function setSelectedPost(post){
@@ -23,6 +19,17 @@ export function setSelectedPost(post){
 		type: types.SET_SELECTED_POST,
 		post: post
 	}
+}
+
+function encodeQueryParams(query){
+	var str = "?"
+	if(!query){return ""}
+	for (var key in query) {
+		if (query.hasOwnProperty(key)){
+			str += (key + '=' + query[key] + '&')
+		}
+	}
+	return str.slice(0,-1)
 }
 
 //function fetchPosts(text) {
@@ -36,7 +43,7 @@ export function setSelectedPost(post){
 //	}
 //}
 
-function requestPost(){
+export function requestPost(){
 	return {
 		type: types.REQUEST_POSTS
 	}
@@ -46,9 +53,15 @@ export function fetchAllPosts(){
 	return function(dispatch){
 		dispatch(requestPost());
 		return fetch('/api/posts').then(response => response.json()).then(json => 
-			dispatch(receivePosts(json))
+			dispatch(receivePosts(json.posts))
 		)
 	}
+}
+
+export function fetchPosts(query){
+	return fetch('/api/posts'.concat(encodeQueryParams(query)))
+	.then(response => response.json())
+	.then(function(json){ return json.posts })
 }
 
 export function setSelectedPostByName(postName){
@@ -58,7 +71,7 @@ export function setSelectedPostByName(postName){
 			response => response.json()
 		).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
-			dispatch(receivePosts(json));
+			dispatch(receivePosts(json.posts));
 			dispatch(setVisibilityFilter("SHOW_ONE"));
 		})
 	}
@@ -84,7 +97,7 @@ export function savePost(post){
 		}).then(
 			response => response.json()
 		).then(function(json){
-			dispatch(receivePosts(json));
+			dispatch(receivePosts(json.posts));
 		})
 	}
 }
@@ -96,7 +109,7 @@ export function setSelectedPostById(id){
 			response => response.json()
 		).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
-			dispatch(receivePosts(json));
+			dispatch(receivePosts(json.posts));
 			dispatch(setVisibilityFilter("SHOW_ONE"));
 		})
 	}
@@ -127,18 +140,17 @@ export function createPosts(posts) {
 	}
 }
 
-export function removePost(id) {
-	return function (dispatch) {
-		var url = "/api/posts/" + id;
-		request({
-			url: url,
-			type: "put",
-			data: {active: false}
-		}).then(() =>{
-			return dispatch({ type: types.REMOVE_POST, id});
-		});
-
-	}
+export function updatePost(id, query) {
+	var url = "/api/posts/" + id + '/update';
+	return fetch(url, {
+		credentials: 'include',
+		method: 'PUT',
+		body: JSON.stringify(query),
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+	})
 }
 
 export function unPublishPost(id) {
