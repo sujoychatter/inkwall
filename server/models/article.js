@@ -10,13 +10,13 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //	limit: "Integer"
 //};
 
-var keys = ['limit', 'preview', 'content', 'active', 'title']
+var keys = ['limit', 'preview', 'content', 'active', 'title', 'url']
 var admin_keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name']
 module.exports = {
 	all: function(query){
 		if(!query){query = {}};
-		query = modelHelper.getValidQueryParams(keys, query);
+		query = modelHelper.getValidQueryParams(admin_keys, query);
 		return knex
 		.select(final_keys)
 		.from('articles')
@@ -41,6 +41,7 @@ module.exports = {
 		query.created_at = time;
 		query.updated_at = time;
 		query.user_id = id;
+		query.published = false
 		return knex.insert(query).returning('id').into('articles');
 	},
 	find: function(id){

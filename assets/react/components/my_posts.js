@@ -40,6 +40,7 @@ export default class MyPosts extends Component {
 						<div className="item-title">{post.title}</div>
 						<div className="item-preview">{post.preview}</div>
 						<div className="last-updated">{post.updated_at}</div>
+						<div className="last-updated">{post.user_name}</div>
 						<div className="post-controls">
 							{showPublishButton.call(this,post)}
 							{showEditButton.call(this,post)}

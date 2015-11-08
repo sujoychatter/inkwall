@@ -46,7 +46,11 @@ module.exports = {
 		});
 	},
 	getMyPosts: function(req, res,next){
-		return Article.all({user_id: req.user.id}).then(function(posts){
+		var filter = {user_id: req.user.id}
+		if(req.user.admin === true){
+			filter = {}
+		}
+		return Article.all(filter).then(function(posts){
 			res.status(200).send({posts: posts});
 		})
 	}

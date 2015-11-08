@@ -39,6 +39,8 @@ function selectPosts(posts, filter, my_id, state){
 		case VisibilityConstants.Filters.SHOW_ALL_PUBLISHED:
 			return posts.filter(post => post.published === true);
 		case VisibilityConstants.Filters.SHOW_MY:
+			if(state.user.admin)
+				return posts;
 			return posts.filter(post => post.user_id == my_id);
 		case VisibilityConstants.Filters.SHOW_ONE:
 			return posts.filter(post => post.id == state.posts.selected_post_id);
