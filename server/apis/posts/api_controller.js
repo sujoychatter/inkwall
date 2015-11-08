@@ -2,12 +2,9 @@ var Article = require(_dir.DIR_MODELS + '/article');
 var User = require(_dir.DIR_MODELS + '/user'); 
 module.exports = {
 	updatePost: function(req, res, next){
-		post = req.body
-		if(post.title){
-			console.log(post.title.replace(/[^((a-z)|(A-Z)|(\s))]*/g, "").replace(/\s+/g, "-"))
-			post.url = post.title.replace(/[^((a-z)|(A-Z)|(\s))]*/g, "").replace(/\s+/g, "-")
-		}
-		return Article.update(req.params.id, post, req.user.id).then(
+		var post = req.body;
+		var admin = req.user.admin;
+		return Article.update(req.params.id, post, req.user.id, admin).then(
 			function(articles){
 				return res.status(200).send({posts: articles});
 			}
