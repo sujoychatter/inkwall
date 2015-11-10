@@ -39,6 +39,7 @@
 		transform: scale(0.9);
 		transition: all 0.7s;
 		cursor: pointer;
+		text-decoration: none;
 	}
 	.cards-container.show-cards .card{
 		transform: scale(1);

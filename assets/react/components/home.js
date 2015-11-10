@@ -5,8 +5,9 @@ module.exports = React.createClass({
 
 	mixins: [Navigation],
 
-	cardClicked: function(url){
+	cardClicked: function(url,e){
 		this.transitionTo('/posts/' + url);
+		e.preventDefault();
 	},
 	setPosts: function(){
 		this.setState(Object.assign({}, state, {posts: this.props.items}))
@@ -62,14 +63,16 @@ module.exports = React.createClass({
 		var items = [];
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
-				return <a key={index} className="card" onClick={self.cardClicked.bind(null, post.url)}>
-					{self.getImageTag(post.content)}
-					<div className="title">{post.title}</div>
-					<div className="details">
-						<span className="author">{post.user_name}</span>
-						<span className="view-count">{post.view_count}</span>
-					</div>
-				</a>
+				return <div itemProp="itemListElement" itemScope itemType="http://schema.org/Blog">
+					<a href={"/posts/" + post.url} key={index} itemProp="url" className="card" onClick={self.cardClicked.bind(null, post.url)}>
+						{self.getImageTag(post.content)}
+						<div className="title" itemProp="about">{post.title}</div>
+						<div className="details">
+							<span className="author" itemProp="author">{post.user_name}</span>
+							<span className="view-count">{post.view_count}</span>
+						</div>
+					</a>
+				</div>
 			});
 			return elements;
 		}
@@ -77,7 +80,7 @@ module.exports = React.createClass({
 			items = this.props.posts.slice(0,10)
 		}
 		return (
-			<div className="container home">
+			<div className="container home" itemscope="" itemtype="http://schema.org/ItemList">
 				<div className="wrapper">
 				<div className="cards-container">
 					<div className="grid-sizer"></div>
