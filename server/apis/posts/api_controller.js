@@ -29,7 +29,7 @@ module.exports = {
 		})
 	},
 	getPost: function(req, res, next){
-		return Article.all({id: req.params.id}).then(function(posts){
+		return Article.all().where({"articles.id": req.params.id}).then(function(posts){
 			res.status(200).send({posts: posts});
 		})
 	},
