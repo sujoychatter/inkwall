@@ -9,6 +9,6 @@ function ensureAuthenticated(req, res, next) {
 	}
 	res.redirect('/')
 }
-router.get('/', ensureAuthenticated, controller.myposts);
+router.get('/:profile_id', ensureAuthenticated, controller.show_profile);
 
 module.exports = router;

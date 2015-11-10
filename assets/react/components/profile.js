@@ -4,7 +4,7 @@ import Button from './common/button';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
 
-export default class MyPosts extends Component {
+export default class Profile extends Component {
 	constructor(props, context){
 		super(props, context);
 		context.router
@@ -31,6 +31,14 @@ export default class MyPosts extends Component {
 				return <Button onclicking={this.remove.bind(this, post)} content={"Remove"}/>
 			}
 		}
+		function convertTimeToLocalTime(time){
+			console.log(time)
+			if(time){
+				return (new Date(time)).toLocaleString()
+			}else{
+				return ""
+			}
+		}
 		function showEditButton(post){
 			if(post.approved !== true && !admin_user){
 				return <Button onclicking={this.openPost.bind(this, post)} content={"Edit"}/>
@@ -49,8 +57,8 @@ export default class MyPosts extends Component {
 					<div className="item" data-id={post.id} key={post.id}>
 						<div className="item-title">{post.title}</div>
 						<div className="item-preview">{post.preview}</div>
-						<div className="last-updated">{post.updated_at}</div>
-						<div className="last-updated">{post.user_name}</div>
+						<div className="last-updated">{convertTimeToLocalTime(post.updated_at)}</div>
+						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">
 							<Button onclicking={this.previewPost.bind(this, post)} content={"Preview"}/>
 							{showEditButton.call(this,post)}
@@ -93,7 +101,4 @@ export default class MyPosts extends Component {
 			</div>
 		)
 	}
-};
-MyPosts.contextTypes = {
-    router: React.PropTypes.func.isRequired
 };

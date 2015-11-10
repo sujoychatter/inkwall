@@ -19,7 +19,12 @@ module.exports = React.createClass({
 		return data;
 	},
 	myPosts: function(){
-		this.transitionTo('/my-posts');
+		var user_id = this.state.user.id;
+		if(user_id){
+			this.transitionTo('/profile/' + user_id);
+		}else{
+			return 
+		}
 	},
 	newPost: function(){
 		var _this = this;

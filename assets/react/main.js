@@ -3,7 +3,7 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
-var MyPosts = require('./components/my_posts.js');
+var Profile = require('./components/profile.js');
 var EditPost = require('./components/edit_post.js');
 var ShowPost = require('./components/show_post.js');
 import {Filters} from './constants/visibilityFilters';
@@ -95,13 +95,13 @@ class ShowPostWrapperElement extends Component{
 	}
 }
 
-class MyPostsWrapperElement extends Component{
+class ProfileWrapperElement extends Component{
 	render() {
 		store.dispatch(fetchMyPosts())
 		store.dispatch(setVisibilityFilter(Filters.SHOW_MY))
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={MyPosts}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
+				{() => <Wrapper child={Profile}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
 			</Provider>
 		)
 	}
@@ -110,7 +110,7 @@ class MyPostsWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
-		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
+		<Route name="posts" path="/profile/:profileId" handler={ProfileWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
 		<Route name="preview_post" path="/posts/:postId/preview" handler={ShowPostWrapperElement}/>
