@@ -62,14 +62,14 @@ module.exports = React.createClass({
 		var items = [];
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
-				return <div key={index} className="card" onClick={self.cardClicked.bind(null, post.url)}>
+				return <a key={index} className="card" onClick={self.cardClicked.bind(null, post.url)}>
 					{self.getImageTag(post.content)}
 					<div className="title">{post.title}</div>
 					<div className="details">
 						<span className="author">{post.user_name}</span>
 						<span className="view-count">{post.view_count}</span>
 					</div>
-				</div>
+				</a>
 			});
 			return elements;
 		}

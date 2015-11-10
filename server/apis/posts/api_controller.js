@@ -24,7 +24,7 @@ module.exports = {
 	},
 	
 	getPostsByName: function(req, res, next){
-		Article.all({url: req.query.name}).then(function(articles){
+		Article.updateCount(req.query.name).then(function(articles){
 			return res.status(200).send({posts: articles});
 		})
 	},
