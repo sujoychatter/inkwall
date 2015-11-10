@@ -31,6 +31,14 @@ module.exports = {
 	},
 
 	showPost: function (req, res, next){
+		var id = req.params.id,
+		filter = {active: true}
+		if(id){
+			filter.id = id;
+		}
+		else{
+			filter.url = req.params.name
+		}
 		Article.all({url: req.params.name}).then(
 			function(articles){
 				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles});

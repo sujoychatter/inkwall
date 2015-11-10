@@ -1,14 +1,13 @@
 @import 'basics';
 .edit-post.container{
-	padding-left: 50px;
-	padding-right: 50px;
+	padding-left: 150px;
+    padding-right: 150px;
 	padding-bottom: 20px;
 	.title{
 		position: absolute;
 		height: 40px;
 		width: 100%;
 		margin-top: 10px;
-		padding-right: 100px;
 		box-sizing: border-box;
 		input{
 			width: 99%;
@@ -24,12 +23,11 @@
 		&.save{
 			position: absolute;
 			bottom: 30px;
-			left: 65px;
 		}
 		&.publish{
 			position: absolute;
 			bottom: 30px;
-			right: 56px;
+			right: 0px;
 		}
 	}
 }

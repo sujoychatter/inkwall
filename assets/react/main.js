@@ -35,15 +35,15 @@ store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
 function selectPosts(posts, filter, my_id, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
-			return posts;
-		case VisibilityConstants.Filters.SHOW_ALL_PUBLISHED:
-			return posts.filter(post => post.published === true);
+			return posts.filter(post => post.active === true);
+		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
+			return posts.filter(post => (post.approved === true && post.published === true && post.active === true));
 		case VisibilityConstants.Filters.SHOW_MY:
 			if(state.user.admin)
-				return posts;
-			return posts.filter(post => post.user_id == my_id);
+				return posts.filter(post => post.active === true);;
+			return posts.filter(post => (post.user_id == my_id && post.active === true));
 		case VisibilityConstants.Filters.SHOW_ONE:
-			return posts.filter(post => post.id == state.posts.selected_post_id);
+			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
 	}
 }
 
@@ -58,7 +58,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 
 class HomeWrapperElement extends Component{
 	render() {
-		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_PUBLISHED));
+		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
 		store.dispatch(fetchAllPosts())
 		return (
 			<Provider store={store}>
@@ -71,10 +71,9 @@ class HomeWrapperElement extends Component{
 class EditPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setSelectedPostById(this.props.params.postId));
-		var data = {post_id: this.props.params.postId};
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={EditPost} data={data} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+				{() => <Wrapper child={EditPost} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -82,7 +81,12 @@ class EditPostWrapperElement extends Component{
 
 class ShowPostWrapperElement extends Component{
 	render() {
-		store.dispatch(setSelectedPostByName(this.props.params.postName));
+		if(this.props.params.postName){
+			store.dispatch(setSelectedPostByName(this.props.params.postName));
+		}
+		else{
+			store.dispatch(setSelectedPostById(this.props.params.postId));
+		}
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={ShowPost} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
@@ -109,6 +113,7 @@ var routes = (
 		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
+		<Route name="preview_post" path="/posts/:postId/preview" handler={ShowPostWrapperElement}/>
 	</Route>
 );
 

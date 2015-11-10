@@ -183,3 +183,40 @@ export function unPublishPost(id) {
 		})
 	}
 }
+export function approvePost(id) {
+	return function (dispatch) {
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({approved: true}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(
+			response => response.json()
+		).then(function(json){
+			dispatch(receivePosts(json.posts));
+		})
+
+	}
+}
+export function unApprovePost(id) {
+	return function (dispatch) {
+		fetch("/api/posts/" + id + '/update', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({approved: false}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(
+			response => response.json()
+		).then(function(json){
+			dispatch(receivePosts(json.posts));
+		})
+	}
+}

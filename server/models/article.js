@@ -10,7 +10,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //	limit: "Integer"
 //};
 
-var keys = ['limit', 'preview', 'content', 'active', 'title', 'url']
+var keys = ['limit', 'published', 'preview', 'content', 'active', 'title', 'url']
 var admin_keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name']
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
 		var check_keys = admin_keys,
 		filters = {id: id};
 		if(admin !== true){
-			filters.published = false;
+			filters.approved = false;
 			filters.user_id = user_id;
 			check_keys = keys;
 		}
@@ -42,11 +42,12 @@ module.exports = {
 		query.created_at = time;
 		query.updated_at = time;
 		query.user_id = id;
-		query.published = false
+		query.approved = false;
+		query.published = false;
 		return knex.insert(query).returning('id').into('articles');
 	},
 	find: function(id){
-		return knex('articles').where('id', id);
+		return knex('articles').where({'id':id, "active": true});
 	},
 	setViews: function(id, count){
 		return knex('articles').returning('*').where({id: id}).update({view_count: count});
