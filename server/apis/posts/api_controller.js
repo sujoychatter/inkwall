@@ -29,21 +29,9 @@ module.exports = {
 		})
 	},
 	getPost: function(req, res, next){
-		Article.find(req.params.id).then(function(articles){
-
-			var result = [];
-		
-			function updateAndReturn(user){
-				var post = articles[0];
-				post.user = user[0];
-				result.push(post);
-				return res.status(200).send({posts: result});
-			}	
-
-			User.find(articles[0].user_id).then(function(user){
-				updateAndReturn(user);
-			})
-		});
+		return Article.all({id: req.params.id}).then(function(posts){
+			res.status(200).send({posts: posts});
+		})
 	},
 	getMyPosts: function(req, res,next){
 		var filter = {user_id: req.user.id}
