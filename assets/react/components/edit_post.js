@@ -25,6 +25,7 @@ module.exports = React.createClass({
 				tinyMCE.init({
 					selector: ".tinymce div",
 					menubar: false,
+					content_css : "/stylesheets/tiny-mce.css",
 					theme: "modern",
 					resize: false,
 					plugins: [
