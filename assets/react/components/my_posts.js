@@ -5,6 +5,9 @@ import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
 
 export default class MyPosts extends Component {
+	componentDidMount(){
+		document.title = "Fodoo : My Posts";
+	}
 	constructor(props, context){
 		super(props, context);
 		context.router

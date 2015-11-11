@@ -21,7 +21,7 @@ module.exports = {
 				data.posts_visibility = "SHOW_ONE";
 				data.selected_post = articles[0];
 				return res.render('new_post', {
-					title: 'Fodoo',
+					title: 'Fodoo : Edit Post',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
 					page_data: "var fodoo_data = " + JSON.stringify(data)

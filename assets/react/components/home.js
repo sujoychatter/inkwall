@@ -32,6 +32,7 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function(){
 		this.initiateMasonry();
+		document.title = "Fodoo : Blogs for everyone";
 	},
 	componentDidUpdate: function(){
 		this.initiateMasonry();
