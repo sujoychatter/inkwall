@@ -1,5 +1,4 @@
 var Article = require(_dir.DIR_MODELS + '/article'); 
-var User = require(_dir.DIR_MODELS + '/user'); 
 module.exports = {
 	updatePost: function(req, res, next){
 		var post = req.body;

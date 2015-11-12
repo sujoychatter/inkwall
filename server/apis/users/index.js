@@ -3,6 +3,7 @@ var router = express.Router();
 var controller = require('./controller');
 
 /* GET home page. */
-router.get('/:profile_id', controller.show_profile);
+router.put('/:profile_id', controller.update);
+router.get('/:profile_id', controller.find);
 
 module.exports = router;

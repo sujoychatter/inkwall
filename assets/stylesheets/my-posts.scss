@@ -1,10 +1,18 @@
 @import 'basics';
-.my-posts.container{
+.profile.container{
   .item{
     margin: 20px;
     position: relative;
     border-bottom: 1px solid rgba(0,0,0,0.1);
     padding-bottom: 40px;
+  }
+  .profile-container{
+    max-width: 1240px;
+    min-width: 1024px;
+    height: 100%;
+    position: relative;
+    margin: 30px auto;
+    box-sizing: border-box;
   }
   .item-title{
     font-size: 20px;
@@ -36,6 +44,27 @@
         background-color: $primary_background;
       }
     }
+  }
+  .profile-section{
+    position: absolute;
+    width: 20%;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100%;
+    .p-image{
+      width: 200px;
+      height: 200px;
+    }
+    .p-name{
+      line-height: 50px;
+      font-size: 18px;
+    }
+  }
+  .posts-section{
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    left: 20%;
   }
   .last-updated{
     position: absolute;
