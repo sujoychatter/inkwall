@@ -35,12 +35,6 @@ module.exports = {
 		var query = modelHelper.getArticleValidQueryParams(check_keys, params);
 		return knex('articles').returning('*').where(filters).update(query);
 	},
-	updateCount: function(url){
-		filters = {active: true, url: url};
-		return knex('articles').returning('*').where(filters).increment('view_count', 1).then(function(articles){
-			return knex('articles').select(final_keys).leftJoin('users', 'articles.user_id', 'users.id').where({"articles.id": articles[0].id})
-		});
-	},
 	create: function(data){
 		var id = data.user.id,
 			time = new Date;

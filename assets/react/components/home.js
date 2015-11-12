@@ -6,6 +6,9 @@ module.exports = React.createClass({
 	mixins: [Navigation],
 
 	cardClicked: function(url,e){
+		if(typeof ga != "undefined"){
+			ga('send', 'event', 'Dashboard Card', 'click', url)
+		}
 		this.transitionTo('/posts/' + url);
 		e.preventDefault();
 	},
@@ -24,6 +27,7 @@ module.exports = React.createClass({
 		this.masonry.on('layoutComplete', function(){
 			var element = document.getElementsByClassName('cards-container')[0]
 			if(element){
+				document.getElementsByClassName('cards-container')[0].style.visibility = "visible";
 				element.className = "cards-container show-cards";
 			}
 		});
@@ -31,6 +35,7 @@ module.exports = React.createClass({
 		// }
 	},
 	componentDidMount: function(){
+		document.getElementsByClassName('cards-container')[0].style.visibility = "hidden";
 		this.initiateMasonry();
 		document.title = "Fodoo : Blogs for everyone";
 	},
