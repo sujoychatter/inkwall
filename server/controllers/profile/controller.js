@@ -17,7 +17,16 @@ module.exports = {
 			query = {user_id: req.params.profile_id}
 		}
 		var data = {}
-		function sendResponse(data){
+		return Article.all(query).then(function(posts){
+			data.posts = posts;
+			if (req.user) {
+				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
+			}
+			data.posts_visibility = "SHOW_MY";
+			return User.find(profile_id, req.user)
+		}).then(function(profile_user){
+			data.profile_user = profile_user[0];
+			data.profile_id = profile_id;
 			var wrapper_element = React.createElement(wrapper, {child: myPosts, posts: data.posts , user: data.user, profile_user: data.profile_user});
 			return res.render('profile', {
 				title: 'Fodoo',
@@ -25,23 +34,6 @@ module.exports = {
 				tracking: req.tracking_element,
 				page_data: "var fodoo_data = " + JSON.stringify(data)
 			});
-		}
-		Article.all(query).then(function(posts){
-			data.posts = posts;
-			if (req.user) {
-				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
-			}
-			data.posts_visibility = "SHOW_MY";
-			if(req.user && profile_id == req.user.id){
-				data.profile_id = data.user.id
-				data.profile_user = data.user;
-				return sendResponse(data)
-			}
-			return User.find(profile_id, req.user)
-		}).then(function(profile_user){
-			data.profile_user = profile_user[0];
-			data.profile_id = profile_id;
-			return  sendResponse(data)
 		});
 	},
 	preview: function (req, res, next) {
