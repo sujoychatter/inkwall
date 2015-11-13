@@ -53,11 +53,9 @@ a {
     padding-left: 10px;
     position: fixed;
     width: 100%;
-    transition: all 1s;
     box-sizing: border-box;
     img{
     	height: 40px;
-      transition: all 1s;
     }
     &.shrunk{
       height: 38px;
@@ -76,12 +74,12 @@ a {
       width: 40px;
       margin-right: 20px;
       margin-left: 20px;
-      margin-top: 8px;
       border-radius: 23px;
       background-size: cover;
-      float: left;
-      transition: all 1s;
       cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 8px;
     }
     .new-post{
       margin-right: 10px;
@@ -90,18 +88,50 @@ a {
       background: #C9BFDE;
       height: 25px;
       border-radius: 2px;
-      padding: 0px 10px;
+      padding: 3px 10px;
       line-height: 23px;
       margin-top: 7px;
       box-shadow: -8px -8px 12px #B7A7D6 inset;
       cursor: pointer;
+      position: absolute;
+      right: 81px;
+      bottom: 15px;
+    }
+    .login-options{
+        width: 400px;
+        height: 58px;
+    }
+    .facebook, .google{
+      height: 100%;
+      width: 185px;
+      display: table;
+      float: left;
+      margin-left: 10px;
+      color: white;
+      text-decoration: none;
+      .image{
+        display: table-cell;
+        height: 20px;
+        width: 20px;
+        background-size: contain;
+        vertical-align: middle;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .text{
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+      }
+    }
+    .google{
+      border-right: 1px solid #5B608B;
     }
 }
 
 #application{
 	height: 100%;
   box-sizing: border-box;
-  transition: all 1s ease-in;
 	.main-content{		
     height: 100%;
     overflow: hidden;
@@ -120,7 +150,6 @@ a {
   box-sizing: border-box;
   z-index: 1;
   overflow: hidden;
-  transition: padding-top 1s;
 }
 
 .right-elements{
@@ -128,13 +157,16 @@ a {
   height: 58px;
   position: relative;
   top: -8px;
-  transition: all 1s;
+  transform: translateX(400px);
+  transition: all 0.5s;
+  &.show{
+    transform: translateX(0px);
+  }
 }
 
 .site-details{
   position: relative;
   top: 0px;
-  transition: all 1s;
   .site-name{
     font-size: 28px;
     margin-left: 10px;
@@ -158,12 +190,14 @@ a {
   line-height: 45px;
   color: white;
   font-size: 12px;
-  transition: all 1s;
   padding-left: 20px;
   padding-top: 5px;
-}
-.btn{
-
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  background: #C9BFDE;
+  top: 0px;
+  box-sizing: border-box;
 }
 .btn-primary{
   height: 40px;
