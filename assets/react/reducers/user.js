@@ -1,10 +1,10 @@
-import {SET_CURRENT_USER_ID, ADD_USER_DATA, FETCHING_USER_PROFILE, LOGGED_OUT, SET_PROFILE_ID} from '../constants/user';
+import {SET_CURRENT_USER_ID, ADD_USER_DATA, FETCHING_USER_PROFILE, LOGGED_OUT, SET_PROFILE_USER_ID} from '../constants/user';
 
 const initialState = {
 	users: [],
 	isFetching: false,
 	currentUserId: null,
-	profileId: null
+	profileUserId: null
 }
 function mergeUsers(users, data){
 	if(!data){
@@ -26,7 +26,7 @@ function mergeUsers(users, data){
 export default function posts(state = initialState, action = {}) {
 	switch (action.type) {
 		case SET_CURRENT_USER_ID:
-			return Object.assign({}, state, {isFetching: false, currentUserId: action.data});
+			return Object.assign({}, state, {currentUserId: action.data});
 
 		case ADD_USER_DATA:
 			return Object.assign({}, state, {isFetching: false, users: mergeUsers(state.users, action.data)});
@@ -34,8 +34,8 @@ export default function posts(state = initialState, action = {}) {
 		case FETCHING_USER_PROFILE:
 			return Object.assign({}, state, {isFetching: true});
 
-		case SET_PROFILE_ID:
-			return Object.assign({}, state, {profileId: action.data});
+		case SET_PROFILE_USER_ID:
+			return Object.assign({}, state, {profileUserId: action.data});
 
 		default:
 			return state;

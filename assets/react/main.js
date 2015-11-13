@@ -22,7 +22,7 @@ store.dispatch(createPosts(window.fodoo_data.posts));
 store.dispatch(setCurrentUserId(window.fodoo_data.user && window.fodoo_data.user.id));
 store.dispatch(addUserData(window.fodoo_data.user));
 store.dispatch(addUserData(window.fodoo_data.profile_user));
-store.dispatch(setProfileId(window.fodoo_data.profile_id));
+store.dispatch(setProfileId(window.fodoo_data.profile_user_id));
 store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
 store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
 
@@ -33,8 +33,8 @@ function selectPosts(posts, filter, state){
 		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
 			return posts.filter(post => (post.approved === true && post.published === true && post.active === true));
 		case VisibilityConstants.Filters.SHOW_PROFILE:
-			var profile_user = getUserData(state.user.users, state.user.profileId);
-			if(profile_user.admin && state.user.profileId == state.user.currentUserId)
+			var profile_user = getUserData(state.user.users, state.user.profileUserId);
+			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId)
 				return posts.filter(post => post.active === true);
 			return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
 		case VisibilityConstants.Filters.SHOW_ONE:
@@ -42,8 +42,8 @@ function selectPosts(posts, filter, state){
 	}
 }
 function selectProfileUser(state, filter){
-	if(VisibilityConstants.Filters.SHOW_PROFILE == filter && state.user.profileId)
-		return {profile_user: getUserData(state.user.users, state.user.profileId)}
+	if(VisibilityConstants.Filters.SHOW_PROFILE == filter && state.user.profileUserId)
+		return {profile_user: getUserData(state.user.users, state.user.profileUserId)}
 	return {}
 }
 
@@ -60,7 +60,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 class HomeWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
-		store.dispatch(fetchPosts())
+		store.dispatch(fetchPosts({approved: true, published: true}))
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}
@@ -98,7 +98,7 @@ class ShowPostWrapperElement extends Component{
 
 class ProfileWrapperElement extends Component{
 	render() {
-		store.dispatch(fetchProfile(parseInt(this.props.params.profileId) || null))
+		store.dispatch(fetchProfile(parseInt(this.props.params.profileUserId) || null))
 		store.dispatch(setVisibilityFilter(Filters.SHOW_PROFILE))
 		return (
 			<Provider store={store}>
@@ -111,7 +111,7 @@ class ProfileWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
-		<Route name="posts" path="/profile/:profileId" handler={ProfileWrapperElement}/>
+		<Route name="posts" path="/profile/:profileUserId" handler={ProfileWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
 		<Route name="preview_post" path="/posts/:postId/preview" handler={ShowPostWrapperElement}/>

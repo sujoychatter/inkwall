@@ -16,9 +16,6 @@ export default class EditableField extends Component {
 			this.props.update_cb(this.state.value)
 		}
 	}
-	getInputClass(){
-		return "ei-input " + (this.props.classes || "")
-	}
 	handleChange(event) {
 		this.setState({value: event.target.value});
 	}
@@ -28,7 +25,7 @@ export default class EditableField extends Component {
 			elems.push(<div className="ei-text"> {this.state.value} </div>)
 			elems.push(<div onClick={this.edit.bind(this)}> Edit </div>)
 		}else{
-			elems.push(<input className={this.getInputClass()} onChange={this.handleChange.bind(this)} value={this.state.value}/>)
+			elems.push(<input className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value}/>)
 			elems.push(<div onClick={this.done.bind(this)}> Done </div>)
 		}
 		return (

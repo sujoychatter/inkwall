@@ -17,7 +17,7 @@ export function setCurrentUserId(id){
 
 export function setProfileId(id){
 	return {
-		type : types.SET_PROFILE_ID,
+		type : types.SET_PROFILE_USER_ID,
 		data : id
 	}
 }

@@ -24,7 +24,7 @@ export default class Profile extends Component {
 		this.props.dispatch(updateUser(this.props.profile_user, {email: email}))
 	}
 	getProfileSection(){
-		if(!this.props.user){
+		if(!this.props.profile_user){
 			return ""
 		}
 		var elems = []
@@ -32,7 +32,7 @@ export default class Profile extends Component {
 		if(this.props.profile_user.admin){
 			elems.push(<div className="p-admin" > Admin </div>)
 		}
-		if( this.props.user && this.props.user.admin || (this.props.user.id == this.props.profile_user.id)){
+		if( this.props.user && (this.props.user.id == this.props.profile_user.id)){
 			elems.push(<EditableInput text={this.props.profile_user.name} update_cb={this.update_name.bind(this)}/>)
 			elems.push(<EditableInput text={this.props.profile_user.email} update_cb={this.update_email.bind(this)} />)
 		}else{
