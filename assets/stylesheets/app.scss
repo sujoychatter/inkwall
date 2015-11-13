@@ -252,12 +252,12 @@ a {
   color: $primary_background;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(10px);
   transition: all .25s;
+  @include transform(translateY(10px));
   &.visible{
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0px);
+    @include transform(translateY(0));
   }
   .drop-down{
     width: 100%;

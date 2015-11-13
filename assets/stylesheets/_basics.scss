@@ -15,3 +15,11 @@ $dark_color30: rgba(27,27,83, 0.3);
 $dark_color20: rgba(27,27,83, 0.2);
 $dark_color10: rgba(27,27,83, 0.1);
 $dark_color05: rgba(27,27,83, 0.05);
+
+@mixin transform($value){
+  -webkit-transform: $value;
+  -moz-transform:    $value;
+  -ms-transform:     $value;
+  -o-transform:      $value;
+  transform:         $value;
+}
