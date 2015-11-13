@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
+import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
 
 export default class ShowPost extends Component {
 	constructor(props, context){
@@ -13,7 +14,13 @@ export default class ShowPost extends Component {
 	show_user(id){
 		this.context.router.transitionTo('/profile/' + id);
 	}
-	render () {
+	render(){
+		if(ExecutionEnvironment.canUseDOM){
+			var title = "Fodoo : " + this.props.posts[0].title
+			if(document.title != title){
+				document.title = title;
+			}
+		}
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">

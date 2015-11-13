@@ -1,5 +1,8 @@
 extends layout
 
 block content
-	#application !{ markup }
 	link(rel='stylesheet', href='/stylesheets/home.css' id="home-css")
+	#application !{markup}
+	script.
+		document.getElementsByClassName('cards-container')[0].style.display = "none";
+		document.onload = function(){document.getElementsByClassName('cards-container')[0].style.display = "visible"}

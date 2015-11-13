@@ -11,6 +11,9 @@ export default class Profile extends Component {
 		super(props, context);
 		context.router
 	}
+	componentDidMount(){
+		document.title = "Fodoo : My Posts";
+	}
 	openPost(post){
 		this.context.router.transitionTo('/posts/' + post.id + '/edit');
 	}

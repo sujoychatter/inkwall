@@ -5,6 +5,7 @@ dir.DIR_APP = path.resolve("./");
 
 //SERVER
 dir.DIR_SERVER = dir.DIR_APP + '/server';
+dir.DIR_JOBS = dir.DIR_SERVER + '/jobs';
 dir.CONFIG = dir.DIR_SERVER + '/config';
 dir.DIR_CONTROLLERS = dir.DIR_SERVER + "/controllers";
 dir.DIR_MODELS = dir.DIR_SERVER + "/models";

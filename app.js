@@ -7,7 +7,7 @@
 var app = require('./server');
 var debug = require('debug')('fodoo:server');
 var http = require('http');
-
+require('./server/jobs')
 /**
  * Get port from environment and store in Express.
  */

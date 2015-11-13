@@ -15,9 +15,9 @@ module.exports = {
 				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
 			}
 			data.posts = posts;
-			data.posts_visibility = "SHOW_ALL_PUBLISHED";
+			data.posts_visibility = "SHOW_ALL_APPROVED";
 			return res.render('home', {
-					title: 'Fodoo',
+					title: 'Fodoo : Blogs for everyone',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
 					page_data: "var fodoo_data = " + JSON.stringify(data)

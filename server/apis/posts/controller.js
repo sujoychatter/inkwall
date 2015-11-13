@@ -10,7 +10,7 @@ module.exports = {
 		);
 	},
 	createPost: function(req, res, next){
-		return Article.create({user: req.user, active: true}).then(function(id){
+		return Article.create({user: req.user, active: true, view_count: 0}).then(function(id){
 			return res.status(201).send({id: id[0]});
 		});
 	},
@@ -24,7 +24,8 @@ module.exports = {
 	},
 	
 	getPostsByName: function(req, res, next){
-		Article.updateCount(req.query.name).then(function(articles){
+		var filter = {active: true, url : req.query.name, published : true, approved  : true}
+		Article.all(filter).then(function(articles){
 			return res.status(200).send({posts: articles});
 		})
 	},
@@ -41,5 +42,9 @@ module.exports = {
 		return Article.all(filter).then(function(posts){
 			return res.status(200).send({posts: posts});
 		})
+	},
+	postViews: function(req, res, next){
+		
+            
 	}
 }
