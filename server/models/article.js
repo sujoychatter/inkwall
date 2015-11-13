@@ -12,7 +12,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 
 var keys = ['limit', 'published', 'preview', 'content', 'active', 'title', 'url']
 var admin_keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
-var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name']
+var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name', 'users.profile_id as user_profile_id']
 module.exports = {
 	all: function(query){
 		if(!query){query = {active: true}};

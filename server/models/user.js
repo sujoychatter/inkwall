@@ -2,9 +2,9 @@ var connection_config = require(_dir.CONFIG + '/knexfile');
 var knex = require('knex')(connection_config[Configs.NODE_ENV]);
 var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 
-var show_keys = ['name', 'photo', 'admin', 'id']
-var user_show_keys = ['name', 'photo', 'admin', 'id', 'email']
-var admin_show_keys = ['name', 'photo', 'admin', 'id', 'email']
+var show_keys = ['name', 'photo', 'admin', 'id', 'profile_id']
+var user_show_keys = ['name', 'photo', 'admin', 'id', 'email', "profile_id"]
+var admin_show_keys = ['name', 'photo', 'admin', 'id', 'email', "profile_id"]
 
 var user_editable_keys = ['email', 'name']
 var admin_editable_keys = ['email', 'name', 'admin', 'photo']

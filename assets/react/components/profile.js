@@ -28,7 +28,8 @@ export default class Profile extends Component {
 			return ""
 		}
 		var elems = []
-		elems.push(<img className="p-image" src={this.props.profile_user.photo} />)
+		var src = "http://graph.facebook.com/" + this.props.profile_user.profile_id + "/picture?width=250&height=250"
+		elems.push(<img className="p-image" src={src} />)
 		if(this.props.profile_user.admin){
 			elems.push(<div className="p-admin" > Admin </div>)
 		}

@@ -25,6 +25,7 @@ store.dispatch(addUserData(window.fodoo_data.profile_user));
 store.dispatch(setProfileId(window.fodoo_data.profile_user_id));
 store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
 store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
+window.fodoo_data = null
 
 function selectPosts(posts, filter, state){
 	switch(filter){
@@ -34,9 +35,13 @@ function selectPosts(posts, filter, state){
 			return posts.filter(post => (post.approved === true && post.published === true && post.active === true));
 		case VisibilityConstants.Filters.SHOW_PROFILE:
 			var profile_user = getUserData(state.user.users, state.user.profileUserId);
-			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId)
-				return posts.filter(post => post.active === true);
-			return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
+			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){
+				return posts.filter(post => (post.active === true && post.published === true));
+			}else if(state.user.profileUserId == state.user.currentUserId){
+				return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
+			}else{
+				return posts.filter(post => (post.user_id == profile_user.id && post.approved === true && post.published === true));
+			}
 		case VisibilityConstants.Filters.SHOW_ONE:
 			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
 	}
