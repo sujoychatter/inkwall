@@ -79,7 +79,7 @@ export function setSelectedPostByName(postName){
 
 function getPostPreview(){
 	var preview = tinyMCE.activeEditor.getContent({format : 'text'}).split('\n');
-	preview = preview.slice(0,4).join('\n').substring(0,300);
+	preview = preview.slice(0,10).join('\n').substring(0,700);
 	return preview
 }
 
