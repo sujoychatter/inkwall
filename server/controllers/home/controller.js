@@ -5,7 +5,6 @@ var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var home = require(_dir.DIR_COMPONENTS + '/home');
 var Article = require(_dir.DIR_MODELS + '/article');
-var User = require(_dir.DIR_MODELS + '/user');
 
 module.exports = {
 	init: function (req, res, next) {

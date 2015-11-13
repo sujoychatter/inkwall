@@ -8,10 +8,50 @@ function addTodoWithoutCheck() {
 		text: "My first Post"
 	};
 }
-
-export function setUserData(user) {
+export function setCurrentUserId(id){
 	return {
-		type : types.SET_USER,
+		type : types.SET_CURRENT_USER_ID,
+		data : id
+	}
+}
+
+export function setProfileId(id){
+	return {
+		type : types.SET_PROFILE_USER_ID,
+		data : id
+	}
+}
+
+export function getUserData(users, id){
+	for(var i in users){
+		if(users[i].id == id){
+			return users[i]
+		}
+	}
+	return {}
+}
+
+export function updateUser(user, query){
+	return function(dispatch){
+		return fetch('/api/users/' + user.id, {
+			credentials: 'include',
+			method: 'PUT',
+			body: JSON.stringify(query),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(
+			response => response.json()
+		).then(function(json){
+			dispatch(addUserData(json));
+		})
+	}
+}
+
+export function addUserData(user) {
+	return {
+		type : types.ADD_USER_DATA,
 		data : user
 	}
 }

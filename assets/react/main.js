@@ -3,55 +3,61 @@ var Router = require('react-router');
 var Route = Router.Route;
 var Wrapper = require('./wrapper.js');
 var Home = require('./components/home.js');
-var MyPosts = require('./components/my_posts.js');
+var Profile = require('./components/profile.js');
 var EditPost = require('./components/edit_post.js');
 var ShowPost = require('./components/show_post.js');
 import {Filters} from './constants/visibilityFilters';
-import {fetchAllPosts} from './actions/posts';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost, fetchMyPosts} from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost, fetchProfile, fetchPosts} from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
-import {setUserData} from './actions/user'
+import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
 
 
-//Elements generated with wrapper
-// function getInitialData(){
-// 	var initialState = window.fodoo_data
-// 	return {
-// 		user: initialState.user,
-// 		posts: initialState.posts
-// 	}
-// }
 const store = configureStore();
 
 store.dispatch(createPosts(window.fodoo_data.posts));
-store.dispatch(setUserData(window.fodoo_data.user));
+store.dispatch(setCurrentUserId(window.fodoo_data.user && window.fodoo_data.user.id));
+store.dispatch(addUserData(window.fodoo_data.user));
+store.dispatch(addUserData(window.fodoo_data.profile_user));
+store.dispatch(setProfileId(window.fodoo_data.profile_user_id));
 store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
 store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
+window.fodoo_data = null
 
-function selectPosts(posts, filter, my_id, state){
+function selectPosts(posts, filter, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts.filter(post => post.active === true);
 		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
 			return posts.filter(post => (post.approved === true && post.published === true && post.active === true));
-		case VisibilityConstants.Filters.SHOW_MY:
-			if(state.user.admin)
-				return posts.filter(post => post.active === true);;
-			return posts.filter(post => (post.user_id == my_id && post.active === true));
+		case VisibilityConstants.Filters.SHOW_PROFILE:
+			var profile_user = getUserData(state.user.users, state.user.profileUserId);
+			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){
+				return posts.filter(post => (post.active === true && post.published === true));
+			}else if(state.user.profileUserId == state.user.currentUserId){
+				return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
+			}else{
+				return posts.filter(post => (post.user_id == profile_user.id && post.approved === true && post.published === true));
+			}
 		case VisibilityConstants.Filters.SHOW_ONE:
 			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
 	}
 }
+function selectProfileUser(state, filter){
+	if(VisibilityConstants.Filters.SHOW_PROFILE == filter && state.user.profileUserId)
+		return {profile_user: getUserData(state.user.users, state.user.profileUserId)}
+	return {}
+}
 
 function mapStateToProps(state) {
-	return {
-		posts: selectPosts(state.posts.items, state.visibilityFilter, state.user.id, state),
-		user: state.user
+	var new_state = {
+		posts: selectPosts(state.posts.items, state.visibilityFilter, state),
+		user: getUserData(state.user.users, state.user.currentUserId)
 	}
+	return Object.assign({}, new_state, selectProfileUser(state, state.visibilityFilter));
 }
 
 Wrapper = connect(mapStateToProps)(Wrapper);
@@ -59,7 +65,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 class HomeWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
-		store.dispatch(fetchAllPosts());
+		store.dispatch(fetchPosts({approved: true, published: true}))
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}
@@ -95,13 +101,13 @@ class ShowPostWrapperElement extends Component{
 	}
 }
 
-class MyPostsWrapperElement extends Component{
+class ProfileWrapperElement extends Component{
 	render() {
-		store.dispatch(fetchMyPosts())
-		store.dispatch(setVisibilityFilter(Filters.SHOW_MY))
+		store.dispatch(fetchProfile(parseInt(this.props.params.profileUserId) || null))
+		store.dispatch(setVisibilityFilter(Filters.SHOW_PROFILE))
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={MyPosts}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
+				{() => <Wrapper child={Profile}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
 			</Provider>
 		)
 	}
@@ -110,7 +116,7 @@ class MyPostsWrapperElement extends Component{
 var routes = (
 	<Route>
 		<Route name="home" path="/" handler={HomeWrapperElement}/>
-		<Route name="posts" path="my-posts" handler={MyPostsWrapperElement}/>
+		<Route name="posts" path="/profile/:profileUserId" handler={ProfileWrapperElement}/>
 		<Route name="edit_post" path="/posts/:postId/edit" handler={EditPostWrapperElement}/>
 		<Route name="show_post" path="/posts/:postName" handler={ShowPostWrapperElement}/>
 		<Route name="preview_post" path="/posts/:postId/preview" handler={ShowPostWrapperElement}/>

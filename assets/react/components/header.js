@@ -18,8 +18,13 @@ module.exports = React.createClass({
 		}
 		return data;
 	},
-	myPosts: function(){
-		this.transitionTo('/my-posts');
+	myProfile: function(){
+		var user_id = this.state.user.id;
+		if(user_id){
+			this.transitionTo('/profile/' + user_id);
+		}else{
+			return null
+		}
 	},
 	newPost: function(){
 		var _this = this;
@@ -61,7 +66,7 @@ module.exports = React.createClass({
 		}
 		var options = [
 			{name: "New Post", callback: this.newPost},
-			{name: "My Posts", callback: this.myPosts},
+			{name: "Profile", callback: this.myProfile},
 			{name: "Logout", backend_route: '/logout'}
 		]
 		return (
