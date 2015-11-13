@@ -14,6 +14,10 @@ export default class ShowPost extends Component {
 	show_user(id){
 		this.context.router.transitionTo('/profile/' + id);
 	}
+	formatPostDate(date){
+		var dateString = (new Date(date)).toString()
+		return dateString.slice(0, dateString.length - 15)
+	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM){
 			var title = "Fodoo : " + this.props.posts[0].title
@@ -26,6 +30,9 @@ export default class ShowPost extends Component {
 				<div className="wrapper">
 					<div className="title" itemProp="name headline">
 						{this.props.posts[0].title}
+					</div>
+					<div className="post-date">
+						{this.formatPostDate(this.props.posts[0].created_at)}
 					</div>
 					<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, this.props.posts[0].user_id)}>
 						<img itemProp="image" className="user-image" src={this.props.posts[0].user_photo}/>
