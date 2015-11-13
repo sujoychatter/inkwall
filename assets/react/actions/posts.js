@@ -1,5 +1,6 @@
 import * as types from '../constants/posts';
 import {setVisibilityFilter} from './visibilityFilters'
+import {addUserData, setProfileId} from './user'
 import fetch from 'isomorphic-fetch';
 
 export function receivePosts(posts){
@@ -32,43 +33,28 @@ function encodeQueryParams(query){
 	return str.slice(0,-1)
 }
 
-//function fetchPosts(text) {
-//	return function (dispat
-// ch) {
-//		dispatch(addTodoWithoutCheck());
-//		fetch("https://buy.housing.com/api/v0/search/suggest/?&string=powa&cursor=4&source=web&source=web").then(
-//			(result) =>  dispatch(addTodoWithoutCheck()),
-//			(error) =>  dispatch(addTodoWithoutCheck())
-//		);
-//	}
-//}
-
 export function requestPost(){
 	return {
 		type: types.REQUEST_POSTS
 	}
 }
 
-export function fetchAllPosts(){
+export function fetchProfile(id){
 	return function(dispatch){
-		dispatch(requestPost());
-		return fetch('/api/posts').then(response => response.json()).then(json => 
-			dispatch(receivePosts(json.posts))
-		)
-	}
-}
-
-export function fetchMyPosts(){
-	return function(dispatch){
-		fetch('/api/posts/my',{credentials: 'include'})
+		dispatch(setProfileId(id))
+		fetch('/api/profile/'+id,{credentials: 'include'})
 		.then(response => response.json())
 		.then(function(json){
+			dispatch(addUserData(json.user[0]))
 			return dispatch(receivePosts(json.posts))
 		})
 	}
 }
 
 export function fetchPosts(query){
+	if(!query){
+		query = {}
+	}
 	return function(dispatch){
 		fetch('/api/posts'.concat(encodeQueryParams(query)))
 		.then(response => response.json())

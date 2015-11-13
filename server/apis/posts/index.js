@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var controller = require('./api_controller');
+var controller = require('./controller');
 
 /* GET home page. */
 function ensureAuthenticated(req, res, next) {

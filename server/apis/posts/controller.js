@@ -1,5 +1,4 @@
 var Article = require(_dir.DIR_MODELS + '/article'); 
-var User = require(_dir.DIR_MODELS + '/user'); 
 module.exports = {
 	updatePost: function(req, res, next){
 		var post = req.body;
@@ -18,6 +17,7 @@ module.exports = {
 
 	getPosts: function(req, res, next){
 		var query = req.query || {}
+		query.approved = true;
 		return Article.all(query).then(function(posts){
 			res.status(200).send({posts: posts});
 		})
@@ -31,7 +31,7 @@ module.exports = {
 	},
 	getPost: function(req, res, next){
 		return Article.all().where({"articles.id": req.params.id}).then(function(posts){
-			res.status(200).send({posts: posts});
+			return res.status(200).send({posts: posts});
 		})
 	},
 	getMyPosts: function(req, res,next){
@@ -40,7 +40,7 @@ module.exports = {
 			filter = {}
 		}
 		return Article.all(filter).then(function(posts){
-			res.status(200).send({posts: posts});
+			return res.status(200).send({posts: posts});
 		})
 	},
 	postViews: function(req, res, next){
