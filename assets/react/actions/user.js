@@ -1,4 +1,5 @@
 import * as types from '../constants/user';
+import {startLoading, stopLoading} from './loader'
 import fetch from 'isomorphic-fetch';
 
 function addTodoWithoutCheck() {
@@ -33,6 +34,7 @@ export function getUserData(users, id){
 
 export function updateUser(user, query){
 	return function(dispatch){
+		dispatch(startLoading())
 		return fetch('/api/users/' + user.id, {
 			credentials: 'include',
 			method: 'PUT',
@@ -41,9 +43,10 @@ export function updateUser(user, query){
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-		}).then(
-			response => response.json()
-		).then(function(json){
+		}).then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(addUserData(json));
 		})
 	}

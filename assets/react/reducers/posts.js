@@ -2,7 +2,6 @@ import { PUBLISH_POST, UN_PUBLISH_POST, REMOVE_POST, CREATE_BLOGS, REQUEST_POSTS
 
 const initialState = {
 	items: [],
-	isFetching: false
 }
 
 function mergePosts(items, posts){
@@ -32,7 +31,7 @@ export default function posts(state = initialState, action = {}) {
 				}
 				return post
 			});
-			return Object.assign({}, state, {isFetching: false, items: items});
+			return Object.assign({}, state, {items: items});
 
 		case UN_PUBLISH_POST:
 			var items = state.items.map((post) => {
@@ -41,22 +40,18 @@ export default function posts(state = initialState, action = {}) {
 				}
 				return post
 			});
-			return Object.assign({}, state, {isFetching: false, items: items});
+			return Object.assign({}, state, {items: items});
 
 		case REMOVE_POST:
 			var items = state.items.filter((post) => post.id != action.id)
-			return Object.assign({}, state, {isFetching: false, items: items});
+			return Object.assign({}, state, {items: items});
 
 		case CREATE_BLOGS:
-			return Object.assign({},state,  {isFetching: false, items: action.posts} );
-
-		case REQUEST_POSTS:
-			return Object.assign({}, state, {isFetching: true});
+			return Object.assign({},state,  {items: action.posts} );
 		
 		case RECEIVE_POSTS:
 			var items = mergePosts(state.items, action.posts)
 			return Object.assign({}, state, {
-				isFetching: false,
 				items: items,
 				lastUpdate: action.receivedAt
 			});

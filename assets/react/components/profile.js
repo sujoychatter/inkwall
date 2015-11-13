@@ -11,19 +11,34 @@ export default class Profile extends Component {
 		super(props, context);
 		context.router
 	}
+	supress(event){
+		event.preventDefault()
+		event.stopPropagation()
+	}
 	componentDidMount(){
 		document.title = "Fodoo : My Posts";
 	}
-	openPost(post){
+	openPost(post, event){
+		this.supress(event)
 		this.context.router.transitionTo('/posts/' + post.id + '/edit');
 	}
-	previewPost(post){
-		this.context.router.transitionTo('/posts/' + post.id + '/preview');
+	show_post(post, event){
+		this.supress(event)
+		if(post.approved && post.published){
+			var link = event.currentTarget.getAttribute('href')
+			if(link){
+				return this.context.router.transitionTo(link);
+			}
+		}else{
+			return this.context.router.transitionTo('/posts/' + post.id + '/preview');
+		}
 	}
-	update_name(name){
+	update_name(name, event){
+		this.supress(event)
 		this.props.dispatch(updateUser(this.props.profile_user, {name: name}))
 	}
-	update_email(email){
+	update_email(email, event){
+		this.supress(event)
 		this.props.dispatch(updateUser(this.props.profile_user, {email: email}))
 	}
 	getProfileSection(){
@@ -84,22 +99,27 @@ export default class Profile extends Component {
 				} content={post.approved ? 'Un-Approve' : 'Approve'}/>
 			}
 		}
+		function showPreviewButton(post){
+			if(isCurrentUser || admin_user){
+				return <Button onclicking={this.previewPost.bind(this, post)} content={"Preview"}/>
+			}
+		}
 		if(posts) {
 			posts.forEach((post) => {
+				var href = "/posts/" + post.url
 				return elems.push(
-					<div className="item" data-id={post.id} key={post.id}>
-						<div className="item-title">{post.title}</div>
-						<div className="item-preview">{post.preview}</div>
+					<a className="item" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
+						<h2 className="item-title">{post.title}</h2>
+						<div className="item-preview">{post.preview.replace(/[\s]{2,}/g, ' ')}</div>
 						<div className="last-updated">{convertTimeToLocalTime(post.updated_at)}</div>
 						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">
-							<Button onclicking={this.previewPost.bind(this, post)} content={"Preview"}/>
 							{showEditButton.call(this,post)}
 							{showRemoveButton.call(this,post)}
 							{showPublishButton.call(this,post)}
 							{showApproveButton.call(this,post)}
 						</div>
-					</div>
+					</a>
 				)
 			});
 		}

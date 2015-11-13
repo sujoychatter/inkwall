@@ -67,6 +67,7 @@ module.exports = React.createClass({
 			{name: "Profile", callback: this.myProfile},
 			{name: "Logout", backend_route: '/logout'}
 		]
+		var loadingClass = this.props.isLoading ? "loader loading" : "loader"
 		return (
 			<div className="header">
 				{logo_link}
@@ -79,6 +80,7 @@ module.exports = React.createClass({
 					{login}
 					<DropDown options={options} showDropDown={this.state.showDropDown}/>
 				</span>
+				<div className={loadingClass}></div>
 			</div>
 		)
 	}
