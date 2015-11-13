@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var connection_config = require('./config/knexfile');
 var knex = require('knex')(connection_config[Configs.NODE_ENV]);
 var facebookAppId = Configs.FACEBOOK_APP_ID;
@@ -54,6 +55,34 @@ passport.use(new FacebookStrategy({
 		});
 	}
 ));
+passport.use(new GoogleStrategy({
+	clientID: "",
+    clientSecret: '',
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+	function(token, tokenSecret, profile, done) {
+		knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+			if(rows.length == 1){
+				return done(null, rows[0]);
+			}
+			else{
+				knex('users').insert({name: profile.displayName,
+					admin: false,
+					photo: profile.photos[0].value,
+					email: profile.email,
+					profile_id: profile.id
+				}).then(function(user){
+					knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+						if(rows.length == 1){
+							return done(null, rows[0]);
+						}
+					});
+				})
+			}
+		});
+	}
+));
+
 passport.serializeUser(function(user, done) {
 	done(null, user);
 });
@@ -85,6 +114,16 @@ app.get('/auth/facebook/callback',
 		failureRedirect: '/'
 	})
 );
+
+app.get('/auth/google', passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']}));
+
+app.get('/auth/google/callback', 
+	passport.authenticate('google', {
+		successRedirect : '/',
+		failureRedirect: '/' 
+	})
+);
+
 app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
