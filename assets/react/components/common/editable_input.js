@@ -31,7 +31,7 @@ export default class EditableField extends Component {
 					</div>)
 		}else{
 			elem = (<div className="ei-edit-container">
-						<input className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value} onKeyDown={this.done.bind(this)}/>
+						<input autoFocus={true} className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value} onKeyDown={this.done.bind(this)}/>
 					</div>)
 		}
 		elems.push(elem)
