@@ -1,6 +1,9 @@
 extends layout
 
 block content
+	link(rel='stylesheet', href='/stylesheets/home.css' id="home-css")
 	#application
 		!{markup}
-	link(rel='stylesheet', href='/stylesheets/home.css' id="home-css")
+	script.
+		document.getElementsByClassName('cards-container')[0].style.display = "none";
+		document.onload = function(){document.getElementsByClassName('cards-container')[0].style.display = "visible"}

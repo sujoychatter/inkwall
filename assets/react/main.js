@@ -59,7 +59,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 class HomeWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
-		store.dispatch(fetchAllPosts())
+		store.dispatch(fetchAllPosts());
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}
