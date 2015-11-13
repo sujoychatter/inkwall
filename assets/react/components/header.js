@@ -2,11 +2,10 @@ var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var DropDown = require('./common/drop_down');
 import Router, { Navigation, Link } from 'react-router';
+import {startLoading} from '../actions/loader'
 
 module.exports = React.createClass({
-
 	mixins: [Navigation],
-
 	showHideDropDown: function(){
 		this.state.showDropDown = !this.state.showDropDown;
 		this.setState(this.state);
@@ -25,6 +24,9 @@ module.exports = React.createClass({
 		}else{
 			return null
 		}
+	},
+	startLoading: function(){
+		this.props.dispatch(startLoading())
 	},
 	newPost: function(){
 		var _this = this;
@@ -51,7 +53,7 @@ module.exports = React.createClass({
 				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
 		}
 		else {
-			var login = <a className="login-button" href="/auth/facebook">Login</a>
+			var login = <a className="login-button" href="/auth/facebook" onClick={this.startLoading.bind(this)}>Login</a>
 		}
 		var logo_link
 		if (ExecutionEnvironment.canUseDOM) {
