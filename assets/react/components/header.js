@@ -53,7 +53,7 @@ module.exports = React.createClass({
 				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
 		}
 		else {
-			var login = <a className="login-button" href="/auth/facebook" onClick={this.startLoading.bind(this)}>Login</a>
+			var login = <a className="login-button" href="/auth/facebook" onClick={this.startLoading}>Login</a>
 		}
 		var logo_link
 		if (ExecutionEnvironment.canUseDOM) {
