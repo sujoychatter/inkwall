@@ -69,7 +69,7 @@ module.exports = React.createClass({
 				{logo_link}
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Fodoo</span>
-					<span className="site-about" itemProp="description">Blogs for engineers</span>
+					<span className="site-about" itemProp="description">Blogs for everyone</span>
 				</span>
 				<span className="pull-right right-elements">
 					{image}

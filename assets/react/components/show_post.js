@@ -8,6 +8,12 @@ module.exports = React.createClass({
 		return {__html: html_string}
 	},
 	render: function () {
+		if(ExecutionEnvironment.canUseDOM){
+			var title = "Fodoo : " + this.props.posts[0].title
+			if(document.title != title){
+				document.title = title;
+			}
+		}
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">

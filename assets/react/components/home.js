@@ -6,6 +6,9 @@ module.exports = React.createClass({
 	mixins: [Navigation],
 
 	cardClicked: function(url,e){
+		if(typeof ga != "undefined"){
+			ga('send', 'event', 'Dashboard Card', 'click', url)
+		}
 		this.transitionTo('/posts/' + url);
 		e.preventDefault();
 	},
@@ -24,6 +27,7 @@ module.exports = React.createClass({
 		this.masonry.on('layoutComplete', function(){
 			var element = document.getElementsByClassName('cards-container')[0]
 			if(element){
+				document.getElementsByClassName('cards-container')[0].style.visibility = "visible";
 				element.className = "cards-container show-cards";
 			}
 		});
@@ -31,7 +35,9 @@ module.exports = React.createClass({
 		// }
 	},
 	componentDidMount: function(){
+		document.getElementsByClassName('cards-container')[0].style.visibility = "hidden";
 		this.initiateMasonry();
+		document.title = "Fodoo : Blogs for everyone";
 	},
 	componentDidUpdate: function(){
 		this.initiateMasonry();
@@ -63,8 +69,8 @@ module.exports = React.createClass({
 		var items = [];
 		function createCards(posts){
 			var elements = posts.map(function(post,index){
-				return <div itemProp="itemListElement" itemScope itemType="http://schema.org/Blog">
-					<a href={"/posts/" + post.url} key={index} itemProp="url" className="card" onClick={self.cardClicked.bind(null, post.url)}>
+				return <div key={index} itemProp="itemListElement" itemScope itemType="http://schema.org/Blog">
+					<a href={"/posts/" + post.url} itemProp="url" className="card" onClick={self.cardClicked.bind(null, post.url)}>
 						{self.getImageTag(post.content)}
 						<div className="title" itemProp="about">{post.title}</div>
 						<div className="details">
@@ -80,7 +86,7 @@ module.exports = React.createClass({
 			items = this.props.posts.slice(0,10)
 		}
 		return (
-			<div className="container home" itemscope="" itemtype="http://schema.org/ItemList">
+			<div className="container home" itemScope="" itemType="http://schema.org/ItemList">
 				<div className="wrapper">
 				<div className="cards-container">
 					<div className="grid-sizer"></div>

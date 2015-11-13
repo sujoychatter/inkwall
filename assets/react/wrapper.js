@@ -26,9 +26,10 @@ export default class Wrapper extends Component{
 		}
 	}
 	componentDidMount(){
-		// if (ExecutionEnvironment.canUseDOM) {
-		// 	document.getElementsByClassName('wrapper')[0].addEventListener('scroll', this.handleScroll);
-		// }
+		if(typeof ga != "undefined"){
+			ga('set', 'page', window.location.pathname);
+			ga('send', 'pageview');
+		}
 	}
 	componentWillUnmount() {
 		// if (ExecutionEnvironment.canUseDOM) {
