@@ -44,9 +44,11 @@ module.exports = React.createClass({
 				},
 				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
 				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
+				var newPost = <a className="new-post pull-right" onClick={this.newPost}>Write a Post</a>
 		}
 		else {
 			var login = <a className="login-button" href="/auth/facebook">Login</a>
+			var newPost = <a className="new-post pull-right">Write a Post</a>
 		}
 		var logo_link
 		if (ExecutionEnvironment.canUseDOM) {
@@ -74,6 +76,7 @@ module.exports = React.createClass({
 					{login}
 					<DropDown options={options} showDropDown={this.state.showDropDown}/>
 				</span>
+				{newPost}
 			</div>
 		)
 	}

@@ -83,6 +83,19 @@ a {
       transition: all 1s;
       cursor: pointer;
     }
+    .new-post{
+      margin-right: 10px;
+      color: white;
+      text-decoration: none;
+      background: #C9BFDE;
+      height: 25px;
+      border-radius: 2px;
+      padding: 0px 10px;
+      line-height: 23px;
+      margin-top: 7px;
+      box-shadow: -8px -8px 12px #B7A7D6 inset;
+      cursor: pointer;
+    }
 }
 
 #application{
