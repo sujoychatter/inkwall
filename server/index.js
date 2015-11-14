@@ -52,7 +52,8 @@ passport.use(new FacebookStrategy({
 					admin: false,
 					photo: profile.photos[0].value,
 					email: profile.email,
-					profile_id: profile.id
+					profile_id: profile.id,
+					photo_large: "http://graph.facebook.com/" + profile.id + "/picture?width=250&height=250"
 				}).then(function(user){
 					knex.select().from('users').where('profile_id', profile.id).then(function(rows){
 						if(rows.length == 1){
@@ -71,15 +72,18 @@ passport.use(new GoogleStrategy({
   },
 	function(token, tokenSecret, profile, done) {
 		knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+			var photo = profile.photos[0].value,
+				photo_large = photo.slice(0, photo.length - 5) + "sz=250";
 			if(rows.length == 1){
 				return done(null, rows[0]);
 			}
 			else{
 				knex('users').insert({name: profile.displayName,
 					admin: false,
-					photo: profile.photos[0].value,
+					photo: photo,
 					email: profile.email,
-					profile_id: profile.id
+					profile_id: profile.id,
+					photo_large: photo_large
 				}).then(function(user){
 					knex.select().from('users').where('profile_id', profile.id).then(function(rows){
 						if(rows.length == 1){

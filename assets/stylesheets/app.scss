@@ -288,6 +288,11 @@ a {
   &:hover{
     background-color: $primary_background;
   }
+  &.round{
+    border-radius: 35px;
+    width: 70px;
+    height: 70px;
+  }
 }
 
 .drop-down-container{
