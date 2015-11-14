@@ -17,13 +17,18 @@ module.exports = React.createClass({
 		}
 		return data;
 	},
-	myProfile: function(){
+	myProfile: function(event){
+		this.supress(event)
 		var user_id = this.state.user.id;
 		if(user_id){
 			this.transitionTo('/profile/' + user_id);
 		}else{
 			return null
 		}
+	},
+	supress: function(event){
+		event.preventDefault()
+		event.stopPropagation()
 	},
 	startLoading: function(){
 		this.props.dispatch(startLoading())
