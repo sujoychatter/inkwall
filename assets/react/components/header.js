@@ -59,7 +59,7 @@ module.exports = React.createClass({
 				},
 				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
 				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
-				var newPost = <a className="new-post" onClick={this.newPost}>Write a Post</a>
+				var newPost = <a className="new-post" onClick={this.newPost}><i className="icon icon-doc"></i>Write a Post</a>
 		}
 		else {
 			if(this.state.showOptions){}else{}
@@ -74,8 +74,8 @@ module.exports = React.createClass({
 						<div className="text">Login with Facebook</div>
 					</a>
 				</div>
-			var login = <a className="login-button" onClick={this.showLoginOptions}>Login</a>
-			var newPost = <a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
+			var login = <a className="login-button" onClick={this.showLoginOptions}><i className="icon icon-login"></i></a>
+			var newPost = <a className="new-post" onClick={this.showLoginOptions}><i className="icon icon-doc"></i>Write a Post</a>
 		}
 		var logo_link;
 		if (ExecutionEnvironment.canUseDOM) {
@@ -87,9 +87,9 @@ module.exports = React.createClass({
 			logo_link = <a href="/"><img src="/images/logo.png" type="image/png"></img></a>
 		}
 		var options = [
-			{name: "New Post", callback: this.newPost},
-			{name: "Profile", callback: this.myProfile},
-			{name: "Logout", backend_route: '/logout'}
+			{name: "New Post", callback: this.newPost, icon: "icon icon-doc"},
+			{name: "Profile", callback: this.myProfile, icon: "icon icon-user"},
+			{name: "Logout", backend_route: '/logout', icon: "icon icon-off"}
 		]
 		var loadingClass = this.props.isLoading ? "loader loading" : "loader"
 		return (

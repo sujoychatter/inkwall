@@ -46,8 +46,7 @@ export default class Profile extends Component {
 			return ""
 		}
 		var elems = []
-		var src = "http://graph.facebook.com/" + this.props.profile_user.profile_id + "/picture?width=250&height=250"
-		elems.push(<img className="p-image" src={src} />)
+		elems.push(<img className="p-image" src={this.props.profile_user.photo_large} />)
 		if(this.props.profile_user.admin){
 			elems.push(<div className="p-admin" > Admin </div>)
 		}
@@ -68,6 +67,7 @@ export default class Profile extends Component {
 		const posts = this.props.posts;
 		var admin_user = this.props.user && this.props.user.admin
 		var isCurrentUser = this.props.user && this.props.user.id == this.props.profile_user.id
+		var content;
 		function showPublishButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
 				return <Button onclicking={
@@ -77,7 +77,7 @@ export default class Profile extends Component {
 		}
 		function showRemoveButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button onclicking={this.remove.bind(this, post)} content={"Remove"}/>
+				return <Button onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
 			}
 		}
 		function convertTimeToLocalTime(time){
@@ -89,7 +89,7 @@ export default class Profile extends Component {
 		}
 		function showEditButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button onclicking={this.openPost.bind(this, post)} content={"Edit"}/>
+				return <Button onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
 			}
 		}
 		function showApproveButton(post){
@@ -97,11 +97,6 @@ export default class Profile extends Component {
 				return <Button onclicking={
 					post.approved ? this.unApprove.bind(this, post) : this.approve.bind(this, post)
 				} content={post.approved ? 'Un-Approve' : 'Approve'}/>
-			}
-		}
-		function showPreviewButton(post){
-			if(isCurrentUser || admin_user){
-				return <Button onclicking={this.previewPost.bind(this, post)} content={"Preview"}/>
 			}
 		}
 		if(posts) {
@@ -114,9 +109,9 @@ export default class Profile extends Component {
 						<div className="last-updated">{convertTimeToLocalTime(post.updated_at)}</div>
 						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">
+							{showPublishButton.call(this,post)}
 							{showEditButton.call(this,post)}
 							{showRemoveButton.call(this,post)}
-							{showPublishButton.call(this,post)}
 							{showApproveButton.call(this,post)}
 						</div>
 					</a>

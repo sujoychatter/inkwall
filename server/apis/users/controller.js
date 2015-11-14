@@ -20,7 +20,11 @@ module.exports = {
 		var query = req.body;
 		return User.update(profile_user_id, query, req.user).then(
 			function(user){
-				return res.status(200).send(user);
+				if(user.length){
+					return res.status(200).send(user[0]);
+				}else{
+					return res.status(402).send({message: "Error in updating data"});
+				}
 			}
 		);
 	},

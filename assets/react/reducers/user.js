@@ -6,6 +6,7 @@ const initialState = {
 	profileUserId: null
 }
 function mergeUsers(users, data){
+	debugger
 	if(!data){
 		return users
 	}
