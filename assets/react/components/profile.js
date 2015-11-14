@@ -4,7 +4,8 @@ import Button from './common/button';
 import EditableInput from './common/editable_input';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
-import {updateUser} from '../actions/user'
+import {updateUser} from '../actions/user';
+import formatDBDate from '../helpers/date';
 
 export default class Profile extends Component {
 	constructor(props, context){
@@ -80,13 +81,6 @@ export default class Profile extends Component {
 				return <Button onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
 			}
 		}
-		function convertTimeToLocalTime(time){
-			if(time){
-				return (new Date(time)).toLocaleString()
-			}else{
-				return ""
-			}
-		}
 		function showEditButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
 				return <Button onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
@@ -106,7 +100,7 @@ export default class Profile extends Component {
 					<a className="item" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
 						<h2 className="item-title">{post.title}</h2>
 						<div className="item-preview">{post.preview.replace(/[\s]{2,}/g, ' ')}</div>
-						<div className="last-updated">{convertTimeToLocalTime(post.updated_at)}</div>
+						<div className="last-updated">{formatDBDate(post.updated_at)}</div>
 						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">
 							{showPublishButton.call(this,post)}
