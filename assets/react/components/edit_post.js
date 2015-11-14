@@ -87,8 +87,7 @@ module.exports = React.createClass({
 					<div className="tinymce">
 						<div className="dummy-container"></div>
 					</div>
-					<Button classes="btn btn-primary save" content="Save" onclicking={this.saveContent}/>
-					<Button classes="btn btn-primary publish" content="Publish"/>
+					<Button classes="btn btn-primary save round" content={<i className="icon-floppy"></i>} onclicking={this.saveContent}/>
 				</div>
 			</div>
 		)

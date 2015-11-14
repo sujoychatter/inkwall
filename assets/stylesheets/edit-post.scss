@@ -3,6 +3,9 @@
 	padding-left: 150px;
     padding-right: 150px;
 	padding-bottom: 20px;
+	.wrapper{
+		overflow: hidden;
+	}
 	.title{
 		position: absolute;
 		height: 40px;
@@ -22,18 +25,16 @@
 	.btn.btn-primary{
 		&.save{
 			position: absolute;
-			bottom: 30px;
-		}
-		&.publish{
-			position: absolute;
-			bottom: 30px;
-			right: 0px;
+			bottom: 40px;
+			right: -5px;
+			box-shadow: 2px 2px 11px #bbb;
+			font-size: 21px;
 		}
 	}
 }
 .tinymce{
 	padding-top: 50px;
-	height: 100%;
+	height : calc(100% + 70px);
 	box-sizing: border-box;
 	iframe{
 		height: 100% !important;
