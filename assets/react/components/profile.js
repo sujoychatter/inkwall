@@ -51,8 +51,8 @@ export default class Profile extends Component {
 			elems.push(<div className="p-admin" > Admin </div>)
 		}
 		if( this.props.user && (this.props.user.id == this.props.profile_user.id)){
-			elems.push(<EditableInput text={this.props.profile_user.name} update_cb={this.update_name.bind(this)}/>)
-			elems.push(<EditableInput text={this.props.profile_user.email} update_cb={this.update_email.bind(this)} />)
+			elems.push(<EditableInput text={this.props.profile_user.name} update_cb={this.update_name.bind(this)} placeholder="Add Name"/>)
+			elems.push(<EditableInput text={this.props.profile_user.email} update_cb={this.update_email.bind(this)} placeholder="Add Email" />)
 		}else{
 			elems.push(<div className="p-name" >{this.props.profile_user.name}</div>)
 		}

@@ -23,15 +23,18 @@ export default class EditableField extends Component {
 		this.setState({value: event.target.value});
 	}
 	render() {
-		var value = this.state.value, elems = [], elem;
+		var elems = [], elem, addClass,
+			value = this.state.value || this.props.placeholder || "";
 		if(!this.state.is_editing){
+			debugger
+			addClass = this.state.value ? "ei-text" : (this.props.placeholder ? "ei-placeholder" : "ei-text")
 			elem = (<div className="ei-text-container" onClick={this.edit.bind(this)}>
-						<div className="ei-text">{this.state.value}</div>
+						<div className={addClass}>{value}</div>
 						<i className="ei-action icon-pencil"></i>
 					</div>)
 		}else{
 			elem = (<div className="ei-edit-container">
-						<input autoFocus={true} className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value} onKeyDown={this.done.bind(this)}/>
+						<input autoFocus={true} className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value} onKeyDown={this.done.bind(this)} placeholder={this.props.placeholder}/>
 					</div>)
 		}
 		elems.push(elem)
