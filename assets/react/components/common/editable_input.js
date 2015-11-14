@@ -26,7 +26,6 @@ export default class EditableField extends Component {
 		var elems = [], elem, addClass,
 			value = this.state.value || this.props.placeholder || "";
 		if(!this.state.is_editing){
-			debugger
 			addClass = this.state.value ? "ei-text" : (this.props.placeholder ? "ei-placeholder" : "ei-text")
 			elem = (<div className="ei-text-container" onClick={this.edit.bind(this)}>
 						<div className={addClass}>{value}</div>

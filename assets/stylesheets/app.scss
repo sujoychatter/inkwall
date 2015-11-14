@@ -72,8 +72,8 @@ a {
     animation         : loader-after-animation 2s infinite; 
   }
   &.loading{
-    &:after{height: 5px;}
-    &:before{height: 5px;}
+    &:after{height: 3px;}
+    &:before{height: 3px;}
   }
 }
 @keyframes loader-before-animation {
