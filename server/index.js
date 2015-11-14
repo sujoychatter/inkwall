@@ -20,6 +20,13 @@ var googleSecretKey = Configs.GOOGLE_APP_SECRET;
 
 var app = express();
 
+var callbackURLGoogle = Configs.GOOGLE_AUTH_CALLBACK_URL_DEV
+var callbackURLFacebook = Configs.FACEBOOK_AUTH_CALLBACK_URL_DEV
+if(Configs.NODE_ENV == "production"){
+	callbackURLGoogle = Configs.GOOGLE_AUTH_CALLBACK_URL_PROD
+	callbackURLFacebook = Configs.FACEBOOK_AUTH_CALLBACK_URL_PROD
+}
+
 // view engine setup
 app.set('views', path.join(_dir.DIR_VIEWS));
 app.set('view engine', 'jade');
@@ -31,7 +38,7 @@ app.use(passport.session());
 passport.use(new FacebookStrategy({
 		clientID: facebookAppId,
 		clientSecret: facebookSecretKey,
-		callbackURL: "http://localhost:3000/auth/facebook/callback",
+		callbackURL: callbackURLFacebook,
 		enableProof: false,
 		profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
 	},
@@ -60,7 +67,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
 	clientID: googleAppId,
     clientSecret: googleSecretKey,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: callbackURLGoogle
   },
 	function(token, tokenSecret, profile, done) {
 		knex.select().from('users').where('profile_id', profile.id).then(function(rows){
