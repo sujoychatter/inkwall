@@ -4,6 +4,9 @@ import {addUserData, setProfileId} from './user'
 import {startLoading, stopLoading} from './loader'
 import fetch from 'isomorphic-fetch';
 
+var TINYMCE_LINE_PREVIEW = 10;
+var TINYMCE_CHAR_PREVIEW = 700;
+
 export function receivePosts(posts){
 	return {
 		type: types.RECEIVE_POSTS,
@@ -81,7 +84,7 @@ export function setSelectedPostByName(postName){
 
 function getPostPreview(){
 	var preview = tinyMCE.activeEditor.getContent({format : 'text'}).split('\n');
-	preview = preview.slice(0,4).join('\n').substring(0,300);
+	preview = preview.slice(0,TINYMCE_LINE_PREVIEW).join('\n').substring(0,TINYMCE_CHAR_PREVIEW);
 	return preview
 }
 

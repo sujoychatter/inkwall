@@ -9,13 +9,23 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var connection_config = require('./config/knexfile');
 var knex = require('knex')(connection_config[Configs.NODE_ENV]);
-var facebookAppId = Configs.FACEBOOK_APP_ID;
 var router = require('./routes');
+var facebookAppId = Configs.FACEBOOK_APP_ID;
 var facebookSecretKey = Configs.FACEBOOK_APP_SECRET;
+var googleAppId = Configs.GOOGLE_APP_ID;
+var googleSecretKey = Configs.GOOGLE_APP_SECRET;
 
 var app = express();
+
+var callbackURLGoogle = Configs.GOOGLE_AUTH_CALLBACK_URL_DEV
+var callbackURLFacebook = Configs.FACEBOOK_AUTH_CALLBACK_URL_DEV
+if(Configs.NODE_ENV == "production"){
+	callbackURLGoogle = Configs.GOOGLE_AUTH_CALLBACK_URL_PROD
+	callbackURLFacebook = Configs.FACEBOOK_AUTH_CALLBACK_URL_PROD
+}
 
 // view engine setup
 app.set('views', path.join(_dir.DIR_VIEWS));
@@ -28,7 +38,7 @@ app.use(passport.session());
 passport.use(new FacebookStrategy({
 		clientID: facebookAppId,
 		clientSecret: facebookSecretKey,
-		callbackURL: "http://localhost:3000/auth/facebook/callback",
+		callbackURL: callbackURLFacebook,
 		enableProof: false,
 		profileFields: ['id', 'displayName', 'link', 'photos', 'emails']
 	},
@@ -54,6 +64,34 @@ passport.use(new FacebookStrategy({
 		});
 	}
 ));
+passport.use(new GoogleStrategy({
+	clientID: googleAppId,
+    clientSecret: googleSecretKey,
+    callbackURL: callbackURLGoogle
+  },
+	function(token, tokenSecret, profile, done) {
+		knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+			if(rows.length == 1){
+				return done(null, rows[0]);
+			}
+			else{
+				knex('users').insert({name: profile.displayName,
+					admin: false,
+					photo: profile.photos[0].value,
+					email: profile.email,
+					profile_id: profile.id
+				}).then(function(user){
+					knex.select().from('users').where('profile_id', profile.id).then(function(rows){
+						if(rows.length == 1){
+							return done(null, rows[0]);
+						}
+					});
+				})
+			}
+		});
+	}
+));
+
 passport.serializeUser(function(user, done) {
 	done(null, user);
 });
@@ -85,6 +123,16 @@ app.get('/auth/facebook/callback',
 		failureRedirect: '/'
 	})
 );
+
+app.get('/auth/google', passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']}));
+
+app.get('/auth/google/callback', 
+	passport.authenticate('google', {
+		successRedirect : '/',
+		failureRedirect: '/' 
+	})
+);
+
 app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');

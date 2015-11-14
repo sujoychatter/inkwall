@@ -2,7 +2,13 @@ module.exports = {
 	NODE_ENV : process.env.NODE_ENV || "development",
 	FACEBOOK_APP_ID : process.env.FACEBOOK_APP_ID,
 	FACEBOOK_APP_SECRET : process.env.FACEBOOK_APP_SECRET,
+	GOOGLE_APP_ID : process.env.GOOGLE_APP_ID,
+	GOOGLE_APP_SECRET : process.env.GOOGLE_APP_SECRET,
 	GOOGLE_SERVICE_ACCOUNT_EMAIL : process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
 	GOOGLE_SERVICE_ACCOUNT_KEY_FILE : process.env.GOOGLE_SERVICE_ACCOUNT_KEY_FILE,
-	ANALYTICS_VIEW_ID : process.env.ANALYTICS_VIEW_ID
+	ANALYTICS_VIEW_ID : process.env.ANALYTICS_VIEW_ID,
+	FACEBOOK_AUTH_CALLBACK_URL_DEV: 'http://localhost:3000/auth/facebook/callback',
+	FACEBOOK_AUTH_CALLBACK_URL_PROD: 'http://fodoo.in/auth/facebook/callback',
+	GOOGLE_AUTH_CALLBACK_URL_DEV: 'http://localhost:3000/auth/google/callback',
+	GOOGLE_AUTH_CALLBACK_URL_PROD: 'http://fodoo.in/auth/google/callback'
 }
