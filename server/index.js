@@ -51,7 +51,7 @@ passport.use(new FacebookStrategy({
 				knex('users').insert({name: profile.displayName,
 					admin: false,
 					photo: profile.photos[0].value,
-					email: profile.email,
+					email: profile.emails[0].value,
 					profile_id: profile.id,
 					photo_large: "http://graph.facebook.com/" + profile.id + "/picture?width=250&height=250"
 				}).then(function(user){
@@ -81,7 +81,7 @@ passport.use(new GoogleStrategy({
 				knex('users').insert({name: profile.displayName,
 					admin: false,
 					photo: photo,
-					email: profile.email,
+					email: profile.emails[0].value,
 					profile_id: profile.id,
 					photo_large: photo_large
 				}).then(function(user){
@@ -120,7 +120,7 @@ app.use(function(req,res,next){
 router.init(app);
 
 //Facebook login paths
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
 app.get('/auth/facebook/callback',
 	passport.authenticate('facebook', {
 		successRedirect : '/',
