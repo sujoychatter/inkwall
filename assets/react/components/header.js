@@ -2,11 +2,10 @@ var React = require('react');
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var DropDown = require('./common/drop_down');
 import Router, { Navigation, Link } from 'react-router';
+import {startLoading} from '../actions/loader'
 
 module.exports = React.createClass({
-
 	mixins: [Navigation],
-
 	showHideDropDown: function(){
 		this.state.showDropDown = !this.state.showDropDown;
 		this.setState(this.state);
@@ -25,6 +24,9 @@ module.exports = React.createClass({
 		}else{
 			return null
 		}
+	},
+	startLoading: function(){
+		this.props.dispatch(startLoading())
 	},
 	newPost: function(){
 		var _this = this;
@@ -63,11 +65,11 @@ module.exports = React.createClass({
 			if(this.state.showOptions){}else{}
 			var login_options = 
 				<div className="login-options">
-					<a className="google" href="/auth/google">
+					<a className="google" href="/auth/google" onClick={this.startLoading}>
 						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
 						<div className="text">Login with Google</div>
 					</a>
-					<a className="facebook" href="/auth/facebook">
+					<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
 						<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
 						<div className="text">Login with Facebook</div>
 					</a>
@@ -89,6 +91,7 @@ module.exports = React.createClass({
 			{name: "Profile", callback: this.myProfile},
 			{name: "Logout", backend_route: '/logout'}
 		]
+		var loadingClass = this.props.isLoading ? "loader loading" : "loader"
 		return (
 			<div className="header">
 				{logo_link}
@@ -103,6 +106,7 @@ module.exports = React.createClass({
 				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
 					{login_options}
 				</span>
+				<div className={loadingClass}></div>
 			</div>
 		)
 	}

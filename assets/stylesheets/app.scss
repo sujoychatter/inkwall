@@ -3,7 +3,8 @@ html{
 	height: 100%;
 }
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 14px;
+  font-family: 'Frutiger Neue W02 Thin', Arial, Helvetica, sans-serif;
   margin: 0;
   height: 100%;
   &.shrunk-header{
@@ -43,6 +44,77 @@ body {
 
 a {
   color: #00B7FF;
+}
+.loader{
+  height: 0px;
+  position: fixed;
+  left: 0;
+  top: 58px;
+  width: 100%;
+  &:before{
+    position          : absolute;
+    background-color  : green;
+    content           : "";
+    -webkit-animation : loader-before-animation 2s infinite;
+    -moz-animation    : loader-before-animation 2s infinite;
+    animation         : loader-before-animation 2s infinite; 
+  }
+  &:after{
+    position          : absolute;
+    content           : "";
+    background-color  : white;
+    -webkit-animation : loader-after-animation 2s infinite;
+    -moz-animation    : loader-after-animation 2s infinite;
+    animation         : loader-after-animation 2s infinite; 
+  }
+  &.loading{
+    &:after{height: 5px;}
+    &:before{height: 5px;}
+  }
+}
+@keyframes loader-before-animation {
+  0% {
+    width: 0;
+  }
+  50%{
+    width: 100%;
+  }
+  100%{
+    width: 100%;
+  }
+}
+@keyframes loader-after-animation {
+  0% {
+    width: 0;
+  }
+  50%{
+    width: 0;
+  }
+  100%{
+    width: 100%;
+  }
+}
+@-webkit-keyframes loader-before-animation {
+  0% {
+    width: 0;
+  }
+  50%{
+    width: 100%;
+  }
+  100%{
+    width: 100%;
+  }
+}
+@-webkit-keyframes loader-after-animation {
+  0% {
+    width: 0;
+  }
+  50%{
+    width: 100%;
+  }
+  100%{
+    width: 100%;
+  }
 }
 
 .header{
@@ -225,9 +297,14 @@ a {
   top: 50px;
   right: 16px;
   color: $primary_background;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .25s;
+  @include transform(translateY(10px));
   &.visible{
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    @include transform(translateY(0));
   }
   .drop-down{
     width: 100%;

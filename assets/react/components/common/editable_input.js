@@ -12,22 +12,29 @@ export default class EditableField extends Component {
 		this.setState({is_editing: true})
 	}
 	done(event){
-		if(this.props.update_cb){
-			this.props.update_cb(this.state.value)
+		if(event.keyCode == 13) {
+			if(this.props.update_cb){
+				this.setState({is_editing: false})
+				this.props.update_cb(this.state.value, event)
+			}
 		}
 	}
 	handleChange(event) {
 		this.setState({value: event.target.value});
 	}
 	render() {
-		var value = this.state.value, elems = [];
+		var value = this.state.value, elems = [], elem;
 		if(!this.state.is_editing){
-			elems.push(<div className="ei-text"> {this.state.value} </div>)
-			elems.push(<div onClick={this.edit.bind(this)}> Edit </div>)
+			elem = (<div className="ei-text-container" onClick={this.edit.bind(this)}>
+						<div className="ei-text">{this.state.value}</div>
+						<div className="ei-action">Edit</div>
+					</div>)
 		}else{
-			elems.push(<input className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value}/>)
-			elems.push(<div onClick={this.done.bind(this)}> Done </div>)
+			elem = (<div className="ei-edit-container">
+						<input autoFocus={true} className="ei-input" onChange={this.handleChange.bind(this)} value={this.state.value} onKeyDown={this.done.bind(this)}/>
+					</div>)
 		}
+		elems.push(elem)
 		return (
 			<div className="editable-input">
 				{elems}

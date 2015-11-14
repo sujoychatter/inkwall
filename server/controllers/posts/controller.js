@@ -38,10 +38,12 @@ module.exports = {
 			filter.url = req.params.name;
 			filter.published = true;
 			filter.approved  = true;
-
 		}
 		Article.all().where(filter).then(
 			function(articles){
+				if(!articles.length){
+					return res.status(404).send({error: "Not Found"})
+				}
 				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles});
 				var data = {};
 				if (req.user) {

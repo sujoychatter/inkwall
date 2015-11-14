@@ -2,7 +2,6 @@ import {SET_CURRENT_USER_ID, ADD_USER_DATA, FETCHING_USER_PROFILE, LOGGED_OUT, S
 
 const initialState = {
 	users: [],
-	isFetching: false,
 	currentUserId: null,
 	profileUserId: null
 }
@@ -29,10 +28,7 @@ export default function posts(state = initialState, action = {}) {
 			return Object.assign({}, state, {currentUserId: action.data});
 
 		case ADD_USER_DATA:
-			return Object.assign({}, state, {isFetching: false, users: mergeUsers(state.users, action.data)});
-
-		case FETCHING_USER_PROFILE:
-			return Object.assign({}, state, {isFetching: true});
+			return Object.assign({}, state, {users: mergeUsers(state.users, action.data)});
 
 		case SET_PROFILE_USER_ID:
 			return Object.assign({}, state, {profileUserId: action.data});
