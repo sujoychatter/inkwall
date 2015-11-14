@@ -31,7 +31,12 @@ module.exports = React.createClass({
 		function handleNewPost(){
 			if(xhr.readyState == 4){
 				if(xhr.status == 201){
-					_this.transitionTo('/posts/' + JSON.parse(xhr.responseText).id + '/edit');
+					if(window.location.pathname.match(/\/posts\/\d+\/edit/)){
+						window.location.pathname = '/posts/' + JSON.parse(xhr.responseText).id + '/edit';
+					}
+					else{
+						_this.transitionTo('/posts/' + JSON.parse(xhr.responseText).id + '/edit');
+					}
 				}
 			}
 		};

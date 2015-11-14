@@ -34,8 +34,8 @@ module.exports = {
 		if(req.params.id){
 			filter["articles.id"] = req.params.id;
 		}
-		else if(req.params.url){
-			filter.url = req.params.url;
+		else if(req.params.name){
+			filter.url = req.params.name;
 			filter.published = true;
 			filter.approved  = true;
 

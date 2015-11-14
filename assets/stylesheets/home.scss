@@ -54,6 +54,10 @@
 		.view-count{
 			float: right;
 			color: $light_red;
+			font-weight: normal;
+		}
+		.icon{
+			margin-right: 3px;
 		}
 		.author{
 			color: $primary_background;
