@@ -12,9 +12,11 @@ module.exports = {
 			res.redirect('/')
 		}
 		if(req.user && req.user.admin && req.user.id == profile_user_id){
-			query = {}
+			query = {published: true}
+		}else if(req.user && req.user.id == profile_user_id){
+			query = {user_id: profile_user_id}
 		}else{
-			query = {user_id: req.params.profile_user_id}
+			query = {user_id: profile_user_id, approved: true}
 		}
 		var data = {}
 		return Article.all(query).then(function(posts){
