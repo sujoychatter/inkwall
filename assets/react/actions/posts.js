@@ -1,6 +1,7 @@
 import * as types from '../constants/posts';
 import {setVisibilityFilter} from './visibilityFilters'
 import {addUserData, setProfileId} from './user'
+import {startLoading, stopLoading} from './loader'
 import fetch from 'isomorphic-fetch';
 
 export function receivePosts(posts){
@@ -33,18 +34,15 @@ function encodeQueryParams(query){
 	return str.slice(0,-1)
 }
 
-export function requestPost(){
-	return {
-		type: types.REQUEST_POSTS
-	}
-}
-
 export function fetchProfile(id){
 	return function(dispatch){
 		dispatch(setProfileId(id))
+		dispatch(startLoading())
 		fetch('/api/profile/'+id,{credentials: 'include'})
-		.then(response => response.json())
-		.then(function(json){
+		.then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(addUserData(json.user[0]))
 			return dispatch(receivePosts(json.posts))
 		})
@@ -56,9 +54,12 @@ export function fetchPosts(query){
 		query = {}
 	}
 	return function(dispatch){
+		dispatch(startLoading())
 		fetch('/api/posts'.concat(encodeQueryParams(query)))
-		.then(response => response.json())
-		.then(function(json){
+		.then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			return dispatch(receivePosts(json.posts))
 		})
 	}
@@ -66,10 +67,11 @@ export function fetchPosts(query){
 
 export function setSelectedPostByName(postName){
 	return function(dispatch){
-		dispatch(requestPost());
-		return fetch('/api/posts/by_name?name=' + postName).then(
-			response => response.json()
-		).then(function(json){
+		dispatch(startLoading())
+		return fetch('/api/posts/by_name?name=' + postName).then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
 			dispatch(setVisibilityFilter("SHOW_ONE"));
@@ -86,6 +88,7 @@ function getPostPreview(){
 export function savePost(post){
 	post.preview = getPostPreview(post.content)
 	return function(dispatch){
+		dispatch(startLoading())
 		return fetch('/api/posts/' + post.id + '/update', {
 			credentials: 'include',
 			method: 'PUT',
@@ -94,9 +97,10 @@ export function savePost(post){
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-		}).then(
-			response => response.json()
-		).then(function(json){
+		}).then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(receivePosts(json.posts));
 		})
 	}
@@ -104,10 +108,11 @@ export function savePost(post){
 
 export function setSelectedPostById(id){
 	return function(dispatch){
-		dispatch(requestPost());
-		return fetch('/api/posts/' + id + '?for_edit=true').then(
-			response => response.json()
-		).then(function(json){
+		dispatch(startLoading())
+		return fetch('/api/posts/' + id + '?for_edit=true').then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
 			dispatch(setVisibilityFilter("SHOW_ONE"));
@@ -117,6 +122,7 @@ export function setSelectedPostById(id){
 
 export function publishPost(id) {
 	return function (dispatch) {
+		dispatch(startLoading())
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
 			method: 'put',
@@ -127,6 +133,7 @@ export function publishPost(id) {
 			},
 		})
 		.then(function(){
+				dispatch(stopLoading())
 				return dispatch({ type: types.PUBLISH_POST, id});
 			}
 		)
@@ -155,6 +162,7 @@ export function updatePost(id, query) {
 
 export function unPublishPost(id) {
 	return function (dispatch) {
+		dispatch(startLoading())
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
 			method: 'put',
@@ -165,12 +173,14 @@ export function unPublishPost(id) {
 			}
 		})
 		.then(function(){
+			dispatch(stopLoading())
 			return dispatch({ type: types.UN_PUBLISH_POST, id});
 		})
 	}
 }
 export function approvePost(id) {
 	return function (dispatch) {
+		dispatch(startLoading())
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
 			method: 'put',
@@ -180,9 +190,10 @@ export function approvePost(id) {
 				'Content-Type': 'application/json'
 			},
 		})
-		.then(
-			response => response.json()
-		).then(function(json){
+		.then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(receivePosts(json.posts));
 		})
 
@@ -190,6 +201,7 @@ export function approvePost(id) {
 }
 export function unApprovePost(id) {
 	return function (dispatch) {
+		dispatch(startLoading())
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
 			method: 'put',
@@ -199,9 +211,10 @@ export function unApprovePost(id) {
 				'Content-Type': 'application/json'
 			}
 		})
-		.then(
-			response => response.json()
-		).then(function(json){
+		.then(response => {
+			dispatch(stopLoading())
+			return response.json()
+		}).then(function(json){
 			dispatch(receivePosts(json.posts));
 		})
 	}

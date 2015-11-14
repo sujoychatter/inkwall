@@ -10,7 +10,7 @@ import {Filters} from './constants/visibilityFilters';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { connect } from 'react-redux';
-import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById , requestPost, fetchProfile, fetchPosts} from './actions/posts';
+import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById ,fetchProfile, fetchPosts} from './actions/posts';
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
@@ -55,7 +55,8 @@ function selectProfileUser(state, filter){
 function mapStateToProps(state) {
 	var new_state = {
 		posts: selectPosts(state.posts.items, state.visibilityFilter, state),
-		user: getUserData(state.user.users, state.user.currentUserId)
+		user: getUserData(state.user.users, state.user.currentUserId),
+		isLoading: state.loader.loading
 	}
 	return Object.assign({}, new_state, selectProfileUser(state, state.visibilityFilter));
 }
@@ -107,7 +108,7 @@ class ProfileWrapperElement extends Component{
 		store.dispatch(setVisibilityFilter(Filters.SHOW_PROFILE))
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={Profile}  cssElementId="my-post-css" stylesheetLink="/stylesheets/my-posts.css"/>}
+				{() => <Wrapper child={Profile}  cssElementId="profile-css" stylesheetLink="/stylesheets/profile.css"/>}
 			</Provider>
 		)
 	}

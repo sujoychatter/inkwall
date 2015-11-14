@@ -42,7 +42,7 @@ export default class Wrapper extends Component{
 		var Child = this.props.child;
 		return (
 			<div className="main-content">
-				<Header user={this.props.user}/>
+				<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
 				<Child {...this.props}/>
 			</div>
 		)
