@@ -85,7 +85,7 @@ a {
       margin-right: 10px;
       color: white;
       text-decoration: none;
-      background: #C9BFDE;
+      background: $light_color;
       height: 25px;
       border-radius: 2px;
       padding: 3px 10px;
@@ -125,7 +125,7 @@ a {
       }
     }
     .google{
-      border-right: 1px solid #5B608B;
+      border-right: 1px solid $primary_background;
     }
 }
 
@@ -157,10 +157,10 @@ a {
   height: 58px;
   position: relative;
   top: -8px;
-  transform: translateX(400px);
+  @include transform(translateX(400px));
   transition: all 0.5s;
   &.show{
-    transform: translateX(0px);
+    @include transform(translateX(0px));
   }
 }
 
@@ -195,8 +195,8 @@ a {
   cursor: pointer;
   position: absolute;
   right: 0;
-  background: #C9BFDE;
-  top: 0px;
+  background: $light_color;
+  top: 0;
   box-sizing: border-box;
 }
 .btn-primary{

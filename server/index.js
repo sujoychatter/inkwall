@@ -12,9 +12,11 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var connection_config = require('./config/knexfile');
 var knex = require('knex')(connection_config[Configs.NODE_ENV]);
-var facebookAppId = Configs.FACEBOOK_APP_ID;
 var router = require('./routes');
+var facebookAppId = Configs.FACEBOOK_APP_ID;
 var facebookSecretKey = Configs.FACEBOOK_APP_SECRET;
+var googleAppId = Configs.GOOGLE_APP_ID;
+var googleSecretKey = Configs.GOOGLE_APP_SECRET;
 
 var app = express();
 
@@ -56,8 +58,8 @@ passport.use(new FacebookStrategy({
 	}
 ));
 passport.use(new GoogleStrategy({
-	clientID: "",
-    clientSecret: '',
+	clientID: googleAppId,
+    clientSecret: googleSecretKey,
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
 	function(token, tokenSecret, profile, done) {

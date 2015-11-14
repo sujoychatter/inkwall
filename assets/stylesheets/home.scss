@@ -17,7 +17,7 @@
 		position: relative;
 	}
 	.card-wrapper{
-		background-color: #C9BFDE;
+		background-color: $light_color;
 		float: left;
 		margin-bottom: 10px;
 		border-radius: 2px;
@@ -43,20 +43,20 @@
 			padding: 10px 3px 3px 3px;
 			width: 97%;
 			bottom: 3px;
-			background: #C9BFDE;
+			background: $light_color;
 			height: 35px;
-			box-shadow: 0px -6px 19px #C9BFDE;
+			box-shadow: 0px -6px 19px $light_color;
 			font-weight: bold;
 		}
 		.preview{
-			color: #6B6B6B;
+			color: $text_grey;
 		}
 		.view-count{
 			float: right;
-			color: #FF3D5F;
+			color: $light_red;
 		}
 		.author{
-			color: #5B608B;
+			color: $primary_background;
 		}
 	}
 	.card{
