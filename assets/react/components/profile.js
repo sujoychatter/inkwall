@@ -6,6 +6,7 @@ import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
 import {updateUser} from '../actions/user';
 import formatDBDate from '../helpers/date';
+import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
 
 export default class Profile extends Component {
 	constructor(props, context){
@@ -15,9 +16,6 @@ export default class Profile extends Component {
 	supress(event){
 		event.preventDefault()
 		event.stopPropagation()
-	}
-	componentDidMount(){
-		document.title = "Fodoo : My Posts";
 	}
 	openPost(post, event){
 		this.supress(event)
@@ -135,6 +133,9 @@ export default class Profile extends Component {
 		this.props.dispatch(unApprovePost(post.id));
 	}
 	render() {
+		if(ExecutionEnvironment.canUseDOM){
+			document.title = this.props.profile_user.name ? this.props.profile_user.name + " | Fodoo" : "Fodoo"
+		}
 		return (
 			<div className="container profile">
 				<div className="wrapper">

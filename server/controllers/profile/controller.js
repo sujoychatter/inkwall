@@ -29,7 +29,7 @@ module.exports = {
 			data.profile_user_id = profile_user_id;
 			var wrapper_element = React.createElement(wrapper, {child: myPosts, posts: data.posts , user: data.user, profile_user: data.profile_user});
 			return res.render('profile', {
-				title: 'Fodoo',
+				title: data.profile_user.name + " | Fodoo",
 				markup: React.renderToString(wrapper_element),
 				tracking: req.tracking_element,
 				page_data: "var fodoo_data = " + JSON.stringify(data)
