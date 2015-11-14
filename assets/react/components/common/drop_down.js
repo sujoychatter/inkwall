@@ -14,13 +14,13 @@ module.exports = React.createClass({
 		function createOptions(){
 			return _this.props.options.map(function(option, index){
 				if(option.backend_route){
-					var action = <a href={option.backend_route}>{option.name}</a>
+					var action = <a href={option.backend_route}><i className={option.icon}></i>{option.name}</a>
 				}
 				else if(option.frontend_route && ExecutionEnvironment.canUseDOM){
-					var action = <Link to={option.frontend_route}>{option.name}</Link>
+					var action = <Link to={option.frontend_route}><i className={option.icon}></i>{option.name}</Link>
 				}
 				else if(option.callback){
-					var action = <a href="#" onClick={option.callback}>{option.name}</a>
+					var action = <a href="#" onClick={option.callback}><i className={option.icon}></i>{option.name}</a>
 				}
 				return (
 					<div className="drop-option" key={index}>

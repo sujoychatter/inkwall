@@ -27,7 +27,7 @@ export default class EditableField extends Component {
 		if(!this.state.is_editing){
 			elem = (<div className="ei-text-container" onClick={this.edit.bind(this)}>
 						<div className="ei-text">{this.state.value}</div>
-						<div className="ei-action">Edit</div>
+						<i className="ei-action icon-pencil"></i>
 					</div>)
 		}else{
 			elem = (<div className="ei-edit-container">

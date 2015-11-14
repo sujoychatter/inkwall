@@ -16,6 +16,9 @@ body {
         transform: rotate(90deg) translateX(-3px);
         height: 28px;
       }
+      .icon{
+        margin-right: 5px;
+      }
       .site-details{
         position: relative;
         top: -6px;
@@ -31,6 +34,7 @@ body {
       margin-top: 5px;
     }
     .login-button{
+      font-size: 20px;
       transform: translate(0px,-7px);
     }
     .drop-down-container{
@@ -168,6 +172,9 @@ a {
       position: absolute;
       right: 81px;
       bottom: 15px;
+      .icon{
+        margin-right: 5px;
+      }
     }
     .login-options{
         width: 400px;
@@ -261,7 +268,6 @@ a {
   padding-right: 20px;
   line-height: 45px;
   color: white;
-  font-size: 12px;
   padding-left: 20px;
   padding-top: 5px;
   cursor: pointer;
