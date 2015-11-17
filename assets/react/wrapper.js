@@ -3,26 +3,28 @@ var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Header = require('./components/header.js');
 import { bindActionCreators } from 'redux';
 import * as postsActions from './actions/posts';
+import ajax from './helpers/ajax';
 
 export default class Wrapper extends Component{
 	constructor(props){
 		super(props);
+		this.state = {
+			loading: true
+		}
 	}
-	// handleScroll(e) {
-	// 	if (e.target.scrollTop > 10) {
-	// 		document.body.className = "shrunk-header"
-	// 	}
-	// 	else if (e.target.scrollTop < 10) {
-	// 		document.body.className = ""
-	// 	}
-	// }
+	setCss(id, responseText, data){
+		var styleElement = document.createElement('style');
+		styleElement.setAttribute('id', id);
+		styleElement.innerHTML = data.response;
+		document.body.appendChild(styleElement);
+		this.setState(Object.assign({}, this.state, {loading: false}))
+	}
 	componentWillMount(){
 		if (ExecutionEnvironment.canUseDOM && this.props.cssElementId && !document.getElementById(this.props.cssElementId)) {
-			var linkElement = document.createElement('link');
-			linkElement.setAttribute('rel', 'stylesheet');
-			linkElement.setAttribute('href', this.props.stylesheetLink);
-			linkElement.setAttribute('id', this.props.cssElementId);
-			document.body.appendChild(linkElement);
+			ajax(this.props.stylesheetLink,'text/css',this.setCss.bind(this, this.props.cssElementId))
+		}
+		else{
+			this.setState({loading: false})
 		}
 	}
 	componentDidMount(){
@@ -31,20 +33,21 @@ export default class Wrapper extends Component{
 			ga('send', 'pageview');
 		}
 	}
-	componentWillUnmount() {
-		// if (ExecutionEnvironment.canUseDOM) {
-		// 	document.getElementsByClassName('wrapper')[0].removeEventListener('scroll', this.handleScroll);
-		// }
-	}
 	render() {
 		const { dispatch } = this.props;
-		this.props.actions = bindActionCreators(postsActions, dispatch);
-		var Child = this.props.child;
-		return (
-			<div className="main-content">
-				<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
-				<Child {...this.props}/>
-			</div>
-		)
+		var Child = this.props.child,
+			retDiv;
+		if(!this.state.loading){
+			retDiv = (
+				<div className="main-content">
+						<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
+						<Child {...this.props}/>	
+				</div>
+			)
+		}
+		else{
+			retDiv = <div></div>
+		}
+		return retDiv;
 	}
 };

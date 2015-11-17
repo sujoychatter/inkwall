@@ -134,7 +134,7 @@ export default class Profile extends Component {
 	}
 	render() {
 		if(ExecutionEnvironment.canUseDOM){
-			document.title = this.props.profile_user.name ? this.props.profile_user.name + " | Fodoo" : "Fodoo"
+			document.title = this.props.profile_user.name ? (this.props.profile_user.name + " | Fodoo") : "Fodoo"
 		}
 		return (
 			<div className="container profile">
