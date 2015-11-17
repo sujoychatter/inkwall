@@ -102,7 +102,6 @@ module.exports = React.createClass({
 				{logo_link}
 				<span className="site-details">
 					<span className="site-name" itemProp="name">Inkwall</span>
-					<span className="site-about" itemProp="description">Blogs for everyone</span>
 				</span>
 				{newPost}
 				{login}
