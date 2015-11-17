@@ -101,7 +101,7 @@ module.exports = React.createClass({
 			<div className="header">
 				{logo_link}
 				<span className="site-details">
-					<span className="site-name" itemProp="name">Fodoo</span>
+					<span className="site-name" itemProp="name">Inkwall</span>
 					<span className="site-about" itemProp="description">Blogs for everyone</span>
 				</span>
 				{newPost}

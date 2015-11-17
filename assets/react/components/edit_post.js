@@ -42,6 +42,13 @@ module.exports = React.createClass({
 							this.getDoc().body.style.fontSize = '14pt';
 							this.setContent(self.props.posts[0].content || "");
 						});
+						ed.on('keyDown', function(e){
+							if(e.keyCode == 83 && e.metaKey){
+								e.stopPropagation()
+								e.preventDefault()
+								self.saveContent()
+							}
+						});
 					}
 				});
 			}
