@@ -17,7 +17,7 @@ module.exports = {
 			data.posts = posts;
 			data.posts_visibility = "SHOW_ALL_APPROVED";
 			return res.render('home', {
-					title: 'Fodoo : Blogs for everyone',
+					title: 'Inkwall : Blogs for everyone',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
 					page_data: "var inkwall_data = " + JSON.stringify(data)
