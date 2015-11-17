@@ -18,14 +18,14 @@ import {setVisibilityFilter} from './actions/visibilityFilters'
 
 const store = configureStore();
 
-store.dispatch(createPosts(window.fodoo_data.posts));
-store.dispatch(setCurrentUserId(window.fodoo_data.user && window.fodoo_data.user.id));
-store.dispatch(addUserData(window.fodoo_data.user));
-store.dispatch(addUserData(window.fodoo_data.profile_user));
-store.dispatch(setProfileId(window.fodoo_data.profile_user_id));
-store.dispatch(setSelectedPost(window.fodoo_data.selected_post || {}));
-store.dispatch(setVisibilityFilter(window.fodoo_data.posts_visibility));
-window.fodoo_data = null
+store.dispatch(createPosts(window.inkwall_data.posts));
+store.dispatch(setCurrentUserId(window.inkwall_data.user && window.inkwall_data.user.id));
+store.dispatch(addUserData(window.inkwall_data.user));
+store.dispatch(addUserData(window.inkwall_data.profile_user));
+store.dispatch(setProfileId(window.inkwall_data.profile_user_id));
+store.dispatch(setSelectedPost(window.inkwall_data.selected_post || {}));
+store.dispatch(setVisibilityFilter(window.inkwall_data.posts_visibility));
+window.inkwall_data = null
 
 function selectPosts(posts, filter, state){
 	switch(filter){

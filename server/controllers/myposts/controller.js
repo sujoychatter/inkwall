@@ -18,7 +18,7 @@ module.exports = {
 				title: 'Fodoo : My posts',
 				markup: React.renderToString(wrapper_element),
 				tracking: req.tracking_element,
-				page_data: "var fodoo_data = " + JSON.stringify(data)
+				page_data: "var inkwall_data = " + JSON.stringify(data)
 			});
 		});
 	},

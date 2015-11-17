@@ -1,4 +1,4 @@
-# fodoo
+# Inkwall
 Blog for engineers
 
 This is a blogging site where users can view blog posts, comment on them.
@@ -14,7 +14,7 @@ Users can submit their own posts.
 - npm install
 - knex --knexfile server/config/knexfile.js <command>
 - gulp
-- DEBUG=fodoo NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  node app.js
+- DEBUG=inkwall NODE_ENV=[development/production] FACEBOOK_APP_ID=[...] FACEBOOK_APP_SECRET=[...]  node app.js
 -
 
-You can find demo at http://www.fodoo.in
+You can find demo at http://www.inkwall.in

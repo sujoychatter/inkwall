@@ -5,7 +5,7 @@ import {savePost} from '../actions/posts'
 
 module.exports = React.createClass({
 	componentDidMount: function () {
-		document.title = "Fodoo : Edit Post"
+		document.title = "Inkwall : Edit Post"
 		this.setupEditor()
 	},
 	componentDidUpdate: function(){

@@ -17,7 +17,7 @@ export default class ShowPost extends Component {
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM){
-			var title = "Fodoo : " + this.props.posts[0].title
+			var title = "Inkwall : " + this.props.posts[0].title
 			if(document.title != title){
 				document.title = title;
 			}

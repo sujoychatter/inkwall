@@ -24,7 +24,7 @@ module.exports = {
 					title: 'Fodoo : Edit Post',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
-					page_data: "var fodoo_data = " + JSON.stringify(data)
+					page_data: "var inkwall_data = " + JSON.stringify(data)
 				});
 			}
 		)
@@ -56,7 +56,7 @@ module.exports = {
 					title: 'Fodoo: ' + articles[0].title,
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
-					page_data: "var fodoo_data = " + JSON.stringify(data)
+					page_data: "var inkwall_data = " + JSON.stringify(data)
 				});
 			}
 		)

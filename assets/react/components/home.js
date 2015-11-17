@@ -16,7 +16,7 @@ module.exports = React.createClass({
 		this.setState(Object.assign({}, state, {posts: this.props.items}))
 	},
 	componentDidMount: function(){
-		document.title = "Fodoo : Blogs for everyone";
+		document.title = "Inkwall : Blogs for everyone";
 	},
 	getImageTag: function(content_text){
 		if(!content_text){
