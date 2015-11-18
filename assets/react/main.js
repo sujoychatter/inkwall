@@ -77,6 +77,7 @@ class HomeWrapperElement extends Component{
 
 class EditPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		store.dispatch(setSelectedPostById(this.props.params.postId));
 		return (
 			<Provider store={store}>
@@ -88,6 +89,7 @@ class EditPostWrapperElement extends Component{
 
 class ShowPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		if(this.props.params.postName){
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
 		}

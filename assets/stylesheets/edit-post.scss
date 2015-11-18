@@ -31,6 +31,14 @@
 			font-size: 21px;
 		}
 	}
+	.saving-hint{
+		position: absolute;
+		left: 28px;
+		bottom: 20px;
+		font-size: 15px;
+		color: $text_grey;
+		transition: all 1s;
+	}
 }
 .tinymce{
 	padding-top: 50px;

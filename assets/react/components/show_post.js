@@ -16,28 +16,37 @@ export default class ShowPost extends Component {
 		this.context.router.transitionTo('/profile/' + id);
 	}
 	render(){
-		if(ExecutionEnvironment.canUseDOM){
+		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
 			var title = "Inkwall : " + this.props.posts[0].title
 			if(document.title != title){
 				document.title = title;
 			}
 		}
+		if(this.props.posts[0]){
+			var title = this.props.posts[0].title,
+				created_at = this.props.posts[0].created_at,
+				user_photo = this.props.posts[0].user_photo,
+				user_name = this.props.posts[0].user_name,
+				user_id = this.props.posts[0].user_id,
+				content = this.props.posts[0].content
+
+		}
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">
 					<div className="title" itemProp="name headline">
-						{this.props.posts[0].title}
+						{title}
 					</div>
 					<div className="post-date">
-						{formatDBDate(this.props.posts[0].created_at)}
+						{formatDBDate(created_at)}
 					</div>
-					<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, this.props.posts[0].user_id)}>
-						<img itemProp="image" className="user-image" src={this.props.posts[0].user_photo}/>
+					<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, user_id)}>
+						<img itemProp="image" className="user-image" src={user_photo}/>
 						<span className="user-name" itemProp="name">
-							{this.props.posts[0].user_name}
+							{user_name}
 						</span>
 					</div>
-					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(this.props.posts[0].content)}>
+					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
 				</div>
 			</div>
