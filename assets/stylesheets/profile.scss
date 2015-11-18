@@ -45,20 +45,15 @@
     top: 10px;
     button{
       float: left;
-      margin-left: 15px;
-      line-height: 30px;
-      padding: 0 15px;
-      border-radius: 2px;
-      background-color: white;
-      border: 1px solid;
-      cursor: pointer;
-      outline: 0;
-      line-height: 34px;
       font-size: 14px;
-      &:hover{
-        color: white;
-        background-color: $primary_background;
-      }
+      margin-left: 15px;
+      @include button(#61bb6e)
+    }
+    button.remove-btn{
+      @include button($tertiary_color)
+    }
+    button.edit-btn{
+      @include button($primary_color)
     }
   }
   .profile-section{

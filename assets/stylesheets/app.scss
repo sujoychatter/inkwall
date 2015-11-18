@@ -264,7 +264,7 @@ a {
   border-radius: 2px;
   border: none;
   &:hover{
-    background-color: $primary_background;
+    background-color: $plain_background;
   }
   &.round{
     border-radius: 35px;
@@ -348,7 +348,7 @@ a {
       border-bottom: 0;
     }
     .icon{
-      margin-right: 5px;
+      margin-right: 10px;
     }
   }
 }

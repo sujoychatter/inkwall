@@ -69,19 +69,19 @@ export default class Profile extends Component {
 		var content;
 		function showPublishButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button onclicking={
+				return <Button classes="publish" onclicking={
 					post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
 				} content={post.published ? 'Un-Publish' : 'Publish'}/>
 			}
 		}
 		function showRemoveButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
+				return <Button classes="remove-btn" onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
 			}
 		}
 		function showEditButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
+				return <Button classes="edit-btn" onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
 			}
 		}
 		function showApproveButton(post){

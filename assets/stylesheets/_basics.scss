@@ -1,6 +1,10 @@
-$primary_background: #5B608B;
-$primary_font_color: #393953;
-$secondary_color: #3F406A;
+$primary_color: #393953;
+
+//green
+$secondary_color: #1fc055;
+
+//red
+$tertiary_color: #e32d79;
 $light_color: #C9BFDE;
 $text_light_grey: #BFBFBF;
 $text_grey: #797878;
@@ -34,12 +38,14 @@ $dark_color05: rgba(0,0,0, 0.05);
 	line-height: 24px;
 	cursor: pointer;
 	border: 1px solid $color;
+	color: $color;
 	border-radius: 20px;
 	padding: 4px 20px;
 	transition: all 0.3s;
+	background-color: white;
 	&:hover{
 		background-color: $color;
-		color: $plain_background;
+		color: white;
 	}
 }
 
