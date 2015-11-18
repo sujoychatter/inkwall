@@ -53,7 +53,7 @@ module.exports = React.createClass({
 		xhr.send();
 	},
 	showLoginOptions: function(){
-		this.setState(Object.assign({}, this.state, {showOptions : true}))
+		this.setState(Object.assign({}, this.state, {showOptions : !this.state.showOptions}))
 	},
 	render: function () {
 		if (this.state.user && this.state.user.name) {
@@ -64,32 +64,30 @@ module.exports = React.createClass({
 				},
 				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
 				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
-				var newPost = <a className="new-post" onClick={this.newPost}><i className="icon icon-doc"></i>Write a Post</a>
+				var newPost = <a className="new-post" onClick={this.newPost}>Write a Post</a>
 		}
 		else {
 			if(this.state.showOptions){}else{}
 			var login_options = 
-				<div className="login-options">
+				<div className="login-options layer-1">
 					<a className="google" href="/auth/google" onClick={this.startLoading}>
 						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
-						<div className="text">Login with Google</div>
 					</a>
 					<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
 						<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
-						<div className="text">Login with Facebook</div>
 					</a>
 				</div>
-			var login = <a className="login-button" onClick={this.showLoginOptions}><i className="icon icon-login"></i></a>
-			var newPost = <a className="new-post" onClick={this.showLoginOptions}><i className="icon icon-doc"></i>Write a Post</a>
+			var login = <a className="login-button layer-2" onClick={this.showLoginOptions}><i className="icon icon-login"></i></a>
+			var newPost = <a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
 		}
 		var logo_link;
 		if (ExecutionEnvironment.canUseDOM) {
-			logo_link = <Link to="/">
-								<img src="/images/logo.png" type="image/png"></img>
-							</Link>
+			logo_link = (<Link to="/" className="site-details">
+							<div className="site-name" itemProp="name">Inkwall</div>
+						</Link>)
 		}
 		else{
-			logo_link = <a href="/"><img src="/images/logo.png" type="image/png"></img></a>
+			logo_link = <a href="/" className="site-details"><div className="site-name" itemProp="name">Inkwall</div></a>
 		}
 		var options = [
 			{name: "New Post", callback: this.newPost, icon: "icon icon-doc"},
@@ -100,9 +98,6 @@ module.exports = React.createClass({
 		return (
 			<div className="header">
 				{logo_link}
-				<span className="site-details">
-					<span className="site-name" itemProp="name">Inkwall</span>
-				</span>
 				{newPost}
 				{login}
 				{image}

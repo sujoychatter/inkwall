@@ -4,7 +4,10 @@ $secondary_color: #3F406A;
 $light_color: #C9BFDE;
 $text_grey: #6B6B6B;
 $light_red: #E67070;
-$main_background: #e7e8f3;
+$main_background: #F5F8F9;
+$plain_background: #FFF;
+$basic-blue: #38B7EA;
+$border-color: 1px solid rgba(0,0,0,0.1);
 
 $dark_color: rgb(27,27,83);
 $dark_color90: rgba(27,27,83, 0.9);
@@ -17,6 +20,23 @@ $dark_color30: rgba(27,27,83, 0.3);
 $dark_color20: rgba(27,27,83, 0.2);
 $dark_color10: rgba(27,27,83, 0.1);
 $dark_color05: rgba(27,27,83, 0.05);
+
+.layer-1{ z-index: 1}
+.layer-2{ z-index: 2 }
+
+@mixin button(){
+	text-decoration: none;
+	line-height: 24px;
+	cursor: pointer;
+	border: 1px solid $basic-blue;
+	border-radius: 20px;
+	padding: 4px 20px;
+	transition: all 0.3s;
+	&:hover{
+		background-color: $basic-blue;
+		color: $plain_background;
+	}
+}
 
 @mixin transform($value){
   -webkit-transform: $value;
