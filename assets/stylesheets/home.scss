@@ -11,13 +11,13 @@
 		display: none;
 	}
 	.card-wrapper{
-		height: 385px;
-		width: 300px;
+		height: 312px;
+		width: 235px;
 		display: inline-block;
 		position: relative;
 	}
 	.card-wrapper{
-		background-color: $light_color;
+		background-color: white;
 		float: left;
 		margin-bottom: 10px;
 		border-radius: 2px;
@@ -37,9 +37,8 @@
 		.title{
 			margin: 5px;
 			font-size: 20px;
-			font-weight: bold;
 			color: black;
-			max-height: 92px;
+			overflow: hidden;
 		}
 		.details{
 			text-align: left;
@@ -48,24 +47,26 @@
 			padding: 10px 3px 3px 3px;
 			width: 97%;
 			bottom: 3px;
-			background: $light_color;
+			background: white;
 			height: 35px;
-			box-shadow: 0px -6px 19px $light_color;
-			font-weight: bold;
+			box-shadow: 0px -6px 19px white;
 		}
 		.preview{
-			color: $text_grey;
+			color: $text_light_grey;
+			font-size: 14px;
 		}
 		.view-count{
 			float: right;
 			color: $light_red;
-			font-weight: normal;
+			font-size: 12px;
+			position: relative;
+			top: 3px;
 		}
 		.icon{
 			margin-right: 3px;
 		}
 		.author{
-			color: $primary_background;
+			color: $text_grey;
 		}
 	}
 	.card{
@@ -77,7 +78,7 @@
 		overflow: hidden;
 	}
 	.post-image{
-		max-width: 288px;
-		max-height: 235px;
+		max-width: 222px;
+		max-height: 145px;
 	}
 }
