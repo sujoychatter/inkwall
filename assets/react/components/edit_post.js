@@ -58,18 +58,8 @@ module.exports = React.createClass({
 							this.getDoc().body.style.fontSize = '14pt';
 							this.setContent(content || "");
 						});
-						ed.on('keyDown', function(e){
-							if(e.keyCode == 83 && e.metaKey){
-								e.stopPropagation()
-								e.preventDefault()
-								self.saveContent()
-							}
-						});
 						ed.on('change', function(e){
-							if(self.saveTimeout){
-								clearTimeout(self.saveTimeout)
-							}
-							self.saveTimeout = setTimeout(self.saveContent, 2000);
+							self.scheduleSave()
 						})
 					}
 				});
@@ -93,6 +83,12 @@ module.exports = React.createClass({
 			savingHintClass: "saving-hint hidden"
 		}
 	},
+	scheduleSave: function(){
+		if(this.saveTimeout){
+			clearTimeout(this.saveTimeout)
+		}
+		this.saveTimeout = setTimeout(this.saveContent, 1000);
+	},
 	saveContent: function (event) {
 		var content = tinyMCE.activeEditor.getContent({format : 'raw'}),
 		post = {
@@ -105,6 +101,7 @@ module.exports = React.createClass({
 	},
 	onTitleChange: function(event){
 		this.setState({title:  event.target.value});
+		this.scheduleSave()
 	},
 	render: function () {
 		return (
