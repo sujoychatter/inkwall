@@ -5,7 +5,7 @@ import EditableInput from './common/editable_input';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
 import {updateUser} from '../actions/user';
-import formatDBDate from '../helpers/date';
+import formatDBDateTime from '../helpers/date';
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
 
 export default class Profile extends Component {
@@ -56,7 +56,7 @@ export default class Profile extends Component {
 			elems.push(<div className="p-name" >{this.props.profile_user.name}</div>)
 		}
 		return (
-			<div className="profile-section">
+			<div className="profile-section gen-bs">
 				{elems}
 			</div>
 		);
@@ -95,10 +95,10 @@ export default class Profile extends Component {
 			posts.forEach((post) => {
 				var href = "/posts/" + post.url
 				return elems.push(
-					<a className="item" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
+					<a className="item gen-bs" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
 						<h2 className="item-title">{post.title}</h2>
 						<div className="item-preview">{post.preview.replace(/[\s]{2,}/g, ' ')}</div>
-						<div className="last-updated">{formatDBDate(post.updated_at)}</div>
+						<div className="last-updated">{formatDBDateTime(post.updated_at)}</div>
 						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">
 							{showPublishButton.call(this,post)}
