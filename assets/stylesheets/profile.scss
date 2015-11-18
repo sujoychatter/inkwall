@@ -47,7 +47,8 @@
       float: left;
       font-size: 14px;
       margin-left: 15px;
-      @include button(#61bb6e)
+      outline: 0;
+      @include button($secondary_color)
     }
     button.remove-btn{
       @include button($tertiary_color)
