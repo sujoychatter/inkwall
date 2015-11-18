@@ -4,13 +4,14 @@
   .item{
     position: relative;
     display: block;
-    color: $dark_color;
+    color: black;
     padding: 0px 20px 34px;
     min-height: 90px;
-    border-bottom: 1px solid rgba(201,191,222,0.5);
     text-decoration: none;
+    background-color: white;
+    margin-bottom: 10px;
     &:hover{
-      background-color: $dark_color05;
+      transform: scale(1.01);
       -webkit-transition: all 0.3s;
       transition: all 0.3s;
     }
@@ -44,30 +45,29 @@
     top: 10px;
     button{
       float: left;
-      margin-left: 15px;
-      line-height: 30px;
-      padding: 0 15px;
-      border-radius: 2px;
-      background-color: white;
-      border: 1px solid;
-      cursor: pointer;
-      outline: 0;
-      line-height: 34px;
       font-size: 14px;
-      &:hover{
-        color: white;
-        background-color: $primary_background;
-      }
+      margin-left: 15px;
+      outline: 0;
+      @include button($secondary_color)
+    }
+    button.remove-btn{
+      @include button($tertiary_color)
+    }
+    button.edit-btn{
+      @include button($primary_color)
     }
   }
   .profile-section{
-    position: relative;
-    width: 20%;
-    padding: 0 10px;
+    position: absolute;
+    width: 240px;
     box-sizing: border-box;
     float: left;
+    background-color: white;
+    text-align: center;
+    padding: 30px 10px;
     .p-image{
-      width: 100%;
+      width: 150px;
+      height: 150px;
       border-radius: 2px; 
     }
     .p-name{
@@ -76,11 +76,11 @@
     }
   }
   .posts-section{
-    border-left: 1px solid rgba(201,191,222,0.5);
-    position: relative;
-    width: 80%;
+    width: 100%;
     float: right;
     box-sizing: border-box;
+    padding-left: 250px;
+    padding-right: 2px;
   }
   .editable-input{
     margin: 10px 0;

@@ -71,13 +71,13 @@ export function fetchPosts(query){
 export function setSelectedPostByName(postName){
 	return function(dispatch){
 		dispatch(startLoading())
+		dispatch(setSelectedPost({id: null}));
 		return fetch('/api/posts/by_name?name=' + postName).then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
-			dispatch(setVisibilityFilter("SHOW_ONE"));
 		})
 	}
 }
@@ -111,14 +111,14 @@ export function savePost(post){
 
 export function setSelectedPostById(id){
 	return function(dispatch){
-		dispatch(startLoading())
+		dispatch(startLoading());
+		dispatch(setSelectedPost({id: null}));
 		return fetch('/api/posts/' + id + '?for_edit=true').then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
-			dispatch(setVisibilityFilter("SHOW_ONE"));
 		})
 	}
 }

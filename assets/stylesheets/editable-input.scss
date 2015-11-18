@@ -4,8 +4,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		opacity: 0;
-		pointer-events: none;
+		background: white;
 		transition: all 0.2s;
 	}
 	.ei-input{
@@ -17,7 +16,8 @@
 		padding: 0;
 		outline: 0;
 		border: 0;
-		border-bottom: 2px solid $dark_color50;
+		text-align: center;
+		border-bottom: 1px solid $dark_color50;
 	}
 	.ei-placeholder{
 		opacity: 0.3;
@@ -28,10 +28,7 @@
 		cursor: pointer;
 	}
 	.ei-text-container:hover{
-		background-color: $dark_color05;
-		.ei-action{
-			opacity: 1;
-			pointer-events: none;
-		}
+		background-color: $main_background;
+		.ei-action{background-color: $main_background}
 	}
 }
