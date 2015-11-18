@@ -10,31 +10,31 @@ $plain_background: #FFF;
 $basic-blue: #38B7EA;
 $border-color: 1px solid rgba(0,0,0,0.1);
 
-$dark_color: rgb(27,27,83);
-$dark_color90: rgba(27,27,83, 0.9);
-$dark_color80: rgba(27,27,83, 0.8);
-$dark_color70: rgba(27,27,83, 0.7);
-$dark_color60: rgba(27,27,83, 0.6);
-$dark_color50: rgba(27,27,83, 0.5);
-$dark_color40: rgba(27,27,83, 0.4);
-$dark_color30: rgba(27,27,83, 0.3);
-$dark_color20: rgba(27,27,83, 0.2);
-$dark_color10: rgba(27,27,83, 0.1);
-$dark_color05: rgba(27,27,83, 0.05);
+$dark_color: rgb(0,0,0);
+$dark_color90: rgba(0,0,0, 0.9);
+$dark_color80: rgba(0,0,0, 0.8);
+$dark_color70: rgba(0,0,0, 0.7);
+$dark_color60: rgba(0,0,0, 0.6);
+$dark_color50: rgba(0,0,0, 0.5);
+$dark_color40: rgba(0,0,0, 0.4);
+$dark_color30: rgba(0,0,0, 0.3);
+$dark_color20: rgba(0,0,0, 0.2);
+$dark_color10: rgba(0,0,0, 0.1);
+$dark_color05: rgba(0,0,0, 0.05);
 
 .layer-1{ z-index: 1}
 .layer-2{ z-index: 2 }
 
-@mixin button(){
+@mixin button($color){
 	text-decoration: none;
 	line-height: 24px;
 	cursor: pointer;
-	border: 1px solid $basic-blue;
+	border: 1px solid $color;
 	border-radius: 20px;
 	padding: 4px 20px;
 	transition: all 0.3s;
 	&:hover{
-		background-color: $basic-blue;
+		background-color: $color;
 		color: $plain_background;
 	}
 }

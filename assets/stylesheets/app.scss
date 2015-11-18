@@ -4,7 +4,7 @@ html{
 }
 body {
   font: 14px;
-  font-family: 'Frutiger Neue W02 Thin', Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', Arial, sans-serif;
   margin: 0;
   height: 100%;
   &.shrunk-header{
@@ -26,12 +26,6 @@ body {
       .right-elements{
         height: 38px;
       }
-    }
-    .user-image{
-      -ms-transform: scale(0.7) translate(0px,-10px);
-      -webkit-transform: scale(0.7) translate(0px,-10px);
-      transform: scale(0.7) translate(0px,-10px);
-      margin-top: 5px;
     }
     .login-button{
       font-size: 20px;
@@ -127,6 +121,7 @@ a {
     background-color: $plain_background;
     position: fixed;
     width: 100%;
+    padding: 0 20px;
     box-sizing: border-box;
     border-bottom: $border-color;
     img{
@@ -150,26 +145,22 @@ a {
     .user-image{
       height: 40px;
       width: 40px;
-      margin-right: 20px;
-      margin-left: 20px;
       border-radius: 23px;
       background-size: cover;
       cursor: pointer;
-      position: absolute;
-      right: 0;
-      top: 8px;
+      float: left;
+      margin: 8px 0px;
     }
     .new-post{
-      position: absolute;
-      right: 150px;
-      margin: 12px 0;
-      @include button();
+      float: left;
+      margin: 12px 10px 12px 0;
+      @include button($basic-blue);
       .icon{
         margin-right: 5px;
       }
     }
     .login-options{
-        width: 130px;
+        width: 315px;
         height: 58px;
     }
     .facebook, .google{
@@ -193,7 +184,7 @@ a {
 }
 .right-elements{
   background-color: transparent;
-  @include transform(translateX(130px));
+  @include transform(translateX(85px));
   transition: all 0.5s;
   &.show{
     @include transform(translateX(0px));
@@ -225,15 +216,12 @@ a {
 }
 
 .site-details{
-  position: relative;
-  top: 0px;
+  overflow: auto;
   .site-name{
     line-height: 58px;
     float: left;
     font-size: 24px;
-    color: $basic-blue;
-    letter-spacing: 2px;
-    margin-left: 30px;
+    color: rgba(0,0,0,0.4);
   }
   .site-about{
     margin-left: 10px;
@@ -246,9 +234,11 @@ a {
 }
 .login-button{
   position: absolute;
-  right: 0;
-  padding: 12px 12px 12px 0;
+  right: 20px;
+  top: 0;
+  margin: 12px 0;
   background-color: $plain_background;
+  @include button($basic-blue)
   .icon{
     display: block;
     width: 30px;
@@ -286,10 +276,10 @@ a {
 .drop-down-container{
   position: absolute;
   height: 58px;
-  width: 125px;
+  width: 160px;
   top: 50px;
   right: 16px;
-  color: $primary_background;
+  color: $dark_color10;
   opacity: 0;
   pointer-events: none;
   transition: all .25s;
@@ -304,40 +294,61 @@ a {
     margin-top: 9px;
     border-radius: 2px;
     background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,.4);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
   }
   .up-pick{
     position: absolute;
     height: 0px;
     width: 0px;
     top: 0px;
-    right: 13px;
-    border-bottom: 9px solid white;
-    border-right: 9px solid transparent;
-    border-left: 9px solid transparent;
+    right: 0;
+    &:before{
+      position: absolute;
+      height: 0px;
+      content: "";
+      width: 0px;
+      top: 0px;
+      right: 13px;
+      border-bottom: 10px solid rgba(0,0,0,0.1);
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+    }
+    &:after{
+      position: absolute;
+      height: 0px;
+      content: "";
+      width: 0px;
+      top: 1px;
+      right: 14px;
+      border-bottom: 9px solid white;
+      border-right: 9px solid transparent;
+      border-left: 9px solid transparent;
+    }
   }
   .drop-option{
     text-transform: uppercase;
-    font-size: 10px;
+    font-size: 12px;
     cursor: pointer;
-    &:hover{
-      background-color: $light_color;
-    }
     a{
       display: block;
       height: 100%;
-      width: 115px;
       text-decoration: none;
-      color: inherit;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding: 15px 0;
       margin-right: 5px;
       margin-left: 5px;
+      color: $dark_color50;
       border-bottom: 1px solid rgba(128, 128, 128, 0.27);
       box-sizing: border-box;
+       &:hover{
+        color: $basic-blue;
+      }
     }
     &:last-child a{
       border-bottom: 0;
+    }
+    .icon{
+      margin-right: 5px;
     }
   }
 }

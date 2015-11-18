@@ -55,31 +55,40 @@ module.exports = React.createClass({
 	showLoginOptions: function(){
 		this.setState(Object.assign({}, this.state, {showOptions : !this.state.showOptions}))
 	},
-	render: function () {
+	getHeaderInfo: function(){
+		var newPost, header_info;
 		if (this.state.user && this.state.user.name) {
-			var userData = {
-					userName: this.state.user.name,
-					imageURL: this.state.user.photo,
-					admin: this.state.user.admin
-				},
-				divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
-				image = <div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>;
-				var newPost = <a className="new-post" onClick={this.newPost}>Write a Post</a>
+			var divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
+			header_info = 
+				<span className="pull-right ">
+					<a className="new-post" onClick={this.newPost}>Write a Post</a>
+					<div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>
+				</span>
 		}
 		else {
-			if(this.state.showOptions){}else{}
-			var login_options = 
-				<div className="login-options layer-1">
-					<a className="google" href="/auth/google" onClick={this.startLoading}>
-						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
-					</a>
-					<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
-						<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
-					</a>
-				</div>
-			var login = <a className="login-button layer-2" onClick={this.showLoginOptions}><i className="icon icon-login"></i></a>
-			var newPost = <a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
+			header_info =
+				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
+					<div className="login-options layer-1">
+						<a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
+						<a className="google" href="/auth/google" onClick={this.startLoading}>
+							<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
+						</a>
+						<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
+							<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
+						</a>
+					</div>
+				</span>
 		}
+		return header_info
+	},
+	getLoginButton: function(){
+		var login;
+		if (! (this.state.user && this.state.user.name) ) {
+			login = <a className="login-button layer-2" onClick={this.showLoginOptions}>Sign In</a>
+		}
+		return login
+	},
+	render: function () {
 		var logo_link;
 		if (ExecutionEnvironment.canUseDOM) {
 			logo_link = (<Link to="/" className="site-details">
@@ -89,6 +98,7 @@ module.exports = React.createClass({
 		else{
 			logo_link = <a href="/" className="site-details"><div className="site-name" itemProp="name">Inkwall</div></a>
 		}
+		
 		var options = [
 			{name: "New Post", callback: this.newPost, icon: "icon icon-doc"},
 			{name: "Profile", callback: this.myProfile, icon: "icon icon-user"},
@@ -98,13 +108,9 @@ module.exports = React.createClass({
 		return (
 			<div className="header">
 				{logo_link}
-				{newPost}
-				{login}
-				{image}
 				<DropDown options={options} showDropDown={this.state.showDropDown}/>
-				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
-					{login_options}
-				</span>
+				{this.getHeaderInfo()}
+				{this.getLoginButton()}
 				<div className={loadingClass}></div>
 			</div>
 		)
