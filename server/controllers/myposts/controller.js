@@ -15,7 +15,7 @@ module.exports = {
 			}
 			data.posts_visibility = "SHOW_MY";
 			return res.render('my_posts', {
-				title: 'Fodoo : My posts',
+				title: 'Inkwall : My posts',
 				markup: React.renderToString(wrapper_element),
 				tracking: req.tracking_element,
 				page_data: "var inkwall_data = " + JSON.stringify(data)

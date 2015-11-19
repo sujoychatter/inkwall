@@ -21,7 +21,7 @@ module.exports = {
 				data.posts_visibility = "SHOW_ONE";
 				data.selected_post = articles[0];
 				return res.render('new_post', {
-					title: 'Fodoo : Edit Post',
+					title: 'Inkwall : Edit Post',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
 					page_data: "var inkwall_data = " + JSON.stringify(data)
@@ -53,7 +53,7 @@ module.exports = {
 				data.posts_visibility = "SHOW_ONE";
 				data.selected_post = articles[0];
 				return res.render('show_post', {
-					title: 'Fodoo: ' + articles[0].title,
+					title: 'Inkwall: ' + articles[0].title,
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
 					page_data: "var inkwall_data = " + JSON.stringify(data)
