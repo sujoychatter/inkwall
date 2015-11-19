@@ -112,28 +112,28 @@ export default class Profile extends Component {
 		}
 		return elems;
 	}
-	remove(elem){
+	remove(elem, event){
 		this.supress(event)
 		let dispatch = this.props.dispatch;
 		updatePost(elem.id, {active: false}).then(() =>{
 			return dispatch(removePost(elem.id));
 		});
 	}
-	publish(post){
+	publish(post, event){
 		this.supress(event)
 		let dispatch = this.props.dispatch;
 		dispatch(publishPost(post.id));
 	}
-	unPublish(post){
+	unPublish(post, event){
 		this.supress(event)
 		let dispatch = this.props.dispatch;
 		dispatch(unPublishPost(post.id));
 	}
-	approve(post){
+	approve(post, event){
 		this.supress(event)
 		this.props.dispatch(approvePost(post.id));
 	}
-	unApprove(post){
+	unApprove(post, event){
 		this.supress(event)
 		this.props.dispatch(unApprovePost(post.id));
 	}
