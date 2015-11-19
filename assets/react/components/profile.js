@@ -93,7 +93,7 @@ export default class Profile extends Component {
 		}
 		if(posts) {
 			posts.forEach((post) => {
-				var href = "/posts/" + post.url
+				var href = "/posts/" + ( post.approved && post.published ? post.url : (post.id + "/preview"))
 				return elems.push(
 					<a className="item gen-bs" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
 						<h2 className="item-title">{post.title}</h2>
