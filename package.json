@@ -6,6 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "babel": "^6.1.18",
+    "babel-core": "^6.2.1",
+    "babel-plugin-object-assign": "^1.2.1",
     "babelify": "^6.3.0",
     "body-parser": "~1.13.2",
     "bower": "^1.5.3",
