@@ -81,7 +81,7 @@ class EditPostWrapperElement extends Component{
 		store.dispatch(setSelectedPostById(this.props.params.postId));
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={EditPost} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+				{() => <Wrapper child={EditPost} hideFooter={false} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}

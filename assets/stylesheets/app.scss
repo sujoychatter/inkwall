@@ -6,6 +6,7 @@ body {
   font: 14px;
   font-family: 'Open Sans', Arial, sans-serif;
   margin: 0;
+  height: 100%;
   &.shrunk-header{
     .header{
       height: 38px;
@@ -117,10 +118,15 @@ a {
 .main-content{
   overflow-x: hidden;
   position: relative;
+  min-height: 100%;
+  box-sizing: border-box;
+  &.large-content{
+    padding-bottom: 160px;
+  }
 }
 
 .header{
-    z-index: 1;
+    z-index: 2;
     height: 58px;
     background-color: $plain_background;
     position: fixed;
@@ -211,7 +217,7 @@ a {
   padding-top: 58px;
   box-sizing: border-box;
   z-index: 1;
-  padding-bottom: 178px;
+  padding-bottom: 160px;
 }
 
 .site-details{
@@ -360,6 +366,7 @@ a {
   padding: 20px;
   position: absolute;
   bottom: 0;
+  color: grey;
 }
 .hidden{
   visibility: hidden;

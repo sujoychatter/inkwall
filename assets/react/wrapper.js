@@ -34,6 +34,11 @@ export default class Wrapper extends Component{
 			ga('send', 'pageview');
 		}
 	}
+	getFooter(){
+		if(this.props.hideFooter !== false){
+			return <Footer />
+		}
+	}
 	render() {
 		const { dispatch } = this.props;
 		var Child = this.props.child,
@@ -43,7 +48,7 @@ export default class Wrapper extends Component{
 				<div className="main-content">
 						<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
 						<Child {...this.props}/>
-						<Footer />
+						{this.getFooter()}
 				</div>
 			)
 		}
