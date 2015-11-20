@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Header = require('./components/header.js');
+var Footer = require('./components/footer.js');
 import { bindActionCreators } from 'redux';
 import * as postsActions from './actions/posts';
 import ajax from './helpers/ajax';
@@ -41,7 +42,8 @@ export default class Wrapper extends Component{
 			retDiv = (
 				<div className="main-content">
 						<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
-						<Child {...this.props}/>	
+						<Child {...this.props}/>
+						<Footer />
 				</div>
 			)
 		}

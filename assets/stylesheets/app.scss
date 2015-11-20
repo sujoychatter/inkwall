@@ -6,7 +6,6 @@ body {
   font: 14px;
   font-family: 'Open Sans', Arial, sans-serif;
   margin: 0;
-  height: 100%;
   &.shrunk-header{
     .header{
       height: 38px;
@@ -115,6 +114,11 @@ a {
   }
 }
 
+.main-content{
+  overflow-x: hidden;
+  position: relative;
+}
+
 .header{
     z-index: 1;
     height: 58px;
@@ -195,25 +199,19 @@ a {
 	height: 100%;
   box-sizing: border-box;
   background-color: $main_background;
-	.main-content{
-    height: 100%;
-    overflow: hidden;
-	}
 }
 
 .wrapper{
   overflow: auto;
-  height: 100%;
   position: relative;
   background-color: $main_background;
 }
 
 .container{
   padding-top: 58px;
-  height: 100%;
   box-sizing: border-box;
   z-index: 1;
-  overflow: hidden;
+  padding-bottom: 178px;
 }
 
 .site-details{
@@ -352,6 +350,16 @@ a {
       margin-right: 10px;
     }
   }
+}
+.footer{
+  width: 100%;
+  background: black;
+  height: 120px;
+  background: $footer-color;
+  text-align: center;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
 }
 .hidden{
   visibility: hidden;
