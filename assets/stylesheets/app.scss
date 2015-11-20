@@ -238,7 +238,7 @@ a {
   top: 0;
   margin: 12px 0;
   background-color: $plain_background;
-  @include button($basic-blue)
+  @include button($basic-blue);
   .icon{
     display: block;
     width: 30px;
