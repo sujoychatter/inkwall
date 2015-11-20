@@ -31,6 +31,7 @@ export default class Wrapper extends Component{
 	componentDidMount(){
 		if(typeof ga != "undefined"){
 			ga('set', 'page', window.location.pathname);
+			ga('set', 'location', window.location.href);
 			ga('send', 'pageview');
 		}
 	}
