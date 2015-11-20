@@ -194,7 +194,8 @@ a {
 #application{
 	height: 100%;
   box-sizing: border-box;
-	.main-content{		
+  background-color: $main_background;
+	.main-content{
     height: 100%;
     overflow: hidden;
 	}

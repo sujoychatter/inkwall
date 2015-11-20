@@ -93,7 +93,7 @@ export default class Profile extends Component {
 		}
 		if(posts) {
 			posts.forEach((post) => {
-				var href = "/posts/" + post.url
+				var href = "/posts/" + ( post.approved && post.published ? post.url : (post.id + "/preview"))
 				return elems.push(
 					<a className="item gen-bs" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
 						<h2 className="item-title">{post.title}</h2>
@@ -112,24 +112,29 @@ export default class Profile extends Component {
 		}
 		return elems;
 	}
-	remove(elem){
+	remove(elem, event){
+		this.supress(event)
 		let dispatch = this.props.dispatch;
 		updatePost(elem.id, {active: false}).then(() =>{
 			return dispatch(removePost(elem.id));
 		});
 	}
-	publish(post){
+	publish(post, event){
+		this.supress(event)
 		let dispatch = this.props.dispatch;
 		dispatch(publishPost(post.id));
 	}
-	unPublish(post){
+	unPublish(post, event){
+		this.supress(event)
 		let dispatch = this.props.dispatch;
 		dispatch(unPublishPost(post.id));
 	}
-	approve(post){
+	approve(post, event){
+		this.supress(event)
 		this.props.dispatch(approvePost(post.id));
 	}
-	unApprove(post){
+	unApprove(post, event){
+		this.supress(event)
 		this.props.dispatch(unApprovePost(post.id));
 	}
 	render() {
