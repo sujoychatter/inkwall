@@ -25,7 +25,11 @@ gulp.task('js', function () {
 
 gulp.task('browserify:js', function () {
 	browserify({entries: 'assets/react/main.js'})
-		.transform(babelify)
+		.transform(
+			babelify.configure({
+    			plugins: ["object-assign"]
+    		})
+    	)
 		.bundle()
 		.pipe(source('main.js'))
 		.pipe(gulp.dest('public/react/'));
