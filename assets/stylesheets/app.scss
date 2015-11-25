@@ -7,37 +7,6 @@ body {
   font-family: 'Open Sans', Arial, sans-serif;
   margin: 0;
   height: 100%;
-  &.shrunk-header{
-    .header{
-      height: 38px;
-      img{
-        -ms-transform: rotate(7deg) translateX(-3px);
-        -webkit-transform: rotate(7deg) translateX(-3px);
-        transform: rotate(90deg) translateX(-3px);
-        height: 28px;
-      }
-      .icon{
-        margin-right: 5px;
-      }
-      .site-details{
-        position: relative;
-        top: -6px;
-      }
-      .right-elements{
-        height: 38px;
-      }
-    }
-    .login-button{
-      font-size: 20px;
-      transform: translate(0px,-7px);
-    }
-    .drop-down-container{
-      top: 32px;
-    }
-    .container{
-      padding-top: 38px;
-    }
-  }
 }
 
 a {
@@ -125,7 +94,8 @@ a {
     box-sizing: border-box;
     border-bottom: $border-color;
     img{
-    	height: 40px;
+      height: 30px;
+      margin: 15px 15px 15px 0;
     }
     .icon{
       margin-left: 3px;

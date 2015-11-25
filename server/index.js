@@ -104,7 +104,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(_dir.DIR_PUBLIC + '/images/logo.png')));
+app.use(favicon(path.join(_dir.DIR_PUBLIC + '/images/favicon.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
