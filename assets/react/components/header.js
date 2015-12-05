@@ -92,11 +92,11 @@ module.exports = React.createClass({
 		var logo_link;
 		if (ExecutionEnvironment.canUseDOM) {
 			logo_link = (<Link to="/" className="site-details">
-							<div className="site-name" itemProp="name">Inkwall</div>
+							<img src="/images/logo.png" className="site-name" itemProp="name"/>
 						</Link>)
 		}
 		else{
-			logo_link = <a href="/" className="site-details"><div className="site-name" itemProp="name">Inkwall</div></a>
+			logo_link = <a href="/" className="site-details"><img src="/images/logo.png" className="site-name" itemProp="name"/></a>
 		}
 		
 		var options = [
