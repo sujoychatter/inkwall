@@ -12,7 +12,12 @@ module.exports = React.createClass({
 	componentWillReceiveProps: function(nextProps) {
 		var state;
 		if(nextProps.posts[0]){
-			state  = {title:  nextProps.posts[0].title};
+			if (!this.state.title){
+				state  = {title:  nextProps.posts[0].title};
+			}
+			else{
+				state = {}
+			}
 			if(this.saving === true && nextProps.isLoading === false){
 				this.saving = false;
 				setTimeout(this.removeSavingHint, 1000);
@@ -90,14 +95,15 @@ module.exports = React.createClass({
 		this.saveTimeout = setTimeout(this.saveContent, 1000);
 	},
 	saveContent: function (event) {
-		var content = tinyMCE.activeEditor.getContent({format : 'raw'}),
-		post = {
-			id: this.props.posts[0].id,
-			title: document.getElementsByClassName('blog-title')[0].value,
-			content: content
+		if(tinyMCE && tinyMCE.activeEditor){
+			var content = tinyMCE.activeEditor.getContent({format : 'raw'}),
+			post = {
+				id: this.props.posts[0].id,
+				title: document.getElementsByClassName('blog-title')[0].value,
+				content: content
+			}
+			this.props.dispatch(savePost(post))
 		}
-		// this.setState(Object.assign({}, this.state, {content: content}));
-		this.props.dispatch(savePost(post))
 	},
 	onTitleChange: function(event){
 		this.setState({title:  event.target.value});

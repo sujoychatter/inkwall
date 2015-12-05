@@ -14,6 +14,7 @@ import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
+import Base64 from './helpers/base64'
 
 
 const store = configureStore();
@@ -78,10 +79,10 @@ class HomeWrapperElement extends Component{
 class EditPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
-		store.dispatch(setSelectedPostById(this.props.params.postId));
+		store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={EditPost} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+				{() => <Wrapper child={EditPost} hideFooter={false} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -94,7 +95,7 @@ class ShowPostWrapperElement extends Component{
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
 		}
 		else{
-			store.dispatch(setSelectedPostById(this.props.params.postId));
+			store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
 		}
 		return (
 			<Provider store={store}>
