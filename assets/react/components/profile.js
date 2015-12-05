@@ -7,6 +7,7 @@ import { Navigation, Link } from 'react-router';
 import {updateUser} from '../actions/user';
 import formatDBDateTime from '../helpers/date';
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
+import Base64 from '../helpers/base64'
 
 export default class Profile extends Component {
 	constructor(props, context){
@@ -19,7 +20,7 @@ export default class Profile extends Component {
 	}
 	openPost(post, event){
 		this.supress(event)
-		this.context.router.transitionTo('/posts/' + post.id + '/edit');
+		this.context.router.transitionTo('/posts/' + Base64.encode(post.id.toString()) + '/edit');
 	}
 	show_post(post, event){
 		this.supress(event)
@@ -29,7 +30,7 @@ export default class Profile extends Component {
 				return this.context.router.transitionTo(link);
 			}
 		}else{
-			return this.context.router.transitionTo('/posts/' + post.id + '/preview');
+			return this.context.router.transitionTo('/posts/' + Base64.encode(post.id.toString()) + '/preview');
 		}
 	}
 	update_name(name, event){
@@ -93,7 +94,7 @@ export default class Profile extends Component {
 		}
 		if(posts) {
 			posts.forEach((post) => {
-				var href = "/posts/" + ( post.approved && post.published ? post.url : (post.id + "/preview"))
+				var href = "/posts/" + ( post.approved && post.published ? post.url : (Base64.encode(post.id.toString()) + "/preview"))
 				return elems.push(
 					<a className="item gen-bs" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
 						<h2 className="item-title">{post.title}</h2>
