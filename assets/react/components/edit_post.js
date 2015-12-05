@@ -12,7 +12,12 @@ module.exports = React.createClass({
 	componentWillReceiveProps: function(nextProps) {
 		var state;
 		if(nextProps.posts[0]){
-			state  = {title:  nextProps.posts[0].title};
+			if (!this.state.title){
+				state  = {title:  nextProps.posts[0].title};
+			}
+			else{
+				state = {}
+			}
 			if(this.saving === true && nextProps.isLoading === false){
 				this.saving = false;
 				setTimeout(this.removeSavingHint, 1000);
