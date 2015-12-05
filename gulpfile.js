@@ -10,6 +10,7 @@ var nodemon = require('gulp-nodemon');
 var shell = require('gulp-shell');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
+var minifyCss = require('gulp-minify-css');
 
 // gulp.task('concatapp', function() {
 //   return gulp.src(['assets/vendor/essentials/**/*.js'])
@@ -41,7 +42,10 @@ gulp.task('browserify:js', function () {
 gulp.task('sass', function () {
 	gulp.src('assets/stylesheets/**/*.scss')
 		.pipe(sass().on('error', sass.logError))
+		.pipe(buffer())
+		.pipe(minifyCss({compatibility: 'ie8'}))
 		.pipe(gulp.dest('public/stylesheets/'));
+
 });
 
 gulp.task('copyvendor', function () {
