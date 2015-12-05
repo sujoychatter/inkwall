@@ -21,6 +21,7 @@ module.exports = {
 		return knex
 		.select(final_keys)
 		.from('articles')
+		.orderBy('id', 'desc')
 		.leftJoin('users', 'articles.user_id', 'users.id')
 		.where(query)
 	},

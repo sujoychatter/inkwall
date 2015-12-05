@@ -2,9 +2,14 @@
 .edit-post.container{
 	padding-left: 150px;
     padding-right: 150px;
-	padding-bottom: 20px;
+	padding-bottom: 5px;
+	position: absolute;
+	height: 100%;
+	bottom: 0;
+	top:0;
 	.wrapper{
 		overflow: hidden;
+		height: 100%;
 	}
 	.title{
 		position: absolute;
@@ -35,7 +40,7 @@
 	.saving-hint{
 		position: absolute;
 		left: 28px;
-		bottom: 20px;
+		bottom: 200px;
 		font-size: 15px;
 		color: $text_grey;
 		transition: all 1s;

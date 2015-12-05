@@ -5,12 +5,13 @@ var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var edit_post = require(_dir.DIR_COMPONENTS + '/edit_post');
 var show_post = require(_dir.DIR_COMPONENTS + '/show_post');
 var Article = require(_dir.DIR_MODELS + '/article');
+var Base64 = require(_dir.DIR_REACT + '/helpers/base64');
 
 
 /* GET users listing. */
 module.exports = {
 	editPost: function (req, res, next) {
-		Article.find(req.params.id).then(
+		Article.find(Base64.decode(req.params.id.toString())).then(
 			function(articles){
 				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles});
 				var data = {}
@@ -32,7 +33,7 @@ module.exports = {
 	showPost: function (req, res, next){
 		var filter = {active: true}
 		if(req.params.id){
-			filter["articles.id"] = req.params.id;
+			filter["articles.id"] = Base64.decode(req.params.id.toString());
 		}
 		else if(req.params.name){
 			filter.url = req.params.name;
