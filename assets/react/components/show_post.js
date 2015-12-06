@@ -18,7 +18,6 @@ export default class ShowPost extends Component {
 		this.context.router.transitionTo('/profile/' + id);
 	}
 	editPost(event){
-		console.log(this.props.posts[0])
 		this.context.router.transitionTo('/posts/' + Base64.encode(this.props.posts[0].id.toString()) + '/edit');
 	}
 	publish(event){
