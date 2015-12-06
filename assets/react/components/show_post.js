@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
+import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost} from '../actions/posts'
 import formatDBDate from '../helpers/date';
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
+import Base64 from '../helpers/base64'
 
 export default class ShowPost extends Component {
 	constructor(props, context){
@@ -14,6 +16,27 @@ export default class ShowPost extends Component {
 	}
 	show_user(id){
 		this.context.router.transitionTo('/profile/' + id);
+	}
+	checkPreview(){
+		return window.location.href.match('/preview')
+	}
+	editPost(event){
+		console.log(this.props.posts[0])
+		this.context.router.transitionTo('/posts/' + Base64.encode(this.props.posts[0].id.toString()) + '/edit');
+	}
+	publish(event){
+		let dispatch = this.props.dispatch;
+		dispatch(publishPost(this.props.posts[0].id));
+	}
+	remove(event){
+		if(confirm('Do you really want to delete this post?')){
+			let dispatch = this.props.dispatch;
+			updatePost(this.props.posts[0].id, {active: false}).then(() =>{
+				return dispatch(removePost(this.props.posts[0].id));
+			}).then(() =>{
+				this.context.router.transitionTo('/')
+			});
+		}
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
@@ -31,6 +54,13 @@ export default class ShowPost extends Component {
 				content = this.props.posts[0].content
 
 		}
+		if(this.checkPreview()){
+			var post_actions = <div className="post-actions">
+					<i className='icon icon-ok ok' title="Publish" onClick={this.publish.bind(this)}></i>
+					<i className='icon icon-pencil edit' title="Edit" onClick={this.editPost.bind(this)}></i>
+					<i className='icon icon-trash-empty delete' title="Delete" onClick={this.remove.bind(this)}></i>
+				</div>
+		}
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">
@@ -46,6 +76,7 @@ export default class ShowPost extends Component {
 							{user_name}
 						</span>
 					</div>
+					{post_actions}
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
 				</div>

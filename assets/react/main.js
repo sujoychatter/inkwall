@@ -93,6 +93,7 @@ class ShowPostWrapperElement extends Component{
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		if(this.props.params.postName){
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
+			
 		}
 		else{
 			store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));

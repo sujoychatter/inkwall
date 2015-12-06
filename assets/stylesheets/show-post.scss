@@ -31,4 +31,21 @@
 	.user-name{
 		margin-left: 10px;
 	}
+	.post-actions{
+		text-align: center;
+		margin-top: 10px;
+		.ok, .edit, .delete{
+			margin: 0px 5px;
+			cursor: pointer;
+		}
+		.ok{
+			color: $secondary_color;
+		}
+		.delete{
+			color: $tertiary_color;
+		}
+		.edit{
+			color: #393953;
+		}
+	}
 }
