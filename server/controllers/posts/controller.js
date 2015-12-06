@@ -13,7 +13,7 @@ module.exports = {
 	editPost: function (req, res, next) {
 		Article.find(Base64.decode(req.params.id.toString())).then(
 			function(articles){
-				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles});
+				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles, hideFooter: true});
 				var data = {}
 				if (req.user) {
 					data.user = {name: req.user.name, id: req.user.id, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
@@ -32,8 +32,10 @@ module.exports = {
 	},
 	showPost: function (req, res, next){
 		var filter = {active: true}
+		preview = false
 		if(req.params.id){
 			filter["articles.id"] = Base64.decode(req.params.id.toString());
+			preview=true
 		}
 		else if(req.params.name){
 			filter.url = req.params.name;
@@ -45,7 +47,7 @@ module.exports = {
 				if(!articles.length){
 					return res.status(404).send({error: "Not Found"})
 				}
-				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles});
+				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview});
 				var data = {};
 				if (req.user) {
 					data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email};

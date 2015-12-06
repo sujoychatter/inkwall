@@ -115,10 +115,12 @@ export default class Profile extends Component {
 	}
 	remove(elem, event){
 		this.supress(event)
-		let dispatch = this.props.dispatch;
-		updatePost(elem.id, {active: false}).then(() =>{
-			return dispatch(removePost(elem.id));
-		});
+		if(confirm('Do you really want to delete this post?')){
+			let dispatch = this.props.dispatch;
+			updatePost(elem.id, {active: false}).then(() =>{
+				return dispatch(removePost(elem.id));
+			});
+		}
 	}
 	publish(post, event){
 		this.supress(event)

@@ -36,7 +36,7 @@ export default class Wrapper extends Component{
 		}
 	}
 	getFooter(){
-		if(this.props.hideFooter !== false){
+		if(this.props.hideFooter !== true){
 			return <Footer />
 		}
 	}
