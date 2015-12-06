@@ -40,10 +40,17 @@
 	.saving-hint{
 		position: absolute;
 		left: 28px;
-		bottom: 200px;
+		bottom: 20px;
 		font-size: 15px;
 		color: $text_grey;
 		transition: all 1s;
+	}
+	.preview-btn{
+		@include button(black);
+		position: absolute;
+		right: 28px;
+		bottom: 20px;
+		font-size: 15px;
 	}
 }
 .tinymce{
@@ -71,7 +78,7 @@
 		text-align: center;
 	}
 	.mce-edit-area{
-		height: calc(100% - 100px);
+		height: calc(100% - 110px);
 	}
 	.mce-statusbar .mce-container-body{
 		height: 35px;

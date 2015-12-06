@@ -82,7 +82,7 @@ class EditPostWrapperElement extends Component{
 		store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={EditPost} hideFooter={false} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+				{() => <Wrapper child={EditPost} hideFooter={true} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -91,16 +91,18 @@ class EditPostWrapperElement extends Component{
 class ShowPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
+		var preview = false
 		if(this.props.params.postName){
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
 			
 		}
 		else{
 			store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
+			preview = true
 		}
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={ShowPost} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
+				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
 			</Provider>
 		)
 	}

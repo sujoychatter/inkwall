@@ -1,15 +1,24 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Button = require('./common/button.js');
 import {savePost} from '../actions/posts'
+import Base64 from '../helpers/base64'
 
-module.exports = React.createClass({
-	componentDidMount: function () {
+export default class EditPost extends Component {
+	constructor(props, context){
+		super(props, context);
+		this.state = {
+			title: "",
+			savingHintClass: "saving-hint hidden"
+		}
+		this.saving= false
+		this.contentSet= false
+		context.router
+	}
+	componentDidMount() {
 		document.title = "Inkwall : Edit Post"
-	},
-	saving: false,
-	contentSet: false,
-	componentWillReceiveProps: function(nextProps) {
+	}
+	componentWillReceiveProps(nextProps) {
 		var state;
 		if(nextProps.posts[0]){
 			if (!this.state.title){
@@ -20,7 +29,7 @@ module.exports = React.createClass({
 			}
 			if(this.saving === true && nextProps.isLoading === false){
 				this.saving = false;
-				setTimeout(this.removeSavingHint, 1000);
+				setTimeout(this.removeSavingHint.bind(this), 500);
 			}
 			else if(this.saving === false && nextProps.isLoading === true){
 				this.saving = true;
@@ -32,14 +41,14 @@ module.exports = React.createClass({
 			}
 			this.setState(Object.assign({}, this.state, state));
 		}
-	},
-	removeSavingHint: function(){
+	}
+	removeSavingHint(){
 		this.setState(Object.assign({}, this.state, {savingHintClass: "saving-hint hidden"}));
-	},
-	componentWillUnmount: function(){
+	}
+	componentWillUnmount(){
 		tinyMCE.activeEditor = null
-	},
-	setupEditor: function(content){
+	}
+	setupEditor(content){
 		var self = this;
 		this.noRerender = true
 		function setupTinyMCE(){
@@ -81,20 +90,14 @@ module.exports = React.createClass({
 		if (ExecutionEnvironment.canUseDOM) {
 			initiateTinyMCE()
 		}
-	},
-	getInitialState: function(){
-		return {
-			title: "",
-			savingHintClass: "saving-hint hidden"
-		}
-	},
-	scheduleSave: function(){
+	}
+	scheduleSave(){
 		if(this.saveTimeout){
 			clearTimeout(this.saveTimeout)
 		}
-		this.saveTimeout = setTimeout(this.saveContent, 1000);
-	},
-	saveContent: function (event) {
+		this.saveTimeout = setTimeout(this.saveContent.bind(this), 1000);
+	}
+	saveContent(event) {
 		if(tinyMCE && tinyMCE.activeEditor){
 			var content = tinyMCE.activeEditor.getContent({format : 'raw'}),
 			post = {
@@ -104,24 +107,32 @@ module.exports = React.createClass({
 			}
 			this.props.dispatch(savePost(post))
 		}
-	},
-	onTitleChange: function(event){
+	}
+	onTitleChange(event){
 		this.setState({title:  event.target.value});
 		this.scheduleSave()
-	},
-	render: function () {
+	}
+	showPreview(post, event){
+		return this.context.router.transitionTo('/posts/' + Base64.encode(this.props.posts[0].id.toString()) + '/preview');
+	}
+	render() {
 		return (
 			<div className="edit-post container">
 				<div className="wrapper">
 					<div className="title">
-						<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange} value={this.state.title}/>
+						<input type="text" className="blog-title" placeholder="Blog Title" onChange={this.onTitleChange.bind(this)} value={this.state.title}/>
 					</div>
 					<div className="tinymce">
 						<div className="dummy-container"></div>
 					</div>
 				</div>
 				<div className={this.state.savingHintClass}>Saving...</div>
+				<div className='preview-btn' onClick={this.showPreview.bind(this)}>Preview</div>
 			</div>
 		)
 	}
-});
+}
+
+EditPost.contextTypes = {
+  router: React.PropTypes.func.isRequired
+};
