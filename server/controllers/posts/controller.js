@@ -6,6 +6,9 @@ var edit_post = require(_dir.DIR_COMPONENTS + '/edit_post');
 var show_post = require(_dir.DIR_COMPONENTS + '/show_post');
 var Article = require(_dir.DIR_MODELS + '/article');
 var Base64 = require(_dir.DIR_REACT + '/helpers/base64');
+var manifest = require(_dir.DIR_APP + '/rev-manifest.json');
+var css_file_name_edit = manifest["edit-post.css"]
+var css_file_name_show = manifest["show-post.css"]
 
 
 /* GET users listing. */
@@ -25,7 +28,9 @@ module.exports = {
 					title: 'Inkwall : Edit Post',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
-					page_data: "var inkwall_data = " + JSON.stringify(data)
+					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
+					css_file_name: css_file_name_edit,
+					main_file: manifest["main.js"]
 				});
 			}
 		)
@@ -59,7 +64,9 @@ module.exports = {
 					title: 'Inkwall: ' + articles[0].title,
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
-					page_data: "var inkwall_data = " + JSON.stringify(data)
+					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
+					css_file_name: css_file_name_show,
+					main_file: manifest["main.js"]
 				});
 			}
 		)

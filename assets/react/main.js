@@ -70,7 +70,7 @@ class HomeWrapperElement extends Component{
 		store.dispatch(fetchPosts({approved: true, published: true}))
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="/stylesheets/home.css"/>}
+				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="home.css"/>}
 			</Provider>
 		)
 	}
@@ -82,7 +82,7 @@ class EditPostWrapperElement extends Component{
 		store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={EditPost} hideFooter={true} cssElementId="edit-post-css" stylesheetLink="/stylesheets/edit-post.css"/>}
+				{() => <Wrapper child={EditPost} hideFooter={true} cssElementId="edit-post-css" stylesheetLink="edit-post.css"/>}
 			</Provider>
 		)
 	}
@@ -102,7 +102,7 @@ class ShowPostWrapperElement extends Component{
 		}
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="/stylesheets/show-post.css"/>}
+				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="show-post.css"/>}
 			</Provider>
 		)
 	}
@@ -114,7 +114,7 @@ class ProfileWrapperElement extends Component{
 		store.dispatch(setVisibilityFilter(Filters.SHOW_PROFILE))
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={Profile}  cssElementId="profile-css" stylesheetLink="/stylesheets/profile.css"/>}
+				{() => <Wrapper child={Profile}  cssElementId="profile-css" stylesheetLink="profile.css"/>}
 			</Provider>
 		)
 	}

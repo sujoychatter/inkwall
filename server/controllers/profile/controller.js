@@ -2,7 +2,9 @@ var React = require('react');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var myPosts = require(_dir.DIR_COMPONENTS + '/profile');
 var Article = require(_dir.DIR_MODELS + '/article');
-var User = require(_dir.DIR_MODELS + '/user'); 
+var User = require(_dir.DIR_MODELS + '/user');
+var manifest = require(_dir.DIR_APP + '/rev-manifest.json');
+var css_file_name = manifest["profile.css"]
 
 /* GET users listing. */
 module.exports = {
@@ -34,7 +36,9 @@ module.exports = {
 				title: data.profile_user.name + " | Inkwall",
 				markup: React.renderToString(wrapper_element),
 				tracking: req.tracking_element,
-				page_data: "var inkwall_data = " + JSON.stringify(data)
+				page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
+				css_file_name: css_file_name,
+				main_file: manifest["main.js"]
 			});
 		});
 	},

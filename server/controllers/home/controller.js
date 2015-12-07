@@ -5,6 +5,8 @@ var footer = require(_dir.DIR_COMPONENTS + '/footer');
 var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var home = require(_dir.DIR_COMPONENTS + '/home');
 var Article = require(_dir.DIR_MODELS + '/article');
+var manifest = require(_dir.DIR_APP + '/rev-manifest.json');
+var css_file_name = manifest["home.css"]
 
 module.exports = {
 	init: function (req, res, next) {
@@ -20,7 +22,9 @@ module.exports = {
 					title: 'Inkwall : Blogs for everyone',
 					markup: React.renderToString(wrapper_element),
 					tracking: req.tracking_element,
-					page_data: "var inkwall_data = " + JSON.stringify(data)
+					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
+					css_file_name: css_file_name,
+					main_file: manifest["main.js"]
 			})
 		})
 	}
