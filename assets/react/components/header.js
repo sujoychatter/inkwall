@@ -3,6 +3,7 @@ var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var DropDown = require('./common/drop_down');
 import Router, { Navigation, Link } from 'react-router';
 import {startLoading} from '../actions/loader'
+import Base64 from '../helpers/base64'
 
 module.exports = React.createClass({
 	mixins: [Navigation],
@@ -39,10 +40,10 @@ module.exports = React.createClass({
 			if(xhr.readyState == 4){
 				if(xhr.status == 201){
 					if(window.location.pathname.match(/\/posts\/\d+\/edit/)){
-						window.location.pathname = '/posts/' + JSON.parse(xhr.responseText).id + '/edit';
+						window.location.pathname = '/posts/' +  Base64.encode(JSON.parse(xhr.responseText).id.toString()) + '/edit';
 					}
 					else{
-						_this.transitionTo('/posts/' + JSON.parse(xhr.responseText).id + '/edit');
+						_this.transitionTo('/posts/' + Base64.encode(JSON.parse(xhr.responseText).id.toString()) + '/edit');
 					}
 				}
 			}
