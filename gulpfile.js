@@ -11,6 +11,7 @@ var shell = require('gulp-shell');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
 var minifyCss = require('gulp-minify-css');
+var rev = require('gulp-rev');
 
 // gulp.task('concatapp', function() {
 //   return gulp.src(['assets/vendor/essentials/**/*.js'])
@@ -36,7 +37,14 @@ gulp.task('browserify:js', function () {
 		.pipe(source('main.js'))
 		.pipe(buffer())
 		.pipe(uglify())
-		.pipe(gulp.dest('public/react/'));
+		.pipe(buffer())
+		.pipe(rev())
+		.pipe(gulp.dest('public/react/'))
+		.pipe(rev.manifest({
+            base: 'public/',
+            merge: true // merge with the existing manifest (if one exists)
+        }))
+        .pipe(gulp.dest('public/'));
 });
 
 gulp.task('sass', function () {
@@ -44,7 +52,14 @@ gulp.task('sass', function () {
 		.pipe(sass().on('error', sass.logError))
 		.pipe(buffer())
 		.pipe(minifyCss({compatibility: 'ie8'}))
-		.pipe(gulp.dest('public/stylesheets/'));
+		.pipe(buffer())
+		.pipe(rev())
+		.pipe(gulp.dest('public/stylesheets/'))
+		.pipe(rev.manifest({
+            base: 'public/',
+            merge: true // merge with the existing manifest (if one exists)
+        }))
+        .pipe(gulp.dest('public/'));
 
 });
 

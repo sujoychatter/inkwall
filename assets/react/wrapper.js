@@ -22,7 +22,7 @@ export default class Wrapper extends Component{
 	}
 	componentWillMount(){
 		if (ExecutionEnvironment.canUseDOM && this.props.cssElementId && !document.getElementById(this.props.cssElementId)) {
-			ajax(this.props.stylesheetLink,'text/css',this.setCss.bind(this, this.props.cssElementId))
+			ajax('/stylesheets/' + window.manifest[this.props.stylesheetLink],'text/css',this.setCss.bind(this, this.props.cssElementId))
 		}
 		else{
 			this.setState({loading: false})
