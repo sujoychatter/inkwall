@@ -1,3 +1,4 @@
+debugger
 var React = require('react');
 
 var header = require(_dir.DIR_COMPONENTS + '/header');
@@ -24,7 +25,8 @@ module.exports = {
 					tracking: req.tracking_element,
 					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
 					css_file_name: css_file_name,
-					main_file: manifest["main.js"]
+					main_file: manifest["main.js"],
+					app_css: manifest["app.css"]
 			})
 		})
 	}

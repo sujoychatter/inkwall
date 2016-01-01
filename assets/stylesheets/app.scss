@@ -110,17 +110,13 @@ a {
     .icon{
       margin-left: 3px;
     }
-    &.shrunk{
-      height: 38px;
-      img{
-        -ms-transform: rotate(7deg);
-        -webkit-transform: rotate(7deg);
-        transform: rotate(90deg);
-        height: 28px;
-      }
-      .site-details{
-        top: -3px;
-      }
+    .site-details{
+      text-decoration: none;
+      line-height: 56px;
+      font-size: 23px;
+      letter-spacing: 5px;
+      font-weight: bold;
+
     }
     .user-image{
       height: 40px;

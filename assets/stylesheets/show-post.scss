@@ -4,7 +4,6 @@
 	.title{
 		font-size: 30px;
 		text-align: center;
-		margin: 20px 0px 20px 0px;
 		font-weight: bold;
 	}
 	.post-date{
@@ -17,6 +16,11 @@
 		max-width: 940px;
 		margin: 0px auto;
 		padding: 20px;
+		background: white;
+		position: relative;
+		top: -80px;
+		overflow: hidden;
+		box-shadow: 0px 0px 3px grey;
 	}
 	.user-details{
 		text-align: center;
@@ -30,6 +34,12 @@
 	}
 	.user-name{
 		margin-left: 10px;
+	}
+	.post-header{
+		position: relative;
+		top: 0;
+		padding: 20px 0 100px 0;
+		background: $mid-blue;
 	}
 	.post-actions{
 		text-align: center;

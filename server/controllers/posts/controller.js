@@ -5,6 +5,7 @@ var wrapper = require(_dir.DIR_REACT + '/wrapper');
 var edit_post = require(_dir.DIR_COMPONENTS + '/edit_post');
 var show_post = require(_dir.DIR_COMPONENTS + '/show_post');
 var Article = require(_dir.DIR_MODELS + '/article');
+var Comment = require(_dir.DIR_MODELS + '/comment');
 var Base64 = require(_dir.DIR_REACT + '/helpers/base64');
 var manifest = require(_dir.DIR_APP + '/rev-manifest.json');
 var css_file_name_edit = manifest["edit-post.css"]
@@ -30,7 +31,8 @@ module.exports = {
 					tracking: req.tracking_element,
 					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
 					css_file_name: css_file_name_edit,
-					main_file: manifest["main.js"]
+					main_file: manifest["main.js"],
+					app_css: manifest["app.css"]
 				});
 			}
 		)
@@ -52,22 +54,25 @@ module.exports = {
 				if(!articles.length){
 					return res.status(404).send({error: "Not Found"})
 				}
-				var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview});
-				var data = {};
-				if (req.user) {
-					data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email};
-				}
-				data.posts = articles;
-				data.posts_visibility = "SHOW_ONE";
-				data.selected_post = articles[0];
-				return res.render('show_post', {
-					title: 'Inkwall: ' + articles[0].title,
-					markup: React.renderToString(wrapper_element),
-					tracking: req.tracking_element,
-					page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
-					css_file_name: css_file_name_show,
-					main_file: manifest["main.js"]
-				});
+				return Comment.all({article_id: articles[0].id}).then(function(comments){
+					var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview, comments: comments});
+					var data = {};
+					if (req.user) {
+						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email, comments: comments};
+					}
+					data.posts = articles;
+					data.posts_visibility = "SHOW_ONE";
+					data.selected_post = articles[0];
+					return res.render('show_post', {
+						title: 'Inkwall: ' + articles[0].title,
+						markup: React.renderToString(wrapper_element),
+						tracking: req.tracking_element,
+						page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
+						css_file_name: css_file_name_show,
+						main_file: manifest["main.js"],
+						app_css: manifest["app.css"]
+					});
+				})
 			}
 		)
 	}

@@ -5,6 +5,7 @@ import {publishPost, unPublishPost, removePost, updatePost, approvePost, unAppro
 import formatDBDate from '../helpers/date';
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
 import Base64 from '../helpers/base64'
+import Comments from './common/comments'
 
 export default class ShowPost extends Component {
 	constructor(props, context){
@@ -37,6 +38,9 @@ export default class ShowPost extends Component {
 	unPublish(event){
 		let dispatch = this.props.dispatch;
 		dispatch(unPublishPost(this.props.posts[0].id));
+	}
+	comments(){
+		return <Comments comments={this.props.comments}/>
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
@@ -71,20 +75,23 @@ export default class ShowPost extends Component {
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">
-					<div className="title" itemProp="name headline">
-						{title}
+					<div className="post-header">
+						<div className="title" itemProp="name headline">
+							{title}
+						</div>
+						<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, user_id)}>
+							<img itemProp="image" className="user-image" src={user_photo}/>
+							<span className="user-name" itemProp="name">
+								{user_name}
+							</span>
+							<div className="small-dot"></div>
+							<span className="post-date">{formatDBDate(created_at)}</span>
+						</div>
+						{post_actions}
 					</div>
-					<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, user_id)}>
-						<img itemProp="image" className="user-image" src={user_photo}/>
-						<span className="user-name" itemProp="name">
-							{user_name}
-						</span>
-						<div className="small-dot"></div>
-						<span className="post-date">{formatDBDate(created_at)}</span>
-					</div>
-					{post_actions}
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
+					{this.comments()}
 				</div>
 			</div>
 		)

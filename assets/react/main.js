@@ -47,6 +47,11 @@ function selectPosts(posts, filter, state){
 			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
 	}
 }
+function getComments(state){
+	return state.comments.items.filter(function(comment){
+		comment.article_id == state.comments.article_id
+	})
+}
 function selectProfileUser(state, filter){
 	if(VisibilityConstants.Filters.SHOW_PROFILE == filter && state.user.profileUserId)
 		return {profile_user: getUserData(state.user.users, state.user.profileUserId)}
@@ -57,6 +62,7 @@ function mapStateToProps(state) {
 	var new_state = {
 		posts: selectPosts(state.posts.items, state.visibilityFilter, state),
 		user: getUserData(state.user.users, state.user.currentUserId),
+		user: getComments(),
 		isLoading: state.loader.loading
 	}
 	return Object.assign({}, new_state, selectProfileUser(state, state.visibilityFilter));
