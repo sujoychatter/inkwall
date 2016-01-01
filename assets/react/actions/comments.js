@@ -17,9 +17,21 @@ export function postComment(data){
 			}
 		})
 		.then(response => {
-			return response.json()
+			return response.json();
 		}).then(function(json){
-			return dispatch(addComments(json.comments))
+			return dispatch(addComments(json.comments));
 		})
+	}
+}
+
+export function getComments(post_id){
+	return function(dispatch){
+		fetch('/api/comments/posts/' + post_id)
+		.then(response => {
+			return response.json();
+		})
+		.then(function(json){
+			return dispatch(addComments(json.comments));
+		});
 	}
 }

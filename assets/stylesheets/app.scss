@@ -10,7 +10,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: $primary_blue;
 }
 .loader{
   height: 0px;
@@ -139,24 +139,25 @@ a {
         width: 315px;
         height: 58px;
     }
-    .facebook, .google{
-      height: 32px;
-      width: 32px;
-      float: left;
-      text-decoration: none;
-      box-sizing: border-box;
-      margin: 12px 0;
-      margin-right: 10px;
-      border-radius: 50%;
-      overflow: hidden;
-      .image{
-        height: 32px;
-        width: 32px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-    }
+}
+.facebook, .google{
+  height: 32px;
+  width: 32px;
+  float: left;
+  text-decoration: none;
+  box-sizing: border-box;
+  margin: 12px 0;
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  .image{
+    height: 32px;
+    width: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
 .right-elements{
   background-color: transparent;

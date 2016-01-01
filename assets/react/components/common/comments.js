@@ -24,9 +24,17 @@ export default class Comments extends Component {
 	getComments(comments){
 		var elements = []
 		if(comments){
-			elements =  comments.map(function(comment){
-				return <div className="comment">
-					{comment.content}
+			elements =  comments.map(function(comment, index){
+				return <div className="comment" key={index}>
+					<img src={comment.photo}></img>
+					<div className="comment-details">
+						<div className="user-name">
+							{comment.name}
+						</div>
+						<div className="comment-content">
+							{comment.content}
+						</div>
+					</div>
 				</div>
 			})
 		}
@@ -41,21 +49,37 @@ export default class Comments extends Component {
 		var self = this,
 		comments= this.props.comments.filter(function(comment){
 			return self.props.posts[0] && comment.article_id == self.props.posts[0].id
-		})
-		return <div className="comments-container">
-			<div className="comments-header">
-				COMMENTS
-			</div>
-			<div className="your-thoughts">
-				<div className="thoughs-header">
-					Your Thoughs
+		}), element;
+		if(this.props.user && this.props.user.name){
+			element = <div className="comments-container">
+				<div className="comments-header">
+					COMMENTS
 				</div>
-				<textarea className="thoughs-text" rows="4" onChange={this.commentChanged.bind(this)} value={this.state.comment}></textarea>
-				<a className="post-comment" onClick={this.saveComment.bind(this)}>Post Comment</a>
+				<div className="your-thoughts">
+					<div className="thoughts-header">
+						Your Thoughs
+					</div>
+					<textarea className="thoughts-text" rows="4" onChange={this.commentChanged.bind(this)} value={this.state.comment}></textarea>
+					<a className="post-comment" onClick={this.saveComment.bind(this)}>Post Comment</a>
+				</div>
 			</div>
-			<div className="comments">
-				{this.getComments(comments)}
+		}
+		else{
+			element= <div className="comments-container">
+				<div className="comments-header no-sign">
+					Sign in to post comments    
+					<a className="google" href="/auth/google" onClick={this.startLoading}>
+						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
+					</a>
+					<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
+						<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
+					</a>
+				</div>
+				<div className="comments">
+					{this.getComments(comments)}
+				</div>
 			</div>
-		</div>
+		}
+		return element;
 	}
 }

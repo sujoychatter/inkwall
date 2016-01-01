@@ -3,6 +3,7 @@ import {setVisibilityFilter} from './visibilityFilters'
 import {addUserData, setProfileId} from './user'
 import {startLoading, stopLoading} from './loader'
 import fetch from 'isomorphic-fetch';
+import {getComments} from './comments'
 
 var TINYMCE_LINE_PREVIEW = 10;
 var TINYMCE_CHAR_PREVIEW = 700;
@@ -78,6 +79,7 @@ export function setSelectedPostByName(postName){
 		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
+			dispatch(getComments(json.posts[0].id));
 		})
 	}
 }

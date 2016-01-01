@@ -6,7 +6,7 @@ module.exports = {
 	all: function(query){
 		if(!query){query = {}};
 		return knex
-		.select('comments.*')
+		.select('comments.*', 'users.name', 'users.photo')
 		.from('comments')
 		.orderBy('comments.created_at', 'desc')
 		.leftJoin('users', 'comments.user_id', 'users.id')

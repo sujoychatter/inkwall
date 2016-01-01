@@ -10,5 +10,6 @@ function ensureAuthenticated(req, res, next) {
 }
 
 router.post('/', ensureAuthenticated, controller.saveComment);
+router.get('/posts/:id', controller.getComments);
 
 module.exports = router;

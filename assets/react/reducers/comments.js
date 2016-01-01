@@ -6,21 +6,13 @@ const initialState = {
 }
 
 function mergeComemnts(items, comments){
-	var new_items, is_present;
-	new_items = comments || [];
-	for(var i in items){
-		is_present = false;
-		for(var j in comments){
-			if(parseInt(comments[j].id) == parseInt(items[i].id)){
-				is_present = true;
-				break;
-			}
+	var merged_contents = [].concat(comments);
+	items.forEach(function(item){
+		if(!merged_contents.some(function(c){return c.id == item.id})){
+			merged_contents.push(item)
 		}
-		if(!is_present){
-			new_items.push(items[i])
-		}
-	}
-	return new_items;
+	})
+	return merged_contents;
 }
 
 export default function comments(state = initialState, action = {}){
