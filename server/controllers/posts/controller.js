@@ -58,8 +58,9 @@ module.exports = {
 					var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview, comments: comments});
 					var data = {};
 					if (req.user) {
-						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email, comments: comments};
+						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email};
 					}
+					data.comments = comments;
 					data.posts = articles;
 					data.posts_visibility = "SHOW_ONE";
 					data.selected_post = articles[0];

@@ -40,7 +40,7 @@ export default class ShowPost extends Component {
 		dispatch(unPublishPost(this.props.posts[0].id));
 	}
 	comments(){
-		return <Comments comments={this.props.comments}/>
+		return <Comments {...this.props}/>
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
