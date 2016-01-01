@@ -94,9 +94,11 @@ class EditPostWrapperElement extends Component{
 class ShowPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
-		var preview = false
+		var preview = false,
+		show_comments = false;
 		if(this.props.params.postName){
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
+			show_comments = true
 		}
 		else{
 			store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
@@ -104,7 +106,7 @@ class ShowPostWrapperElement extends Component{
 		}
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="show-post.css"/>}
+				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="show-post.css" showComments={show_comments}/>}
 			</Provider>
 		)
 	}

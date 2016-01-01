@@ -37,7 +37,7 @@ module.exports = {
 			}
 		)
 	},
-	showPost: function (req, res, next){
+	showPost: function (show_comments, req, res, next){
 		var filter = {active: true}
 		preview = false
 		if(req.params.id){
@@ -55,7 +55,7 @@ module.exports = {
 					return res.status(404).send({error: "Not Found"})
 				}
 				return Comment.all({article_id: articles[0].id}).then(function(comments){
-					var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview, comments: comments});
+					var wrapper_element = React.createElement(wrapper, {child: show_post, user: req.user, posts: articles, preview: preview, comments: comments, showComments: show_comments});
 					var data = {};
 					if (req.user) {
 						data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email};

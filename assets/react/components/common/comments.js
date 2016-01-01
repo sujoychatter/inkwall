@@ -62,6 +62,9 @@ export default class Comments extends Component {
 					<textarea className="thoughts-text" rows="4" onChange={this.commentChanged.bind(this)} value={this.state.comment}></textarea>
 					<a className="post-comment" onClick={this.saveComment.bind(this)}>Post Comment</a>
 				</div>
+				<div className="comments">
+					{this.getComments(comments)}
+				</div>
 			</div>
 		}
 		else{

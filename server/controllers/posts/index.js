@@ -13,8 +13,8 @@ function ensureAuthenticated(req, res, next) {
 
 //page endpoints
 router.get('/:id/edit', ensureAuthenticated, controller.editPost);
-router.get('/:id/preview', controller.showPost);
-router.get('/:name', controller.showPost);
+router.get('/:id/preview', controller.showPost.bind(null,false));
+router.get('/:name', controller.showPost.bind(null,true));
 
 
 module.exports = router;
