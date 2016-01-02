@@ -56,15 +56,18 @@
 			color: $text_light_grey;
 			font-size: 14px;
 		}
-		.view-count{
+		.view-count, .comments-count{
 			float: right;
-			color: $light_red;
 			font-size: 12px;
 			position: relative;
 			top: 3px;
+			margin-left: 3px;
 		}
-		.icon{
-			margin-right: 3px;
+		.view-count{
+			color: $view_green;
+		}
+		.comments-count{
+			color: $comments_orange;
 		}
 		.author{
 			color: $text_grey;

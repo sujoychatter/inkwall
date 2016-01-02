@@ -28,8 +28,9 @@ export default class Comments extends Component {
 				return <div className="comment" key={index}>
 					<img src={comment.photo}></img>
 					<div className="comment-details">
-						<div className="user-name">
-							{comment.name}
+						<div className="user-details">
+							<span className="user-name">{comment.name}</span>
+							<span className="created-at">{(new Date(comment.created_at)).toString().slice(4, 15)}</span>
 						</div>
 						<div className="comment-content">
 							{comment.content}
@@ -69,7 +70,10 @@ export default class Comments extends Component {
 		}
 		else{
 			element= <div className="comments-container">
-				<div className="comments-header no-sign">
+				<div className="comments-header">
+					COMMENTS
+				</div>
+				<div className="thoughts-header no-sign">
 					Sign in to post comments    
 					<a className="google" href="/auth/google" onClick={this.startLoading}>
 						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>

@@ -25,6 +25,9 @@ module.exports = {
 		.leftJoin('users', 'articles.user_id', 'users.id')
 		.where(query)
 	},
+	incrementComments: function(id){
+		return knex('articles').where({id: id}).increment('comments_count', 1);
+	},
 	update: function(id, params, user_id, admin){
 		var check_keys = admin_keys,
 		filters = {id: id};

@@ -1,4 +1,3 @@
-debugger
 var React = require('react');
 
 var header = require(_dir.DIR_COMPONENTS + '/header');

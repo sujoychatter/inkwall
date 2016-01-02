@@ -44,6 +44,7 @@ module.exports = React.createClass({
 						<div className="details">
 							<span className="author" itemProp="author">{post.user_name}</span>
 							<span className="view-count"><i className="icon icon-eye"></i>{post.view_count}</span>
+							<span className="comments-count"><i className="icon icon-comment"></i>{post.comments_count}</span>
 						</div>
 					</a>
 				</div>
