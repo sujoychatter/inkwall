@@ -9,13 +9,12 @@ function ensureAuthenticated(req, res, next) {
 	}
 	res.redirect('/')
 }
-
 router.post('/create', ensureAuthenticated, controller.createPost);
 router.get('/my', ensureAuthenticated, controller.getMyPosts);
-router.get('/post_views', controller.postViews)
 router.get('/by_name', controller.getPostsByName);
 router.get('/:id', controller.getPost);
 router.get('/', controller.getPosts);
 router.put('/:id/update', ensureAuthenticated, controller.updatePost);
+router.post('/:id/like', ensureAuthenticated, controller.likePost);
 
 module.exports = router;

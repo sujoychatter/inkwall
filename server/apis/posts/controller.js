@@ -1,4 +1,5 @@
-var Article = require(_dir.DIR_MODELS + '/article'); 
+var Article = require(_dir.DIR_MODELS + '/article');
+var LikeArticleUser = require(_dir.DIR_MODELS + '/like_article_user');
 module.exports = {
 	updatePost: function(req, res, next){
 		var post = req.body;
@@ -43,8 +44,17 @@ module.exports = {
 			return res.status(200).send({posts: posts});
 		})
 	},
-	postViews: function(req, res, next){
-		
-            
+	likePost: function(req, res, next){
+		var article_id = req.params.id,
+		user_id = req.user.id;
+		if(article_id){
+			return LikeArticleUser.create(article_id, user_id)
+			.then(function(){
+				return Article.all({'articles.id' : article_id})
+				.then(function(posts){
+					return res.status(200).send({posts: posts});
+				})
+			})
+		}
 	}
 }

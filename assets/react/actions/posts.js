@@ -224,3 +224,21 @@ export function unApprovePost(id) {
 		})
 	}
 }
+export function likePost(post_id){
+	return function(dispatch){
+		fetch('/api/posts/' + post_id + '/like', {
+			credentials: 'include',
+			method: 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => {
+			return response.json();
+		})
+		.then(json => {
+			dispatch(receivePosts(json.posts));
+		})
+	}
+}

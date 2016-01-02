@@ -11,17 +11,19 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //};
 
 var keys = ['limit', 'published', 'preview', 'content', 'active', 'title', 'url']
-var admin_keys = ['id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
+var admin_keys = ['articles.id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name', 'users.profile_id as user_profile_id']
 module.exports = {
 	all: function(query){
 		if(!query){query = {active: true}};
 		query = modelHelper.getValidQueryParams(admin_keys, query);
 		query.active = true
+		var query_keys = final_keys.join(','),
+		select_string = '(select count(*) from like_article_user where articles.id = like_article_user.article_id) as likes_count , ' + query_keys;
 		return knex
-		.select(final_keys)
+		.select(knex.raw(select_string))
 		.from('articles')
-		.orderBy('id', 'desc')
+		.orderBy('articles.id', 'desc')
 		.leftJoin('users', 'articles.user_id', 'users.id')
 		.where(query)
 	},
@@ -51,9 +53,11 @@ module.exports = {
 		return knex.insert(query).returning('id').into('articles');
 	},
 	find: function(id){
-		return knex('articles').where({'id':id, "active": true});
-	},
-	setViews: function(id, count){
-		return knex('articles').returning('*').where({id: id}).update({view_count: count});
+		var query_keys = final_keys.join(','),
+		select_string = '(select count(*) from like_article_user where articles.id = like_article_user.article_id) as likes_count , ' + query_keys;
+		return knex
+		.select(knex.raw(select_string))
+		.from('articles')
+		.where({'articles.id':id, "active": true});
 	}
 }

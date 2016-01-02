@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
-import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost} from '../actions/posts'
+import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost, likePost} from '../actions/posts'
 import formatDBDate from '../helpers/date';
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
 import Base64 from '../helpers/base64'
@@ -39,6 +39,11 @@ export default class ShowPost extends Component {
 		let dispatch = this.props.dispatch;
 		dispatch(unPublishPost(this.props.posts[0].id));
 	}
+
+	likePostHandle(){
+		this.props.dispatch(likePost(this.props.posts[0].id))
+	}
+
 	comments(){
 		if(this.props.showComments){
 			return <Comments {...this.props}/>
@@ -94,6 +99,7 @@ export default class ShowPost extends Component {
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
 					{this.comments()}
+					<i className="like-icon icon icon-heart" onClick={this.likePostHandle.bind(this)}/>
 				</div>
 			</div>
 		)
