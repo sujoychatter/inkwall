@@ -73,7 +73,7 @@ export function setSelectedPostByName(postName){
 	return function(dispatch){
 		dispatch(startLoading())
 		dispatch(setSelectedPost({id: null}));
-		return fetch('/api/posts/by_name?name=' + postName).then(response => {
+		return fetch('/api/posts/by_name?name=' + postName,{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
@@ -115,7 +115,7 @@ export function setSelectedPostById(id){
 	return function(dispatch){
 		dispatch(startLoading());
 		dispatch(setSelectedPost({id: null}));
-		return fetch('/api/posts/' + id + '?for_edit=true').then(response => {
+		return fetch('/api/posts/' + id + '?for_edit=true',{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){

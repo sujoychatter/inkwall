@@ -15,7 +15,7 @@ var css_file_name_show = manifest["show-post.css"]
 /* GET users listing. */
 module.exports = {
 	editPost: function (req, res, next) {
-		Article.find(Base64.decode(req.params.id.toString())).then(
+		Article.find(Base64.decode(req.params.id.toString()), req.user).then(
 			function(articles){
 				var wrapper_element = React.createElement(wrapper, {child: edit_post, user: req.user, posts: articles, hideFooter: true});
 				var data = {}
@@ -49,7 +49,7 @@ module.exports = {
 			filter.published = true;
 			filter.approved  = true;
 		}
-		Article.all().where(filter).then(
+		Article.all({}, req.user).where(filter).then(
 			function(articles){
 				if(!articles.length){
 					return res.status(404).send({error: "Not Found"})

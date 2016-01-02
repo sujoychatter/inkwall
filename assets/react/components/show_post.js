@@ -40,14 +40,26 @@ export default class ShowPost extends Component {
 		dispatch(unPublishPost(this.props.posts[0].id));
 	}
 
-	likePostHandle(){
-		this.props.dispatch(likePost(this.props.posts[0].id))
+	likePostHandle(e){
+		if(this.props.user && this.props.user.name && !e.target.className.match('liked')){
+			this.props.dispatch(likePost(this.props.posts[0].id))
+		}
+		else if(!this.props.user || !this.props.user.name){
+			console.log("signin")
+		}
 	}
 
 	comments(){
 		if(this.props.showComments){
 			return <Comments {...this.props}/>
 		}
+	}
+	likeIconClasses(){
+		var classes = 'like-icon icon icon-heart';
+		if(this.props.user && this.props.user.name && this.props.posts[0].liked > 0){
+			classes = classes + " liked";
+		}
+		return classes;
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
@@ -99,7 +111,7 @@ export default class ShowPost extends Component {
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
 					{this.comments()}
-					<i className="like-icon icon icon-heart" onClick={this.likePostHandle.bind(this)}/>
+					<i className={this.likeIconClasses()} onClick={this.likePostHandle.bind(this)}/>
 				</div>
 			</div>
 		)

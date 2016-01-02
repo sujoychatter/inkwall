@@ -9,5 +9,10 @@ module.exports = {
 		query.article_id = article_id;
 		query.user_id = user_id;
 		return knex.insert(query).into('like_article_user');
+	},
+	all: function(query){
+		if(!query)
+			query = {};
+		return knex('like_article_user').where(query).returning('*');
 	}
 }

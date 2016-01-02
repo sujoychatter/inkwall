@@ -21,7 +21,7 @@ module.exports = {
 			query = {user_id: profile_user_id, approved: true}
 		}
 		var data = {}
-		return Article.all(query).then(function(posts){
+		return Article.all(query, req.user).then(function(posts){
 			data.posts = posts;
 			if (req.user) {
 				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
