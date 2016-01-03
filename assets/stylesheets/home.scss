@@ -12,7 +12,7 @@
 	}
 	.card-wrapper{
 		height: 312px;
-		width: 235px;
+		width: 290px;
 		display: inline-block;
 		position: relative;
 	}
@@ -21,25 +21,23 @@
 		float: left;
 		margin-bottom: 10px;
 		border-radius: 2px;
-		padding: 6px;
 		box-sizing: border-box;
 		text-align: center;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.17);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.42);
 		transition: all 0.3s;
 		cursor: pointer;
 		text-decoration: none;
 		margin: 5px;
 		transform: scale(0.98);
 		&:hover{
-			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.42);
 			transform: scale(1);
 		}
 		.title{
-			margin: 5px;
+			padding: 8px 5px;
 			font-size: 20px;
 			overflow: hidden;
-			font-weight: bold;
-			color: rgba(0, 0, 0, 0.63);
+			background: #F5F2F2;
 		}
 		.details{
 			text-align: left;
@@ -47,7 +45,7 @@
 			box-sizing: border-box;
 			padding: 10px 3px 3px 3px;
 			width: 97%;
-			bottom: 3px;
+			bottom: 0px;
 			background: white;
 			height: 35px;
 			box-shadow: 0px -6px 19px white;
@@ -55,6 +53,7 @@
 		.preview{
 			color: $text_light_grey;
 			font-size: 14px;
+			padding: 5px 6px 0 6px;
 		}
 		.view-count, .comments-count, .likes-count{
 			float: right;
@@ -85,7 +84,9 @@
 		overflow: hidden;
 	}
 	.post-image{
-		max-width: 222px;
-		max-height: 145px;
+		width: 100%;
+		background-size: cover;
+		background-position: center;
+		height: 145px;
 	}
 }

@@ -24,9 +24,10 @@ module.exports = React.createClass({
 		}
 		var img_tag = content_text.match('img[^>]*src[^>]*');
 		if(img_tag && img_tag[0]){
-			var image_url = img_tag[0].match('src="[^"]*"');
-			var url = image_url[0].slice(5, (image_url.length - 2));
-			return <img src={url} className="post-image"></img>
+			var image_url = img_tag[0].match('src="[^"]*"'),
+			url = image_url[0].slice(5, (image_url.length - 2)),
+			cssValue = {backgroundImage: 'url(' + url + ')'};
+			return <div style={cssValue} className="post-image"></div>
 		}else{
 			return ""
 		}
