@@ -21,6 +21,9 @@
 		margin-bottom: 20px;
         &.no-sign{
             margin-left: 80px;
+            .login-buttons{
+                margin-left: 10px;
+            }
         }
     }
     .thoughts-text{
@@ -50,7 +53,7 @@
     }
     .comments{
     	margin-top: 50px;
-    	padding: 0 10px;
+    	padding: 0 80px;
     }
     .comment-details{
     	padding-left: 70px;
@@ -74,11 +77,6 @@
     }
     img{
     	position: absolute;
-    }
-    .google, .facebook{
-    	float: none;
-    	vertical-align: middle;
-    	margin: 10px 0 10px 10px;
     }
 }
 .show-post .comments-container .user-details{

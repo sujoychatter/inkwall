@@ -3,14 +3,16 @@ import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
 import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost, likePost} from '../actions/posts'
 import formatDBDate from '../helpers/date';
-import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
-import Base64 from '../helpers/base64'
-import Comments from './common/comments'
+import ExecutionEnvironment from 'react/lib/ExecutionEnvironment';
+import Base64 from '../helpers/base64';
+import Comments from './common/comments';
+import LoginHelper from './common/login_helper';
 
 export default class ShowPost extends Component {
 	constructor(props, context){
 		super(props, context);
-		this.context = context
+		this.context = context;
+		this.state = {show_signin: false};
 	}
 	createContent(html_string){
 		return {__html: html_string}
@@ -45,7 +47,7 @@ export default class ShowPost extends Component {
 			this.props.dispatch(likePost(this.props.posts[0].id))
 		}
 		else if(!this.props.user || !this.props.user.name){
-			console.log("signin")
+			this.setState({show_signin: true})
 		}
 	}
 
@@ -58,6 +60,13 @@ export default class ShowPost extends Component {
 		var classes = 'like-icon icon icon-heart';
 		if(this.props.user && this.props.user.name && this.props.posts[0].liked > 0){
 			classes = classes + " liked";
+		}
+		return classes;
+	}
+	likesContainerClasses(){
+		var classes = "like-container";
+		if(this.state.show_signin){
+			classes = classes + " sign-in";
 		}
 		return classes;
 	}
@@ -111,7 +120,10 @@ export default class ShowPost extends Component {
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
 					</div>
 					{this.comments()}
-					<i className={this.likeIconClasses()} onClick={this.likePostHandle.bind(this)}/>
+					<div className={this.likesContainerClasses()}>
+						<i className={this.likeIconClasses()} onClick={this.likePostHandle.bind(this)}/>
+						<LoginHelper/>
+					</div>
 				</div>
 			</div>
 		)

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {postComment} from '../../actions/comments';
+import LoginHelper from './login_helper';
 
 export default class Comments extends Component {
 
@@ -75,12 +76,7 @@ export default class Comments extends Component {
 				</div>
 				<div className="thoughts-header no-sign">
 					Sign in to post comments    
-					<a className="google" href="/auth/google" onClick={this.startLoading}>
-						<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
-					</a>
-					<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
-						<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
-					</a>
+					<LoginHelper/>
 				</div>
 				<div className="comments">
 					{this.getComments(comments)}
