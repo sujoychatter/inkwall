@@ -64,6 +64,17 @@ module.exports = {
 					data.posts = articles;
 					data.posts_visibility = "SHOW_ONE";
 					data.selected_post = articles[0];
+
+					var image_url = '';
+					var img_tag = articles[0].content.match('img[^>]*src[^>]*');
+					if(img_tag && img_tag[0]){
+						image_url = img_tag[0].match('src="[^"]*"')[0].slice(5, (image_url.length - 1));
+					}
+					var og_data= {title: articles[0].title}
+					og_data.url=  req.protocol + '://' + req.get('host') + req.originalUrl;
+					og_data.description = articles[0].preview;
+					og_data.image = image_url;
+
 					return res.render('show_post', {
 						title: 'Inkwall: ' + articles[0].title,
 						markup: React.renderToString(wrapper_element),
@@ -71,7 +82,8 @@ module.exports = {
 						page_data: "var inkwall_data = " + JSON.stringify(data) + "; var manifest = " + JSON.stringify(manifest),
 						css_file_name: css_file_name_show,
 						main_file: manifest["main.js"],
-						app_css: manifest["app.css"]
+						app_css: manifest["app.css"],
+						og_data: og_data
 					});
 				})
 			}
