@@ -35,7 +35,7 @@
 			transform: scale(1);
 		}
 		.title{
-			padding: 8px 5px;
+			padding: 10px 5px;
 			font-size: 20px;
 			overflow: hidden;
 			background: #F5F2F2;
@@ -45,7 +45,7 @@
 			text-align: left;
 			position: absolute;
 			box-sizing: border-box;
-			padding: 10px 3px 3px 3px;
+			padding: 10px 3px 3px 10px;
 			width: 97%;
 			bottom: 0px;
 			background: white;
@@ -118,12 +118,13 @@
 		}
 	}
 	.icon-share{
+		padding: 3px;
 		font-size: 13px;
 		position: absolute;
-		bottom: 11px;
+		bottom: 8px;
 		right: 5px;
 		&:hover{
-			color: red;
+			color: $primary_blue;
 		}
 	}
 }

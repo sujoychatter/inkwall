@@ -58,7 +58,7 @@ export default class ShowPost extends Component {
 	}
 	likeIconClasses(){
 		var classes = 'like-icon icon icon-heart';
-		if(this.props.user && this.props.user.name && this.props.posts[0].liked > 0){
+		if(this.props.user && this.props.user.name && this.props.posts[0] && this.props.posts[0].liked > 0){
 			classes = classes + " liked";
 		}
 		return classes;

@@ -19,9 +19,11 @@ export default class EditPost extends Component {
 		document.title = "Inkwall : Edit Post"
 	}
 	componentWillReceiveProps(nextProps) {
+
+		console.log(nextProps.posts[0])
 		var state;
 		if(nextProps.posts[0]){
-			if (!this.state.title){
+			if (!this.state.title || !nextProps.posts[0].title){
 				state  = {title:  nextProps.posts[0].title};
 			}
 			else{
@@ -35,12 +37,14 @@ export default class EditPost extends Component {
 				this.saving = true;
 				state.savingHintClass = "saving-hint";
 			}
-			if(this.content !== true){
+			if(this.contentSet !== true || !nextProps.posts[0].content){
+				console.log("here")
 				this.contentSet = true;
 				this.setupEditor(nextProps.posts[0].content);
 			}
 			this.setState(Object.assign({}, this.state, state));
 		}
+		
 	}
 	removeSavingHint(){
 		this.setState(Object.assign({}, this.state, {savingHintClass: "saving-hint hidden"}));
@@ -50,7 +54,7 @@ export default class EditPost extends Component {
 	}
 	setupEditor(content){
 		var self = this;
-		this.noRerender = true
+		this.noRerender = true;
 		function setupTinyMCE(){
 			if(!tinyMCE.activeEditor){
 				tinyMCE.init({
@@ -70,13 +74,19 @@ export default class EditPost extends Component {
 						ed.on('init', function()
 						{
 							this.getDoc().body.style.fontSize = '14pt';
-							this.setContent(content || "");
+							if(!content){
+								content = ""
+							}
+							this.setContent(content);
 						});
 						ed.on('change', function(e){
 							self.scheduleSave()
 						})
 					}
 				});
+			}
+			else if(tinyMCE.activeEditor && !content){
+				tinyMCE.activeEditor.setContent('');
 			}
 		}
 		function initiateTinyMCE() {
