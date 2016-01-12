@@ -3,6 +3,7 @@ import {setVisibilityFilter} from './visibilityFilters'
 import {addUserData, setProfileId} from './user'
 import {startLoading, stopLoading} from './loader'
 import fetch from 'isomorphic-fetch';
+import {getComments} from './comments'
 
 var TINYMCE_LINE_PREVIEW = 10;
 var TINYMCE_CHAR_PREVIEW = 700;
@@ -72,12 +73,13 @@ export function setSelectedPostByName(postName){
 	return function(dispatch){
 		dispatch(startLoading())
 		dispatch(setSelectedPost({id: null}));
-		return fetch('/api/posts/by_name?name=' + postName).then(response => {
+		return fetch('/api/posts/by_name?name=' + postName,{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
 			dispatch(setSelectedPost(json.posts[0]));
 			dispatch(receivePosts(json.posts));
+			dispatch(getComments(json.posts[0].id));
 		})
 	}
 }
@@ -113,7 +115,7 @@ export function setSelectedPostById(id){
 	return function(dispatch){
 		dispatch(startLoading());
 		dispatch(setSelectedPost({id: null}));
-		return fetch('/api/posts/' + id + '?for_edit=true').then(response => {
+		return fetch('/api/posts/' + id + '?for_edit=true',{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
@@ -218,6 +220,24 @@ export function unApprovePost(id) {
 			dispatch(stopLoading())
 			return response.json()
 		}).then(function(json){
+			dispatch(receivePosts(json.posts));
+		})
+	}
+}
+export function likePost(post_id){
+	return function(dispatch){
+		fetch('/api/posts/' + post_id + '/like', {
+			credentials: 'include',
+			method: 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(response => {
+			return response.json();
+		})
+		.then(json => {
 			dispatch(receivePosts(json.posts));
 		})
 	}

@@ -1,15 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import Router from 'react-router';
 import { Navigation, Link } from 'react-router';
-import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost} from '../actions/posts'
+import {publishPost, unPublishPost, removePost, updatePost, approvePost, unApprovePost, likePost} from '../actions/posts'
 import formatDBDate from '../helpers/date';
-import ExecutionEnvironment from 'react/lib/ExecutionEnvironment'
-import Base64 from '../helpers/base64'
+import ExecutionEnvironment from 'react/lib/ExecutionEnvironment';
+import Base64 from '../helpers/base64';
+import Comments from './common/comments';
+import LoginHelper from './common/login_helper';
 
 export default class ShowPost extends Component {
 	constructor(props, context){
 		super(props, context);
-		this.context = context
+		this.context = context;
+		this.state = {show_signin: false};
 	}
 	createContent(html_string){
 		return {__html: html_string}
@@ -37,6 +40,35 @@ export default class ShowPost extends Component {
 	unPublish(event){
 		let dispatch = this.props.dispatch;
 		dispatch(unPublishPost(this.props.posts[0].id));
+	}
+
+	likePostHandle(e){
+		if(this.props.user && this.props.user.name && !e.target.className.match('liked')){
+			this.props.dispatch(likePost(this.props.posts[0].id))
+		}
+		else if(!this.props.user || !this.props.user.name){
+			this.setState({show_signin: true})
+		}
+	}
+
+	comments(){
+		if(this.props.showComments){
+			return <Comments {...this.props}/>
+		}
+	}
+	likeIconClasses(){
+		var classes = 'like-icon icon icon-heart';
+		if(this.props.user && this.props.user.name && this.props.posts[0] && this.props.posts[0].liked > 0){
+			classes = classes + " liked";
+		}
+		return classes;
+	}
+	likesContainerClasses(){
+		var classes = "like-container";
+		if(this.state.show_signin){
+			classes = classes + " sign-in";
+		}
+		return classes;
 	}
 	render(){
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
@@ -71,19 +103,26 @@ export default class ShowPost extends Component {
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
 				<div className="wrapper">
-					<div className="title" itemProp="name headline">
-						{title}
+					<div className="post-header">
+						<div className="title" itemProp="name headline">
+							{title}
+						</div>
+						<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, user_id)}>
+							<img itemProp="image" className="user-image" src={user_photo}/>
+							<span className="user-name" itemProp="name">
+								{user_name}
+							</span>
+							<div className="small-dot"></div>
+							<span className="post-date">{formatDBDate(created_at)}</span>
+						</div>
+						{post_actions}
 					</div>
-					<div className="user-details" itemScope itemType="http://schema.org/Person" onClick={this.show_user.bind(this, user_id)}>
-						<img itemProp="image" className="user-image" src={user_photo}/>
-						<span className="user-name" itemProp="name">
-							{user_name}
-						</span>
-						<div className="small-dot"></div>
-						<span className="post-date">{formatDBDate(created_at)}</span>
-					</div>
-					{post_actions}
 					<div itemProp="articleBody" className="content" dangerouslySetInnerHTML={this.createContent(content)}>
+					</div>
+					{this.comments()}
+					<div className={this.likesContainerClasses()}>
+						<i className={this.likeIconClasses()} onClick={this.likePostHandle.bind(this)}/>
+						<LoginHelper/>
 					</div>
 				</div>
 			</div>

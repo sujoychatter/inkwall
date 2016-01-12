@@ -6,7 +6,7 @@ var Article = require(_dir.DIR_MODELS + '/article');
 /* GET users listing. */
 module.exports = {
 	myposts: function (req, res) {
-		Article.all({user_id: req.user.id}).then(function(posts){
+		Article.all({user_id: req.user.id}, req.user).then(function(posts){
 			var data = {};
 			var wrapper_element = React.createElement(wrapper, {child: myPosts, posts: posts , user: req.user});
 			data.posts = posts;

@@ -120,26 +120,43 @@ app.use(function(req,res,next){
 router.init(app);
 
 //Facebook login paths
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
+app.get('/auth/facebook',
+	function(req, res, next){
+		var full_url = req.headers["referer"];
+		req.session.redirect_to = full_url.slice(full_url.indexOf('/', full_url.indexOf('//')+ 2)) ;
+		next()
+	},
+	passport.authenticate('facebook', {scope: ['email']}));
+
 app.get('/auth/facebook/callback',
-	passport.authenticate('facebook', {
-		successRedirect : '/',
-		failureRedirect: '/'
-	})
+	passport.authenticate('facebook'),
+	function(req, res, next){
+		res.redirect(req.session.redirect_to || '/');
+		delete req.session.redirect_to;
+	}
 );
 
-app.get('/auth/google', passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']}));
+app.get('/auth/google',
+	function(req, res, next){
+		var full_url = req.headers["referer"];
+		req.session.redirect_to = full_url.slice(full_url.indexOf('/', full_url.indexOf('//')+ 2)) ;
+		next()
+	},
+	passport.authenticate('google', { scope: [ 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']}));
 
-app.get('/auth/google/callback', 
-	passport.authenticate('google', {
-		successRedirect : '/',
-		failureRedirect: '/' 
-	})
+app.get('/auth/google/callback',
+	passport.authenticate('google'),
+	function(req, res, next){
+		res.redirect(req.session.redirect_to || '/');
+		delete req.session.redirect_to;
+	}
 );
 
 app.get('/logout', function(req, res){
+	var full_url = req.headers["referer"],
+	redirect = full_url.slice(full_url.indexOf('/', full_url.indexOf('//')+ 2));
 	req.logout();
-	res.redirect('/');
+	res.redirect(redirect);
 });
 
 // catch 404 and forward to error handler

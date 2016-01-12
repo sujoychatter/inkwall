@@ -14,7 +14,7 @@ module.exports = {
 		}else{
 			query = {user_id: profile_user_id, approved: true}
 		}
-		return Article.all(query).then(function(posts){
+		return Article.all(query, req.user).then(function(posts){
 			items = posts;
 			return User.find(profile_user_id, req.user)
 		}).then(function(data){

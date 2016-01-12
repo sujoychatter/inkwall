@@ -10,7 +10,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: $primary_blue;
 }
 .loader{
   height: 0px;
@@ -110,17 +110,13 @@ a {
     .icon{
       margin-left: 3px;
     }
-    &.shrunk{
-      height: 38px;
-      img{
-        -ms-transform: rotate(7deg);
-        -webkit-transform: rotate(7deg);
-        transform: rotate(90deg);
-        height: 28px;
-      }
-      .site-details{
-        top: -3px;
-      }
+    .site-details{
+      text-decoration: none;
+      line-height: 56px;
+      font-size: 23px;
+      letter-spacing: 5px;
+      font-weight: bold;
+
     }
     .user-image{
       height: 40px;
@@ -142,24 +138,6 @@ a {
     .login-options{
         width: 315px;
         height: 58px;
-    }
-    .facebook, .google{
-      height: 32px;
-      width: 32px;
-      float: left;
-      text-decoration: none;
-      box-sizing: border-box;
-      margin: 12px 0;
-      margin-right: 10px;
-      border-radius: 50%;
-      overflow: hidden;
-      .image{
-        height: 32px;
-        width: 32px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
     }
 }
 .right-elements{
@@ -341,4 +319,29 @@ a {
 }
 .hidden{
   visibility: hidden;
+}
+.login-buttons{
+  width: 85px;
+  height: 53px;
+  display: inline-block;
+  vertical-align: middle;
+  .facebook, .google{
+    height: 32px;
+    width: 32px;
+    float: left;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 12px 0;
+    margin-right: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+    .image{
+      height: 32px;
+      width: 32px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
 }

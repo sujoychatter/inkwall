@@ -1,4 +1,5 @@
-var Article = require(_dir.DIR_MODELS + '/article'); 
+var Article = require(_dir.DIR_MODELS + '/article');
+var LikeArticleUser = require(_dir.DIR_MODELS + '/like_article_user');
 module.exports = {
 	updatePost: function(req, res, next){
 		var post = req.body;
@@ -18,19 +19,19 @@ module.exports = {
 	getPosts: function(req, res, next){
 		var query = req.query || {}
 		query.approved = true;
-		return Article.all(query).then(function(posts){
+		return Article.all(query, req.user).then(function(posts){
 			res.status(200).send({posts: posts});
 		})
 	},
 	
 	getPostsByName: function(req, res, next){
 		var filter = {active: true, url : req.query.name, published : true, approved  : true}
-		Article.all(filter).then(function(articles){
+		Article.all(filter, req.user).then(function(articles){
 			return res.status(200).send({posts: articles});
 		})
 	},
 	getPost: function(req, res, next){
-		return Article.all().where({"articles.id": req.params.id}).then(function(posts){
+		return Article.all({}, req.user).where({"articles.id": req.params.id}).then(function(posts){
 			return res.status(200).send({posts: posts});
 		})
 	},
@@ -39,12 +40,29 @@ module.exports = {
 		if(req.user.admin === true){
 			filter = {}
 		}
-		return Article.all(filter).then(function(posts){
+		return Article.all(filter, req.user).then(function(posts){
 			return res.status(200).send({posts: posts});
 		})
 	},
-	postViews: function(req, res, next){
-		
-            
+	likePost: function(req, res, next){
+		var article_id = req.params.id,
+		user_id = req.user.id;
+		if(article_id){
+			return LikeArticleUser.all({article_id: article_id, user_id: user_id})
+			.then(function (results){
+				if(results.length == 0){
+					return LikeArticleUser.create(article_id, user_id)
+					.then(function(){
+						return Article.all({'articles.id' : article_id}, req.user)
+						.then(function(posts){
+							return res.status(200).send({posts: posts});
+						})
+					})
+				}
+				else{
+					res.status(403).send();
+				}
+			})
+		}
 	}
 }

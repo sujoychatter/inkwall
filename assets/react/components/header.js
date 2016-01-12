@@ -3,7 +3,8 @@ var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var DropDown = require('./common/drop_down');
 import Router, { Navigation, Link } from 'react-router';
 import {startLoading} from '../actions/loader'
-import Base64 from '../helpers/base64'
+import Base64 from '../helpers/base64';
+import LoginHelper from './common/login_helper';
 
 module.exports = React.createClass({
 	mixins: [Navigation],
@@ -71,12 +72,7 @@ module.exports = React.createClass({
 				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
 					<div className="login-options layer-1">
 						<a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
-						<a className="google" href="/auth/google" onClick={this.startLoading}>
-							<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
-						</a>
-						<a className="facebook" href="/auth/facebook" onClick={this.startLoading}>
-							<div className="image" style={{backgroundImage : "url('/images/FB_logo.png')"}}></div>
-						</a>
+						<LoginHelper/>
 					</div>
 				</span>
 		}
@@ -93,11 +89,11 @@ module.exports = React.createClass({
 		var logo_link;
 		if (ExecutionEnvironment.canUseDOM) {
 			logo_link = (<Link to="/" className="site-details">
-							<img src="/images/logo.png" className="site-name" itemProp="name"/>
+							INKWALL
 						</Link>)
 		}
 		else{
-			logo_link = <a href="/" className="site-details"><img src="/images/logo.png" className="site-name" itemProp="name"/></a>
+			logo_link = <a href="/" className="site-details">INKWALL</a>
 		}
 		
 		var options = [

@@ -14,11 +14,11 @@ import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
+import {addComments} from './actions/comments'
 import Base64 from './helpers/base64'
 
 
 const store = configureStore();
-
 store.dispatch(createPosts(window.inkwall_data.posts));
 store.dispatch(setCurrentUserId(window.inkwall_data.user && window.inkwall_data.user.id));
 store.dispatch(addUserData(window.inkwall_data.user));
@@ -26,7 +26,8 @@ store.dispatch(addUserData(window.inkwall_data.profile_user));
 store.dispatch(setProfileId(window.inkwall_data.profile_user_id));
 store.dispatch(setSelectedPost(window.inkwall_data.selected_post || {}));
 store.dispatch(setVisibilityFilter(window.inkwall_data.posts_visibility));
-window.inkwall_data = null
+store.dispatch(addComments(window.inkwall_data.comments));
+
 
 function selectPosts(posts, filter, state){
 	switch(filter){
@@ -47,6 +48,7 @@ function selectPosts(posts, filter, state){
 			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
 	}
 }
+
 function selectProfileUser(state, filter){
 	if(VisibilityConstants.Filters.SHOW_PROFILE == filter && state.user.profileUserId)
 		return {profile_user: getUserData(state.user.users, state.user.profileUserId)}
@@ -57,6 +59,7 @@ function mapStateToProps(state) {
 	var new_state = {
 		posts: selectPosts(state.posts.items, state.visibilityFilter, state),
 		user: getUserData(state.user.users, state.user.currentUserId),
+		comments: state.comments.items,
 		isLoading: state.loader.loading
 	}
 	return Object.assign({}, new_state, selectProfileUser(state, state.visibilityFilter));
@@ -91,10 +94,11 @@ class EditPostWrapperElement extends Component{
 class ShowPostWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
-		var preview = false
+		var preview = false,
+		show_comments = false;
 		if(this.props.params.postName){
 			store.dispatch(setSelectedPostByName(this.props.params.postName));
-			
+			show_comments = true
 		}
 		else{
 			store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
@@ -102,7 +106,7 @@ class ShowPostWrapperElement extends Component{
 		}
 		return (
 			<Provider store={store}>
-				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="show-post.css"/>}
+				{() => <Wrapper child={ShowPost} preview={preview} cssElementId="show-post-css" stylesheetLink="show-post.css" showComments={show_comments}/>}
 			</Provider>
 		)
 	}

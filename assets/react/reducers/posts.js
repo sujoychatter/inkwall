@@ -57,9 +57,15 @@ export default function posts(state = initialState, action = {}) {
 			});
 		
 		case SET_SELECTED_POST:
-			return Object.assign({}, state, {
-				selected_post_id: action.post.id
-			})
+			if(action.post.id){
+				return Object.assign({}, state, {
+					selected_post_id: action.post.id
+				})
+			}
+			else{
+				return state;
+			}
+			
 		default:
 			return state;
 	}
