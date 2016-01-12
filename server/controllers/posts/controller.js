@@ -71,7 +71,7 @@ module.exports = {
 						image_url = img_tag[0].match('src="[^"]*"')[0].slice(5, (image_url.length - 1));
 					}
 					var og_data= {title: articles[0].title}
-					og_data.url=  req.protocol + '://' + req.get('host') + req.originalUrl;
+					og_data.url=  'http://inkwall.in' + req.originalUrl;
 					og_data.description = articles[0].preview;
 					og_data.image = image_url;
 
