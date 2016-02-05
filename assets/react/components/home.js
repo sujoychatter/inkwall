@@ -67,9 +67,9 @@ module.exports = React.createClass({
 
 				return <div key={index} className="card-wrapper" itemProp="itemListElement" itemScope itemType="http://schema.org/Blog">
 					<a href={"/posts/" + post.url} itemProp="url" className="card" onClick={self.cardClicked.bind(null, post.url)}>
-						{self.getImageTag(post.content)}
-						<div className="title" itemProp="about">{post.title} <i className="icon-share" onClick={self.openShare.bind(self, post)}></i></div>
-						<div className="preview">{post.preview}</div>
+						{self.getImageTag(post.published_content)}
+						<div className="title" itemProp="about">{post.published_title} <i className="icon-share" onClick={self.openShare.bind(self, post)}></i></div>
+						<div className="preview">{post.published_preview}</div>
 						<div className="details">
 							<span className="author" itemProp="author">{post.user_name}</span>
 							<span className="view-count"><i className="icon icon-eye"></i>{post.view_count}</span>

@@ -11,7 +11,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //};
 
 var keys = ['limit', 'published', 'preview', 'content', 'active', 'title', 'url']
-var admin_keys = ['articles.id', 'published', 'approved', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
+var admin_keys = ['articles.id', 'published', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name', 'users.profile_id as user_profile_id']
 module.exports = {
 	all: function(query, user){
@@ -45,6 +45,9 @@ module.exports = {
 		var query = modelHelper.getArticleValidQueryParams(check_keys, params);
 		return knex('articles').returning('*').where(filters).update(query);
 	},
+	approve: function(id){
+		return knex.schema.raw("UPDATE articles set published_title = title, published_preview = preview, published_content = content, approved = true where id = " + id);
+	},
 	create: function(data){
 		var id = data.user.id,
 			time = new Date;
@@ -66,6 +69,7 @@ module.exports = {
 		return knex
 		.select(knex.raw(select_string))
 		.from('articles')
+		.leftJoin('users', 'articles.user_id', 'users.id')
 		.where({'articles.id':id, "active": true});
 	}
 }
