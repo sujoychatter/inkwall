@@ -46,7 +46,6 @@ module.exports = {
 		}
 		else if(req.params.name){
 			filter.url = req.params.name;
-			filter.published = true;
 			filter.approved  = true;
 		}
 		Article.all({}, req.user).where(filter).then(

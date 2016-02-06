@@ -78,12 +78,19 @@ export default class ShowPost extends Component {
 			}
 		}
 		if(this.props.posts[0]){
-			var title = this.props.posts[0].title,
-				created_at = this.props.posts[0].created_at,
+
+			if(this.props.preview){
+				var title = this.props.posts[0].title,
+				content = this.props.posts[0].content;
+			}
+			else{
+				var title = this.props.posts[0].published_title,
+				content = this.props.posts[0].published_content;
+			}
+			var created_at = this.props.posts[0].created_at,
 				user_photo = this.props.posts[0].user_photo,
 				user_name = this.props.posts[0].user_name,
-				user_id = this.props.posts[0].user_id,
-				content = this.props.posts[0].content
+				user_id = this.props.posts[0].user_id
 
 		}
 		if(this.props.preview && this.props.posts[0] && this.props.user && this.props.user.id == this.props.posts[0].user_id ){

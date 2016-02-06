@@ -4,6 +4,9 @@ module.exports = {
 	updatePost: function(req, res, next){
 		var post = req.body;
 		var admin = req.user.admin;
+		if(post.published == true){
+			post.approval_pending = true
+		}
 		return Article.update(req.params.id, post, req.user.id, admin).then(
 			function(articles){
 				return res.status(200).send({posts: articles});
@@ -20,6 +23,15 @@ module.exports = {
 				}
 			)
 			.then(
+				function(articles){
+					var article = articles[0],
+						url = "";
+					if(article && article.published_title){
+						url = article.published_title.replace(/[^((a-z)|(A-Z)|(\s)|(0-9))]*/g, "").replace(/\s+/g, "-")
+					}
+					return Article.setURL(article.id, {url: url});
+				}
+			).then(
 				function(articles){
 					return res.status(200).send({posts: articles});
 				}
@@ -44,7 +56,7 @@ module.exports = {
 	},
 	
 	getPostsByName: function(req, res, next){
-		var filter = {active: true, url : req.query.name, published : true, approved  : true}
+		var filter = {active: true, url : req.query.name, approved : true}
 		Article.all(filter, req.user).then(function(articles){
 			return res.status(200).send({posts: articles});
 		})

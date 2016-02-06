@@ -5,7 +5,7 @@
 		padding: 20px;
 		box-sizing: border-box;
 		overflow: hidden;
-
+		text-align: center;
 	}
 	.grid-sizer{
 		display: none;
@@ -19,7 +19,6 @@
 	}
 	.card-wrapper{
 		background-color: white;
-		float: left;
 		margin-bottom: 10px;
 		border-radius: 2px;
 		box-sizing: border-box;
