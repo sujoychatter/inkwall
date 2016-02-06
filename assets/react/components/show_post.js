@@ -72,7 +72,7 @@ export default class ShowPost extends Component {
 	}
 	render(){
 		var admin_user = this.props.user && this.props.user.admin
-		var isCurrentUser = this.props.user && this.props.user.id == this.props.posts[0].user_id
+		var isCurrentUser = this.props.user && this.props.posts[0] && this.props.user.id == this.props.posts[0].user_id
 		function showPublishButton(post){
 			if(isCurrentUser && !admin_user && (!post.published || post.approval_pending)){
 				if(post.published){
