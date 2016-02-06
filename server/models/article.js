@@ -11,7 +11,7 @@ var modelHelper = require(_dir.DIR_HELPERS + '/model_helper');
 //};
 
 var keys = ['limit', 'published', 'preview', 'content', 'active', 'title', 'approval_pending']
-var admin_keys = ['articles.id', 'published', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'approval_pending', 'approved']
+var admin_keys = ['articles.id', 'published', 'user_id', 'limit', 'preview', 'content', 'active', 'title', 'approval_pending', 'approved', 'url']
 var final_keys = ['articles.*', 'users.admin as user_admin', 'users.photo as user_photo', 'users.id as user_id', 'users.name as user_name', 'users.profile_id as user_profile_id', 'approval_pending']
 module.exports = {
 	all: function(query, user){

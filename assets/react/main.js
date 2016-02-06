@@ -38,7 +38,7 @@ function selectPosts(posts, filter, state){
 		case VisibilityConstants.Filters.SHOW_PROFILE:
 			var profile_user = getUserData(state.user.users, state.user.profileUserId);
 			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){
-				return posts.filter(post => (post.active === true && (post.approved === true || post.approval_pending)));
+				return posts.filter(post => (post.active === true && (post.approved === true || (post.approval_pending && post.published))));
 			}else if(state.user.profileUserId == state.user.currentUserId){
 				return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
 			}else{

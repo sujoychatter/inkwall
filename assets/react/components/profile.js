@@ -69,7 +69,7 @@ export default class Profile extends Component {
 		var isCurrentUser = this.props.user && this.props.user.id == this.props.profile_user.id
 		var content;
 		function showPublishButton(post){
-			if(isCurrentUser && !admin_user){
+			if(isCurrentUser && !admin_user && (!post.published || post.approval_pending)){
 				return <Button classes="publish" onclicking={
 					post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
 				} content={post.published ? 'Un-Publish' : (post.approved? 'Re-Publish' : 'Publish')}/>
@@ -86,10 +86,10 @@ export default class Profile extends Component {
 			}
 		}
 		function showApproveButton(post){
-			if(isCurrentUser && admin_user && (post.approval_pending === true || post.approved)){
+			if(isCurrentUser && admin_user && ((post.approval_pending === true && post.published) || post.approved)){
 				return <Button onclicking={
-					post.approval_pending ? this.approve.bind(this, post) : this.unApprove.bind(this, post)
-				} content={post.approval_pending ? (post.approved ? 'Re-Approve' : 'Approve') : 'Un-Approve'}/>
+					(post.approval_pending && post.published) ? this.approve.bind(this, post) : this.unApprove.bind(this, post)
+				} content={(post.approval_pending && post.published) ? (post.approved ? 'Re-Approve' : 'Approve') : 'Un-Approve'}/>
 			}
 		}
 		if(posts) {
