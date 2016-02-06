@@ -71,41 +71,56 @@ export default class ShowPost extends Component {
 		return classes;
 	}
 	render(){
+		var admin_user = this.props.user && this.props.user.admin
+		var isCurrentUser = this.props.user && this.props.user.id == this.props.posts[0].user_id
+		function showPublishButton(post){
+			if(isCurrentUser && !admin_user && (!post.published || post.approval_pending)){
+				if(post.published){
+					return <i className='icon icon-cancel post-icon' title="UnPublish" onClick={this.unPublish.bind(this)}></i>
+				}
+				else{
+					return <i className='icon icon-ok ok post-icon' title={post.approved? 'Re-Publish' : 'Publish'} onClick={this.publish.bind(this)}></i>
+				}
+			}
+		}
+		function showRemoveButton(post){
+			if(isCurrentUser && post.approved !== true && !admin_user){
+				return <i className='icon icon-trash-empty delete post-icon' title="Delete" onClick={this.remove.bind(this)}></i>
+			}
+		}
+		function showEditButton(post){
+			if(isCurrentUser && !admin_user){
+				return <i className='icon icon-pencil edit post-icon' title="Edit" onClick={this.editPost.bind(this)}></i>
+			}
+		}
 		if(ExecutionEnvironment.canUseDOM && this.props.posts[0]){
 			var title = "Inkwall : " + this.props.posts[0].title
 			if(document.title != title){
 				document.title = title;
 			}
 		}
-		if(this.props.posts[0]){
-
+		var post;
+		if(post = this.props.posts[0]){
 			if(this.props.preview){
-				var title = this.props.posts[0].title,
-				content = this.props.posts[0].content;
+				var title = post.title,
+				content = post.content;
 			}
 			else{
-				var title = this.props.posts[0].published_title,
-				content = this.props.posts[0].published_content;
+				var title = post.published_title,
+				content = post.published_content;
 			}
-			var created_at = this.props.posts[0].created_at,
-				user_photo = this.props.posts[0].user_photo,
-				user_name = this.props.posts[0].user_name,
-				user_id = this.props.posts[0].user_id
+			var created_at = post.created_at,
+				user_photo = post.user_photo,
+				user_name = post.user_name,
+				user_id = post.user_id
 
 		}
 		if(this.props.preview && this.props.posts[0] && this.props.user && this.props.user.id == this.props.posts[0].user_id ){
-			if(this.props.posts[0].published){
-				var post_actions = <div className="post-actions">
-						<i className='icon icon-cancel post-icon' title="UnPublish" onClick={this.unPublish.bind(this)}></i>
-					</div>
-			}
-			else{
-				var post_actions = <div className="post-actions">
-						<i className='icon icon-ok ok post-icon' title="Publish" onClick={this.publish.bind(this)}></i>
-						<i className='icon icon-pencil edit post-icon' title="Edit" onClick={this.editPost.bind(this)}></i>
-						<i className='icon icon-trash-empty delete post-icon' title="Delete" onClick={this.remove.bind(this)}></i>
-					</div>
-			}
+			var post_actions = <div className="post-actions">
+				{showPublishButton.call(this,post)}
+				{showEditButton.call(this,post)}
+				{showRemoveButton.call(this,post)}
+			</div>
 		}
 		return (
 			<div className="show-post container" itemScope itemType="http://schema.org/BlogPosting">
