@@ -1,5 +1,6 @@
 extends layout
 
 block content
+	script(src='/tinymce.min.js' type='text/javascript' id="tinymce-js")
 	link(rel='stylesheet', href='/stylesheets/#{css_file_name}' id="edit-post-css")
 	#application !{markup}
