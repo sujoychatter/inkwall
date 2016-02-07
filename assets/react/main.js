@@ -29,12 +29,15 @@ store.dispatch(setVisibilityFilter(window.inkwall_data.posts_visibility));
 store.dispatch(addComments(window.inkwall_data.comments));
 
 
+function sortPosts(p1, p2){
+	return (new Date(p2.created_at).getTime()) - (new Date(p1.created_at).getTime())
+}
 function selectPosts(posts, filter, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts.filter(post => post.active === true);
 		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
-			return posts.filter(post => (post.approved === true && post.active === true));
+			return posts.filter(post => (post.approved === true && post.active === true)).sort(sortPosts);
 		case VisibilityConstants.Filters.SHOW_PROFILE:
 			var profile_user = getUserData(state.user.users, state.user.profileUserId);
 			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){

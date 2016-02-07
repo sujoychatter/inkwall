@@ -1,4 +1,4 @@
-import { PUBLISH_POST, UN_PUBLISH_POST, REMOVE_POST, CREATE_BLOGS, REQUEST_POSTS, RECEIVE_POSTS, SET_SELECTED_POST} from '../constants/posts';
+import { PUBLISH_POST, UN_PUBLISH_POST, REMOVE_POST, CREATE_BLOGS, REQUEST_POSTS, RECEIVE_POSTS, SET_SELECTED_POST, SET_SELECTED_POST_NON_REQ} from '../constants/posts';
 
 const initialState = {
 	items: [],
@@ -20,6 +20,16 @@ function mergePosts(items, posts){
 		}
 	}
 	return new_items;
+}
+
+function findPostIdByName(state, name){
+	var post = state.items.filter(function(post){return post.url == name})[0];
+	if(post){
+		return post.id;
+	}
+	else{
+		return null;
+	}
 }
 
 export default function posts(state = initialState, action = {}) {
@@ -60,6 +70,20 @@ export default function posts(state = initialState, action = {}) {
 			if(action.post.id){
 				return Object.assign({}, state, {
 					selected_post_id: action.post.id
+				})
+			}
+			else{
+				return state;
+			}
+		case SET_SELECTED_POST_NON_REQ:
+			if(action.post.name){
+				return Object.assign({}, state, {
+					selected_post_id: findPostIdByName(state, action.post.name)
+				})
+			}
+			else if(typeof action.post.id != 'undefined'){
+				return Object.assign({}, state, {
+					selected_post_id: parseInt(action.post.id)
 				})
 			}
 			else{
