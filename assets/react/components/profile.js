@@ -24,13 +24,13 @@ export default class Profile extends Component {
 	}
 	show_post(post, event){
 		this.supress(event)
-		if(post.approved && post.published){
+		if(this.props.user && (post.user_id == this.props.user.id || this.props.user.admin)){
+			return this.context.router.transitionTo('/posts/' + Base64.encode(post.id.toString()) + '/preview');
+		}else{
 			var link = event.currentTarget.getAttribute('href')
 			if(link){
 				return this.context.router.transitionTo(link);
 			}
-		}else{
-			return this.context.router.transitionTo('/posts/' + Base64.encode(post.id.toString()) + '/preview');
 		}
 	}
 	update_name(name, event){
@@ -69,10 +69,10 @@ export default class Profile extends Component {
 		var isCurrentUser = this.props.user && this.props.user.id == this.props.profile_user.id
 		var content;
 		function showPublishButton(post){
-			if(isCurrentUser && post.approved !== true && !admin_user){
+			if(isCurrentUser && !admin_user && (!post.published || post.approval_pending)){
 				return <Button classes="publish" onclicking={
 					post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
-				} content={post.published ? 'Un-Publish' : 'Publish'}/>
+				} content={post.published ? 'Un-Publish' : (post.approved? 'Re-Publish' : 'Publish')}/>
 			}
 		}
 		function showRemoveButton(post){
@@ -81,24 +81,32 @@ export default class Profile extends Component {
 			}
 		}
 		function showEditButton(post){
-			if(isCurrentUser && post.approved !== true && !admin_user){
+			if(isCurrentUser && !admin_user){
 				return <Button classes="edit-btn" onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
 			}
 		}
 		function showApproveButton(post){
-			if(isCurrentUser && admin_user && post.published === true){
+			if(isCurrentUser && admin_user && ((post.approval_pending === true && post.published) || post.approved)){
 				return <Button onclicking={
-					post.approved ? this.unApprove.bind(this, post) : this.approve.bind(this, post)
-				} content={post.approved ? 'Un-Approve' : 'Approve'}/>
+					(post.approval_pending && post.published) ? this.approve.bind(this, post) : this.unApprove.bind(this, post)
+				} content={(post.approval_pending && post.published) ? (post.approved ? 'Re-Approve' : 'Approve') : 'Un-Approve'}/>
 			}
 		}
 		if(posts) {
 			posts.forEach((post) => {
-				var href = "/posts/" + ( post.approved && post.published ? post.url : (Base64.encode(post.id.toString()) + "/preview"))
+				var href = "/posts/" + ( this.props.user && (post.user_id == this.props.user.id || this.props.user.admin) ? (Base64.encode(post.id.toString()) + "/preview") : post.url)
+				if(this.props.user && this.props.user.id == this.props.profile_user.id){
+					var title = post.title,
+						preview = post.preview;
+				}
+				else{
+					var title = post.published_title,
+						preview = post.published_preview;
+				}
 				return elems.push(
 					<a className="item gen-bs" href={href} data-id={post.id} key={post.id} onClick={this.show_post.bind(this, post)}>
-						<h2 className="item-title">{post.title}</h2>
-						<div className="item-preview">{post.preview.replace(/[\s]{2,}/g, ' ')}</div>
+						<h2 className="item-title">{title}</h2>
+						<div className="item-preview">{preview.replace(/[\s]{2,}/g, ' ')}</div>
 						<div className="last-updated">{formatDBDateTime(post.updated_at)}</div>
 						<div className="user-name">{admin_user ? post.user_name : null}</div>
 						<div className="post-controls">

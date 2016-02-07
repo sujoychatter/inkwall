@@ -186,10 +186,9 @@ export function unPublishPost(id) {
 export function approvePost(id) {
 	return function (dispatch) {
 		dispatch(startLoading())
-		fetch("/api/posts/" + id + '/update', {
+		fetch("/api/posts/" + id + '/approve', {
 			credentials: 'include',
 			method: 'put',
-			body: JSON.stringify({approved: true}),
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
@@ -210,7 +209,7 @@ export function unApprovePost(id) {
 		fetch("/api/posts/" + id + '/update', {
 			credentials: 'include',
 			method: 'put',
-			body: JSON.stringify({approved: false}),
+			body: JSON.stringify({approved: false, published: false}),
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'

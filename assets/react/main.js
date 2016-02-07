@@ -34,15 +34,15 @@ function selectPosts(posts, filter, state){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts.filter(post => post.active === true);
 		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
-			return posts.filter(post => (post.approved === true && post.published === true && post.active === true));
+			return posts.filter(post => (post.approved === true && post.active === true));
 		case VisibilityConstants.Filters.SHOW_PROFILE:
 			var profile_user = getUserData(state.user.users, state.user.profileUserId);
 			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){
-				return posts.filter(post => (post.active === true && post.published === true));
+				return posts.filter(post => (post.active === true && (post.approved === true || (post.approval_pending && post.published))));
 			}else if(state.user.profileUserId == state.user.currentUserId){
 				return posts.filter(post => (post.user_id == profile_user.id && post.active === true));
 			}else{
-				return posts.filter(post => (post.user_id == profile_user.id && post.approved === true && post.published === true));
+				return posts.filter(post => (post.user_id == profile_user.id && post.active === true && post.approved === true));
 			}
 		case VisibilityConstants.Filters.SHOW_ONE:
 			return posts.filter(post => (post.id == state.posts.selected_post_id && post.active === true));
@@ -70,7 +70,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 class HomeWrapperElement extends Component{
 	render() {
 		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
-		store.dispatch(fetchPosts({approved: true, published: true}))
+		store.dispatch(fetchPosts({approved: true}))
 		return (
 			<Provider store={store}>
 				{() => <Wrapper child={Home} cssElementId="home-css" stylesheetLink="home.css"/>}

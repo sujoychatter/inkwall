@@ -19,8 +19,6 @@ export default class EditPost extends Component {
 		document.title = "Inkwall : Edit Post"
 	}
 	componentWillReceiveProps(nextProps) {
-
-		console.log(nextProps.posts[0])
 		var state;
 		if(nextProps.posts[0]){
 			if (!this.state.title || !nextProps.posts[0].title){
@@ -38,7 +36,6 @@ export default class EditPost extends Component {
 				state.savingHintClass = "saving-hint";
 			}
 			if(this.contentSet !== true || !nextProps.posts[0].content){
-				console.log("here")
 				this.contentSet = true;
 				this.setupEditor(nextProps.posts[0].content);
 			}
@@ -113,7 +110,8 @@ export default class EditPost extends Component {
 			post = {
 				id: this.props.posts[0].id,
 				title: document.getElementsByClassName('blog-title')[0].value,
-				content: content
+				content: content,
+				published: false
 			}
 			this.props.dispatch(savePost(post))
 		}

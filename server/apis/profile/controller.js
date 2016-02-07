@@ -8,7 +8,7 @@ module.exports = {
 		}
 		var items, query;
 		if(req.user && req.user.admin && req.user.id == profile_user_id){
-			query = {published: true}
+			query = {}
 		}else if(req.user && req.user.id == profile_user_id){
 			query = {user_id: profile_user_id}
 		}else{

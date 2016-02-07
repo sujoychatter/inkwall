@@ -15,6 +15,7 @@ router.get('/by_name', controller.getPostsByName);
 router.get('/:id', controller.getPost);
 router.get('/', controller.getPosts);
 router.put('/:id/update', ensureAuthenticated, controller.updatePost);
+router.put('/:id/approve', ensureAuthenticated, controller.approvePost);
 router.post('/:id/like', ensureAuthenticated, controller.likePost);
 
 module.exports = router;

@@ -36,6 +36,26 @@ gulp.task('browserify:js', function () {
 		.bundle()
 		.pipe(source('main.js'))
 		.pipe(buffer())
+		.pipe(buffer())
+		.pipe(rev())
+		.pipe(gulp.dest('public/react/'))
+		.pipe(rev.manifest({
+            base: 'public/',
+            merge: true // merge with the existing manifest (if one exists)
+        }))
+        .pipe(gulp.dest('public/'));
+});
+
+gulp.task('browserify_prod:js', function () {
+	browserify({entries: 'assets/react/main.js'})
+		.transform(
+			babelify.configure({
+    			plugins: ["object-assign"]
+    		})
+    	)
+		.bundle()
+		.pipe(source('main.js'))
+		.pipe(buffer())
 		.pipe(uglify())
 		.pipe(buffer())
 		.pipe(rev())
@@ -103,3 +123,4 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['js', 'sass', 'copyvendor', 'browserify:js', 'copyimages', 'watch']);
+gulp.task('prod_build', ['js', 'sass', 'copyvendor', 'browserify_prod:js', 'copyimages']);
