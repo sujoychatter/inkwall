@@ -97,12 +97,27 @@ a {
 .header{
     z-index: 2;
     height: 58px;
-    background-color: $plain_background;
+    box-shadow: 0px 0px 5px 1px $footer-color;
     position: fixed;
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
-    border-bottom: $border-color;
+    background: $footer-color;
+    .login-buttons{
+      position: absolute;
+      right: 5px;
+      width: 115px;
+      padding-left: 15px;
+      background: $footer-color;
+      @include transform(translateY(-45px));
+      transition: transform 0.5s;
+    }
+    .right-elements.show .login-buttons{
+      @include transform(translateY(0));
+      &.bigger{
+        @include transform(scale(1.1));
+      }
+    }
     img{
       height: 30px;
       margin: 15px 15px 15px 0;
@@ -110,13 +125,22 @@ a {
     .icon{
       margin-left: 3px;
     }
+    .header-link{
+      color: white;
+      font-size: 30px;
+      text-transform: lowercase;
+      line-height: 54px;
+      background: $footer-color;
+      cursor: pointer;
+    }
     .site-details{
       text-decoration: none;
-      line-height: 56px;
-      font-size: 23px;
-      letter-spacing: 5px;
-      font-weight: bold;
-
+      line-height: 54px;
+      font-size: 54px;
+      letter-spacing: -2px;
+      font-weight: 700;
+      color: white;
+      text-transform: lowercase;
     }
     .user-image{
       height: 40px;
@@ -124,8 +148,8 @@ a {
       border-radius: 23px;
       background-size: cover;
       cursor: pointer;
-      float: left;
-      margin: 8px 0px;
+      float: right;
+      margin: 8px 10px;
     }
     .new-post{
       float: left;
@@ -136,17 +160,9 @@ a {
       }
     }
     .login-options{
-        width: 315px;
+        width: 335px;
         height: 58px;
     }
-}
-.right-elements{
-  background-color: transparent;
-  @include transform(translateX(85px));
-  transition: all 0.5s;
-  &.show{
-    @include transform(translateX(0px));
-  }
 }
 
 #application{
@@ -190,9 +206,6 @@ a {
   position: absolute;
   right: 20px;
   top: 0;
-  margin: 12px 0;
-  background-color: $plain_background;
-  @include button($basic-blue);
   .icon{
     display: block;
     width: 30px;
@@ -231,8 +244,8 @@ a {
   position: absolute;
   height: 58px;
   width: 160px;
-  top: 50px;
-  right: 16px;
+  top: 52px;
+  right: 27px;
   color: $dark_color10;
   opacity: 0;
   pointer-events: none;
