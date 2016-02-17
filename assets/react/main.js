@@ -15,7 +15,7 @@ import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
-import {setheaderTransparent, setheaderOpaque} from './actions/transparentheader'
+import {setheaderTransparent, setheaderOpaque} from './actions/transparentHeader'
 import {addComments} from './actions/comments'
 import Base64 from './helpers/base64'
 
