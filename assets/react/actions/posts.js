@@ -27,6 +27,13 @@ export function setSelectedPost(post){
 	}
 }
 
+function setSelectedPostNonReq(post){
+	return {
+		type: types.SET_SELECTED_POST_NON_REQ,
+		post: post
+	}
+}
+
 function encodeQueryParams(query){
 	var str = "?"
 	if(!query){return ""}
@@ -72,7 +79,7 @@ export function fetchPosts(query){
 export function setSelectedPostByName(postName){
 	return function(dispatch){
 		dispatch(startLoading())
-		dispatch(setSelectedPost({id: null}));
+		dispatch(setSelectedPostNonReq({name: postName}));
 		return fetch('/api/posts/by_name?name=' + postName,{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()
@@ -114,7 +121,7 @@ export function savePost(post){
 export function setSelectedPostById(id){
 	return function(dispatch){
 		dispatch(startLoading());
-		dispatch(setSelectedPost({id: null}));
+		dispatch(setSelectedPostNonReq({id: id}));
 		return fetch('/api/posts/' + id + '?for_edit=true',{credentials: 'include'}).then(response => {
 			dispatch(stopLoading())
 			return response.json()

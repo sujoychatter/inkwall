@@ -3,8 +3,10 @@ var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 var Button = require('./common/button.js');
 import {savePost} from '../actions/posts'
 import Base64 from '../helpers/base64'
+import ajax from '../helpers/ajax';
 
 export default class EditPost extends Component {
+	tinyMCELoaded: false
 	constructor(props, context){
 		super(props, context);
 		this.state = {
@@ -15,33 +17,51 @@ export default class EditPost extends Component {
 		this.contentSet= false
 		context.router
 	}
+	componentWillMount(){
+		if (ExecutionEnvironment.canUseDOM &&  !document.getElementById("tinymce-js")) {
+			ajax('/tinymce.min.js','text/javascript',this.setTinymceJs.bind(this))
+		}
+		else{
+			this.tinyMCELoaded = true
+		}
+	}
+	setTinymceJs(responseText, data){
+		var scriptElement = document.createElement('script');
+		scriptElement.setAttribute('id', "tinymce-js");
+		scriptElement.innerHTML = data.response;
+		document.body.appendChild(scriptElement);
+		this.tinyMCELoaded = true;
+		this.setProcessedState(this.props)
+	}
 	componentDidMount() {
 		document.title = "Inkwall : Edit Post"
 	}
 	componentWillReceiveProps(nextProps) {
+		this.setProcessedState(nextProps)
+	}
+	setProcessedState(props){
 		var state;
-		if(nextProps.posts[0]){
-			if (!this.state.title || !nextProps.posts[0].title){
-				state  = {title:  nextProps.posts[0].title};
+		if(props.posts[0] && this.tinyMCELoaded){
+			if (!this.state.title || !props.posts[0].title){
+				state  = {title:  props.posts[0].title};
 			}
 			else{
 				state = {}
 			}
-			if(this.saving === true && nextProps.isLoading === false){
+			if(this.saving === true && props.isLoading === false){
 				this.saving = false;
 				setTimeout(this.removeSavingHint.bind(this), 500);
 			}
-			else if(this.saving === false && nextProps.isLoading === true){
+			else if(this.saving === false && props.isLoading === true){
 				this.saving = true;
 				state.savingHintClass = "saving-hint";
 			}
-			if(this.contentSet !== true || !nextProps.posts[0].content){
+			if(this.contentSet !== true || !props.posts[0].content){
 				this.contentSet = true;
-				this.setupEditor(nextProps.posts[0].content);
+				this.setupEditor(props.posts[0].content);
 			}
 			this.setState(Object.assign({}, this.state, state));
 		}
-		
 	}
 	removeSavingHint(){
 		this.setState(Object.assign({}, this.state, {savingHintClass: "saving-hint hidden"}));
@@ -61,10 +81,10 @@ export default class EditPost extends Component {
 					theme: "modern",
 					resize: false,
 					plugins: [
-						"autolink lists link image preview fullscreen media table contextmenu",
-						"emoticons paste textcolor colorpicker textpattern imagetools"
+						"autolink lists link image media table contextmenu",
+						"paste textcolor colorpicker textpattern imagetools"
 					],
-					toolbar1: "undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons | fullscreen",
+					toolbar1: "undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | media | forecolor backcolor",
 					image_advtab: true,
 					setup : function(ed)
 					{
@@ -87,12 +107,9 @@ export default class EditPost extends Component {
 			}
 		}
 		function initiateTinyMCE() {
-			if (typeof tinyMCE == "undefined") {
-				window.onload = setupTinyMCE;
-			}
-			else {
-				setupTinyMCE();
-			}
+			tinyMCE.suffix = '.min';
+			tinyMCE.baseURL = "/tinymce_assets";
+			setupTinyMCE();
 		}
 		if (ExecutionEnvironment.canUseDOM) {
 			initiateTinyMCE()

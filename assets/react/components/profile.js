@@ -70,24 +70,24 @@ export default class Profile extends Component {
 		var content;
 		function showPublishButton(post){
 			if(isCurrentUser && !admin_user && (!post.published || post.approval_pending)){
-				return <Button classes="publish" onclicking={
+				return <Button classes="publish small" onclicking={
 					post.published ? this.unPublish.bind(this, post) : this.publish.bind(this, post)
 				} content={post.published ? 'Un-Publish' : (post.approved? 'Re-Publish' : 'Publish')}/>
 			}
 		}
 		function showRemoveButton(post){
 			if(isCurrentUser && post.approved !== true && !admin_user){
-				return <Button classes="remove-btn" onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
+				return <Button classes="remove-btn small" onclicking={this.remove.bind(this, post)} content={(<i className="icon icon-trash-empty"></i>)}/>
 			}
 		}
 		function showEditButton(post){
 			if(isCurrentUser && !admin_user){
-				return <Button classes="edit-btn" onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
+				return <Button classes="edit-btn small" onclicking={this.openPost.bind(this, post)} content={(<i className="icon icon-pencil"></i>)}/>
 			}
 		}
 		function showApproveButton(post){
 			if(isCurrentUser && admin_user && ((post.approval_pending === true && post.published) || post.approved)){
-				return <Button onclicking={
+				return <Button classes="small" onclicking={
 					(post.approval_pending && post.published) ? this.approve.bind(this, post) : this.unApprove.bind(this, post)
 				} content={(post.approval_pending && post.published) ? (post.approved ? 'Re-Approve' : 'Approve') : 'Un-Approve'}/>
 			}

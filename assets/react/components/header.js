@@ -15,7 +15,7 @@ module.exports = React.createClass({
 	getInitialState: function () {
 		var data = {};
 		if (this.props.user) {
-			data = {user: this.props.user, showOptions: false};
+			data = {user: this.props.user, showOptions: false, highlightLogin: false};
 		}
 		return data;
 	},
@@ -55,25 +55,34 @@ module.exports = React.createClass({
 		xhr.send();
 	},
 	showLoginOptions: function(){
-		this.setState(Object.assign({}, this.state, {showOptions : !this.state.showOptions}))
+		if(!this.state.showOptions){
+			this.setState(Object.assign({}, this.state, {showOptions : true}))
+		}
+		else{
+			console.log('highlight')
+			this.setState(Object.assign({}, this.state, {highlightLogin : true}));
+			var self = this;
+			setTimeout(function(){
+				self.setState(Object.assign({}, this.state, {highlightLogin : false}))
+				console.log('highlight off')
+			}, 300)
+		}
 	},
 	getHeaderInfo: function(){
 		var newPost, header_info;
 		if (this.state.user && this.state.user.name) {
 			var divStyle = {backgroundImage: 'url(' + this.state.user.photo + ')'},
 			header_info = 
-				<span className="pull-right ">
-					<a className="new-post" onClick={this.newPost}>Write a Post</a>
+				<span className="pull-right">
+					<a className="header-link" onClick={this.newPost}><i className='icon-pencil'></i>Write |</a>
 					<div className="user-image" style={divStyle} onClick={this.showHideDropDown}></div>
 				</span>
 		}
 		else {
 			header_info =
-				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
-					<div className="login-options layer-1">
-						<a className="new-post" onClick={this.showLoginOptions}>Write a Post</a>
-						<LoginHelper/>
-					</div>
+				<span className={"pull-right right-elements"}>
+					<a className="header-link" onClick={this.showLoginOptions}><i className='icon-pencil'></i>Write |</a>
+					<LoginHelper extClasses={this.state.highlightLogin ? 'bigger' : ''}/>
 				</span>
 		}
 		return header_info
@@ -81,7 +90,7 @@ module.exports = React.createClass({
 	getLoginButton: function(){
 		var login;
 		if (! (this.state.user && this.state.user.name) ) {
-			login = <a className="login-button layer-2" onClick={this.showLoginOptions}>Sign In</a>
+			login = <a className="pull-right header-link signin" onClick={this.showLoginOptions}><i className="icon-login"></i>SignIn</a>
 		}
 		return login
 	},
@@ -103,11 +112,11 @@ module.exports = React.createClass({
 		]
 		var loadingClass = this.props.isLoading ? "loader loading" : "loader"
 		return (
-			<div className="header">
+			<div className={"header " + (this.props.transparent ? 'transparent ' : '') + (this.state.showOptions ? "show-login" : "")}>
 				{logo_link}
 				<DropDown options={options} showDropDown={this.state.showDropDown}/>
-				{this.getHeaderInfo()}
 				{this.getLoginButton()}
+				{this.getHeaderInfo()}
 				<div className={loadingClass}></div>
 			</div>
 		)

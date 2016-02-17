@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 export default class LoginHelper extends Component{
 	render(){
-		return <div className="login-buttons">
+		return <div className={"login-buttons " + (this.props.extClasses ? this.props.extClasses : '') }>
 			<a className="google" href="/auth/google" onClick={this.startLoading}>
 				<div className="image" style={{backgroundImage : "url('/images/google_logo.png')"}}></div>
 			</a>

@@ -4,13 +4,15 @@ import user from './user';
 import loader from './loader';
 import comments from './comments';
 import visibilityFilter from './visibilityFilter';
+import transparentHeader from './transparentHeader';
 
 const rootReducer = combineReducers({
 	posts,
 	user,
 	visibilityFilter,
 	loader,
-	comments
+	comments,
+	transparentHeader
 });
 
 export default rootReducer;

@@ -9,6 +9,8 @@ $comments_orange: #FF8600;;
 
 $likes_red: #E00000;
 
+$banner-color: rgb(114, 131, 172);
+
 $tertiary_color: #e32d79;
 $light_color: #C9BFDE;
 $text_light_grey: #BFBFBF;
@@ -17,7 +19,7 @@ $main_background: #F5F8F9;
 $plain_background: #FFF;
 $basic-blue: #38B7EA;
 $border-color: 1px solid rgba(0,0,0,0.1);
-$footer-color: #D6E7EC;
+$footer-color: #ACE1F1;
 $mid-blue: #DDF0F7;
 
 $dark_color: rgb(0,0,0);
@@ -46,14 +48,18 @@ $primary_blue: #00B7FF;
 	line-height: 24px;
 	cursor: pointer;
 	border: 1px solid $color;
-	color: $color;
-	border-radius: 20px;
+	border-radius: 2px;
 	padding: 4px 20px;
 	transition: all 0.3s;
-	background-color: white;
+	background-color: $color;
+	color: white;
 	&:hover{
-		background-color: $color;
-		color: white;
+		background-color: white;
+		color: $color;
+	}
+	&.small{
+		line-height: 15px;
+		padding: 4px 6px;
 	}
 }
 
@@ -63,4 +69,44 @@ $primary_blue: #00B7FF;
   -ms-transform:     $value;
   -o-transform:      $value;
   transform:         $value;
+}
+
+@mixin keyframe ($animation_name) {
+    @-webkit-keyframes $animation_name {
+        @content;
+    }
+
+    @-moz-keyframes $animation_name {
+        @content;
+    }
+
+    @-o-keyframes $animation_name {
+        @content;
+    }
+
+    @keyframes $animation_name {
+        @content;
+    }
+}
+
+@mixin animation ($delay, $duration, $animation) {
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-name: $animation;
+    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+    -moz-animation-name: $animation;
+    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -o-animation-delay: $delay;
+    -o-animation-duration: $duration;
+    -o-animation-name: $animation;
+    -o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-name: $animation;
+    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
 }

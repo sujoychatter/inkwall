@@ -6,6 +6,7 @@ var Home = require('./components/home.js');
 var Profile = require('./components/profile.js');
 var EditPost = require('./components/edit_post.js');
 var ShowPost = require('./components/show_post.js');
+
 import {Filters} from './constants/visibilityFilters';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
@@ -14,6 +15,7 @@ import {createPosts, setSelectedPost, setSelectedPostByName, setSelectedPostById
 import * as VisibilityConstants from './constants/visibilityFilters'
 import {addUserData, setCurrentUserId, getUserData, setProfileId} from './actions/user'
 import {setVisibilityFilter} from './actions/visibilityFilters'
+import {setheaderTransparent, setheaderOpaque} from './actions/transparentheader'
 import {addComments} from './actions/comments'
 import Base64 from './helpers/base64'
 
@@ -29,12 +31,15 @@ store.dispatch(setVisibilityFilter(window.inkwall_data.posts_visibility));
 store.dispatch(addComments(window.inkwall_data.comments));
 
 
+function sortPosts(p1, p2){
+	return (new Date(p2.created_at).getTime()) - (new Date(p1.created_at).getTime())
+}
 function selectPosts(posts, filter, state){
 	switch(filter){
 		case VisibilityConstants.Filters.SHOW_ALL:
 			return posts.filter(post => post.active === true);
 		case VisibilityConstants.Filters.SHOW_ALL_APPROVED:
-			return posts.filter(post => (post.approved === true && post.active === true));
+			return posts.filter(post => (post.approved === true && post.active === true)).sort(sortPosts);
 		case VisibilityConstants.Filters.SHOW_PROFILE:
 			var profile_user = getUserData(state.user.users, state.user.profileUserId);
 			if(profile_user.admin && state.user.profileUserId == state.user.currentUserId){
@@ -60,7 +65,8 @@ function mapStateToProps(state) {
 		posts: selectPosts(state.posts.items, state.visibilityFilter, state),
 		user: getUserData(state.user.users, state.user.currentUserId),
 		comments: state.comments.items,
-		isLoading: state.loader.loading
+		isLoading: state.loader.loading,
+		transparentHeader: state.transparentHeader.transparent
 	}
 	return Object.assign({}, new_state, selectProfileUser(state, state.visibilityFilter));
 }
@@ -69,6 +75,7 @@ Wrapper = connect(mapStateToProps)(Wrapper);
 
 class HomeWrapperElement extends Component{
 	render() {
+		store.dispatch(setheaderTransparent());
 		store.dispatch(setVisibilityFilter(Filters.SHOW_ALL_APPROVED));
 		store.dispatch(fetchPosts({approved: true}))
 		return (
@@ -81,6 +88,7 @@ class HomeWrapperElement extends Component{
 
 class EditPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setheaderOpaque());
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		store.dispatch(setSelectedPostById(Base64.decode(this.props.params.postId)));
 		return (
@@ -93,6 +101,7 @@ class EditPostWrapperElement extends Component{
 
 class ShowPostWrapperElement extends Component{
 	render() {
+		store.dispatch(setheaderOpaque());
 		store.dispatch(setVisibilityFilter("SHOW_ONE"));
 		var preview = false,
 		show_comments = false;
@@ -114,6 +123,7 @@ class ShowPostWrapperElement extends Component{
 
 class ProfileWrapperElement extends Component{
 	render() {
+		store.dispatch(setheaderOpaque());
 		store.dispatch(fetchProfile(parseInt(this.props.params.profileUserId) || null))
 		store.dispatch(setVisibilityFilter(Filters.SHOW_PROFILE))
 		return (
