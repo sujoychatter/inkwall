@@ -1,5 +1,6 @@
 var React = require('react');
 import Router, { Navigation, Link } from 'react-router';
+import {setheaderTransparent, setheaderOpaque} from '../actions/transparentHeader';
 
 module.exports = React.createClass({
 
@@ -20,6 +21,27 @@ module.exports = React.createClass({
 	},
 	componentDidMount: function(){
 		document.title = "Inkwall : Blogs for everyone";
+		window.addEventListener('scroll', this.windowScrolled)
+	},
+	componentWillUnmount: function(){
+		window.removeEventListener('scroll', this.windowScrolled)
+	},
+	setHeaderState: function(){
+		if(this.props.transparentHeader){
+			if(document.body.scrollTop > 50){
+				this.props.dispatch(setheaderOpaque());
+			}
+		}
+		else if(document.body.scrollTop < 50){
+			this.props.dispatch(setheaderTransparent());
+		}
+		clearTimeout(this.timeoutObj);
+		this.timeoutObj = undefined;
+	},
+	windowScrolled: function(event){
+		if(!this.timeoutObj){
+			this.timeoutObj = setTimeout(this.setHeaderState.bind(this), 300)
+		}
 	},
 	getImageTag: function(content_text){
 		if(!content_text){
@@ -95,6 +117,8 @@ module.exports = React.createClass({
 		return (
 			<div className="container home" itemScope="" itemType="http://schema.org/ItemList">
 				<div className="wrapper">
+					<div className='banner'>
+					</div>
 					<div className="cards-container">
 						{createCards(items)}
 					</div>

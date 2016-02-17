@@ -47,7 +47,7 @@ export default class Wrapper extends Component{
 		if(!this.state.loading){
 			retDiv = (
 				<div className="main-content">
-						<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch}/>
+						<Header user={this.props.user} isLoading={this.props.isLoading} dispatch={dispatch} transparent={this.props.transparentHeader}/>
 						<Child {...this.props}/>
 						{this.getFooter()}
 				</div>

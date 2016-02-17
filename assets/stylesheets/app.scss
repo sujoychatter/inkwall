@@ -97,25 +97,40 @@ a {
 .header{
     z-index: 2;
     height: 58px;
-    box-shadow: 0px 0px 5px 1px $footer-color;
     position: fixed;
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
     background: $footer-color;
+    transition: all 500ms;
+    &.transparent{
+      background: transparent;
+      box-shadow: none;
+      .header-link{
+        background: transparent;
+      }
+      .site-details{
+        color: $banner-color;
+      }
+    }
     .login-buttons{
+      transition: all 500ms;
       position: absolute;
       right: 5px;
       width: 115px;
       padding-left: 15px;
-      background: $footer-color;
-      @include transform(translateY(-45px));
-      transition: transform 0.5s;
+      @include transform(translateY(-55px));
+      transition: all 0.5s;
     }
-    .right-elements.show .login-buttons{
-      @include transform(translateY(0));
-      &.bigger{
-        @include transform(scale(1.1));
+    &.show-login{
+      .login-buttons{
+        @include transform(translateY(0));
+        &.bigger{
+          @include transform(scale(1.1));
+        }
+      }
+      .signin{
+        @include transform(translateY(-55px));
       }
     }
     img{
@@ -130,7 +145,6 @@ a {
       font-size: 30px;
       text-transform: lowercase;
       line-height: 54px;
-      background: $footer-color;
       cursor: pointer;
     }
     .site-details{
@@ -328,7 +342,7 @@ a {
   padding: 20px;
   position: absolute;
   bottom: 0;
-  color: grey;
+  color: white;
 }
 .hidden{
   visibility: hidden;

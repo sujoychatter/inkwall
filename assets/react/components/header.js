@@ -80,7 +80,7 @@ module.exports = React.createClass({
 		}
 		else {
 			header_info =
-				<span className={"pull-right right-elements" + (this.state.showOptions ? " show" : "")}>
+				<span className={"pull-right right-elements"}>
 					<a className="header-link" onClick={this.showLoginOptions}><i className='icon-pencil'></i>Write |</a>
 					<LoginHelper extClasses={this.state.highlightLogin ? 'bigger' : ''}/>
 				</span>
@@ -90,7 +90,7 @@ module.exports = React.createClass({
 	getLoginButton: function(){
 		var login;
 		if (! (this.state.user && this.state.user.name) ) {
-			login = <a className="pull-right header-link layer-2" onClick={this.showLoginOptions}><i className="icon-login"></i>SignIn</a>
+			login = <a className="pull-right header-link signin" onClick={this.showLoginOptions}><i className="icon-login"></i>SignIn</a>
 		}
 		return login
 	},
@@ -112,7 +112,7 @@ module.exports = React.createClass({
 		]
 		var loadingClass = this.props.isLoading ? "loader loading" : "loader"
 		return (
-			<div className="header">
+			<div className={"header " + (this.props.transparent ? 'transparent ' : '') + (this.state.showOptions ? "show-login" : "")}>
 				{logo_link}
 				<DropDown options={options} showDropDown={this.state.showDropDown}/>
 				{this.getLoginButton()}

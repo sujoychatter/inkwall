@@ -11,7 +11,7 @@ var css_file_name = manifest["home.css"]
 module.exports = {
 	init: function (req, res, next) {
 		Article.all({approved: true}, req.user).then(function(posts){
-			var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: posts});
+			var wrapper_element = React.createElement(wrapper, {child: home, user: req.user, posts: posts, transparentHeader: true});
 			var data = {};
 			if (req.user) {
 				data.user = {id: req.user.id, name: req.user.name, admin: req.user.admin, photo: req.user.photo, email: req.user.email}
