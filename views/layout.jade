@@ -3,6 +3,7 @@ html(prefix="og: http://ogp.me/ns#")
   head
     title= title
     link(rel="stylesheet", href="/fontello.css")
+    link(rel='stylesheet', href='/stylesheets/#{app_css}')
     meta(name="viewport" content="width=device-width, initial-scale=1")
 
     if og_data
@@ -14,6 +15,5 @@ html(prefix="og: http://ogp.me/ns#")
   body(itemscope, itemtype="http://schema.org/Blog")
     script !{page_data}
     block content
-    link(rel='stylesheet', href='/stylesheets/#{app_css}')
     !{tracking}
     script(src='/react/#{main_file}' type='text/javascript' defer)
