@@ -40,7 +40,7 @@ module.exports = React.createClass({
 	},
 	windowScrolled: function(event){
 		if(!this.timeoutObj){
-			this.timeoutObj = setTimeout(this.setHeaderState.bind(this), 300)
+			this.timeoutObj = setTimeout(this.setHeaderState, 300)
 		}
 	},
 	getImageTag: function(content_text){
